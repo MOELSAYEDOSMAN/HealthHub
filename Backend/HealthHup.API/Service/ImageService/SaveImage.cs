@@ -41,7 +41,7 @@
 
         public async Task<string> UploadImage(string src, IFormFile img)
         {
-            string NameImg = Guid.NewGuid().ToString() + ".jpg";
+            string NameImg = Guid.NewGuid().ToString() + ".webp";
             var filepath = Path.Combine(env.ContentRootPath + System.IO.Path.DirectorySeparatorChar, $@"wwwroot/Image/{src}", NameImg);
             using (var steam = System.IO.File.Create(filepath))
             {
@@ -66,7 +66,7 @@
             List<string> images = new List<string>();
             foreach (IFormFile file in imgs)
             {
-                string NameImg = Guid.NewGuid().ToString() + ".jpg";
+                string NameImg = Guid.NewGuid().ToString() + ".webp";
                 var filepath = Path.Combine(env.ContentRootPath + System.IO.Path.DirectorySeparatorChar, $@"wwwroot/Image/{src}", NameImg);
                 using (var steam = System.IO.File.Create(filepath))
                 {

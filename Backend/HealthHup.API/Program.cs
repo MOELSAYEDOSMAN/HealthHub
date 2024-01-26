@@ -5,6 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
+using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,7 +56,10 @@ builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
 
 //Def Service
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+}).ConfigureApiBehaviorOptions(option=>option.SuppressModelStateInvalidFilter=true);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -75,6 +81,7 @@ builder.Services.AddTransient<IGovermentService, GovermentService>();
 builder.Services.AddTransient<IAreaService, AreaService>();
 //End DataBase
 //End Inject Service
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

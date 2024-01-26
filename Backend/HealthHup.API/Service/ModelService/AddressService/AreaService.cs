@@ -8,7 +8,10 @@ namespace HealthHup.API.Service.ModelService.AddressService
         {
             _govermentService = govermentService;
         }
-        public async Task<IList<Area>> GetAreasWithGoverment(string town)
-        =>(await _govermentService.find(t=>t.key==town,new string[] {"areas"}))?.areas;
+        public async Task<List<Area>> GetAreasWithGoverment(string town)
+        {
+            var result= await _govermentService.find(t => t.key == town, new string[] { "areas" });
+            return result.areas;
+        }
     }
 }

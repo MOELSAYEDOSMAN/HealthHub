@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Mail;
 
 namespace HealthHup.API.Model.Extion.Account
@@ -9,15 +10,16 @@ namespace HealthHup.API.Model.Extion.Account
         public string name { get; set; }
         [Required, DataType(DataType.EmailAddress)]
         public string email { get; set; }
-        [Required, DataType(DataType.Password),RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#$^+=!*()@%&]).{8,}$")]
+        [Required, DataType(DataType.Password),MinLength(8),RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[_#$^+=!*()@%&]).{8,}$")]
         public string password { get; set; }
-        [Required, RegularExpression(@"^01[0125][1-9]{8}$")]
+        [Required,MinLength(11) ,RegularExpression(@"^01[0125][1-9]{8}$")]
         public string phone { get; set; }
         [Required, DataType(DataType.Date)]
         public DateTime birday { get; set; }
         [Required]
         public string area { get; set; }
-
+        [JsonIgnore]
+        public IFormFile? img { get; set; }
         //Func
         public static implicit operator ApplicationUser(InputRegister input)
             => new()

@@ -1,7 +1,11 @@
 {
   "Files": [
     {
-      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\HealthHup.API\\wwwroot\\Image\\User\\user.png",
+      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\User\\c5eb205b-a62c-46a0-8b84-1488dd9d3ca0.webp",
+      "PackagePath": "staticwebassets\\Image\\User\\c5eb205b-a62c-46a0-8b84-1488dd9d3ca0.webp"
+    },
+    {
+      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\User\\user.png",
       "PackagePath": "staticwebassets\\Image\\User\\user.png"
     },
     {

@@ -6,7 +6,7 @@ namespace HealthHup.API.Model.Extion.Account
     {
         [Required]
         public string userName { get; set; }
-        [Required ,MinLength(8), RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[#$^+=!*()@%&]).{8,}$")]
+        [Required ,MinLength(8), RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[_#$^+=!*()@%&]).{8,}$")]
         public string password { get; set; }
     }
 }

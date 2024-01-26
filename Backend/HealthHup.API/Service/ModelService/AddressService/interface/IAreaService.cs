@@ -2,6 +2,6 @@
 {
     public interface IAreaService:IBaseService<Area>
     {
-        Task<IList<Area>> GetAreasWithGoverment(string goverment);
+        Task<List<Area>> GetAreasWithGoverment(string goverment);
     }
 }

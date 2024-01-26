@@ -49,8 +49,11 @@ namespace HealthHup.API.Service.AccountService
         }
         public async Task<OUser> RegisterAsync(InputRegister input, IFormFile? img = null)
         {
+            //Cheack Email Or UserName
+            string UserName = new EmailAddressAttribute().IsValid(input.email) ? new MailAddress(input.email).User : input.email;
+
             //Cheack If Main In DataBase
-            if (await _userManager.FindByEmailAsync(input.email) != null)
+            if (await _userManager.FindByNameAsync(UserName) != null)
                 return new()
                 { Error = true, IsLogin = false, Message = "The Email Is Registered" };
             //Cheack Area
@@ -76,7 +79,7 @@ namespace HealthHup.API.Service.AccountService
             {
                 //Delete Image User
                 if (srcImg != "user.png")
-                    await _SvImg.DeleteImage(srcImg);
+                    await _SvImg.DeleteImage($"User/{srcImg}");
 
                 StringBuilder errors = new StringBuilder();
                 foreach (var i in Result.Errors)

@@ -1,7 +1,6 @@
 ﻿using HealthHup.API.Model.Extion.Account;
 using HealthHup.API.Service.AccountService;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Security.Claims;
@@ -25,7 +24,7 @@ namespace HealthHup.API.Controllers
             {
                 string Error = string.Empty;
                 foreach (var i in ModelState.Values.SelectMany(x => x.Errors))
-                    Error = $"{Error}\nError:{i.ErrorMessage}";
+                    Error = $"{Error}Error:{i.ErrorMessage}\n";
                 return BadRequest(new OUser()
                 {
                     Error = true, IsLogin = false, Message = Error
@@ -39,19 +38,23 @@ namespace HealthHup.API.Controllers
         public async Task<IActionResult> Register(IFormFile? Img, IFormCollection input)
         {
             InputRegister UsrInput = JsonConvert.DeserializeObject<InputRegister>(input["input"]);
-            return Ok(await register(UsrInput, Img));
+            if(Img!=null)
+                UsrInput.img=Img;
+            return Ok(await Register(UsrInput));
         }
-        private async Task<OUser> register(InputRegister input, IFormFile? img = null)
+        
+        private async Task<OUser> Register( InputRegister input)
         {
-            if (!ModelState.IsValid)
+            ModelState.ClearValidationState(nameof(input));
+            if (!TryValidateModel(input, nameof(input)))
             {
                 string Error = string.Empty;
                 foreach (var i in ModelState.Values.SelectMany(x => x.Errors))
-                    Error = $"{Error}\nError:{i.ErrorMessage}";
-                return new OUser()
+                    Error = $"{Error}Error:{i.ErrorMessage}\n";
+                return  new OUser()
                 { Error = true, IsLogin = false, Message = Error };
             }
-            return ChangeSrcImage(await _authService.RegisterAsync(input, img));
+            return ChangeSrcImage(await _authService.RegisterAsync(input,input?.img));
         }
 
 

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "sKRlZm/bVLeq3jdrlOuxEp+30rL40tqtJj0npuDUnDg=",
+  "Hash": "meGxb+GYO+as/O4SGG2NBx714tiJCq6VCq4zm8C+46o=",
   "Source": "HealthHup.API",
   "BasePath": "_content/HealthHup.API",
   "Mode": "Default",
@@ -10,17 +10,36 @@
     {
       "Name": "HealthHup.API\\wwwroot",
       "Source": "HealthHup.API",
-      "ContentRoot": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\HealthHup.API\\wwwroot\\",
+      "ContentRoot": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\",
       "BasePath": "_content/HealthHup.API",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\HealthHup.API\\wwwroot\\Image\\User\\user.png",
+      "Identity": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\User\\c5eb205b-a62c-46a0-8b84-1488dd9d3ca0.webp",
       "SourceId": "HealthHup.API",
       "SourceType": "Discovered",
-      "ContentRoot": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\HealthHup.API\\wwwroot\\",
+      "ContentRoot": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\",
+      "BasePath": "_content/HealthHup.API",
+      "RelativePath": "Image/User/c5eb205b-a62c-46a0-8b84-1488dd9d3ca0.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Image\\User\\c5eb205b-a62c-46a0-8b84-1488dd9d3ca0.webp"
+    },
+    {
+      "Identity": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\User\\user.png",
+      "SourceId": "HealthHup.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\",
       "BasePath": "_content/HealthHup.API",
       "RelativePath": "Image/User/user.png",
       "AssetKind": "All",

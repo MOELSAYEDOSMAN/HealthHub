@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "j2AGdvomtZ8PxSjAikvhjxR96agJXdb0wzjL9IibwS83q2F5XtRd89zbqtbQxAnR5UZhj1itvDTZRrld3ShMkA==",
+  "dgSpecHash": "soQd9dnLgDzMUGOHj0PhYa0UJ0myW4p5EYSc7QHey2ZlmaiDbNAlBzI2ppeKKI+URSc+EH41shJ05fjfnH2FYw==",
   "success": true,
-  "projectFilePath": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\HealthHup.API\\HealthHup.API.csproj",
+  "projectFilePath": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\HealthHup.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\moham\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\moham\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
