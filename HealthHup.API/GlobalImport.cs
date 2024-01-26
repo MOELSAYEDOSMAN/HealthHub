@@ -1,0 +1,10 @@
+﻿global using HealthHup.API.Model.Models;
+global using HealthHup.API.Model;
+global using HealthHup.API.Model.Models.AdressModle;
+global using HealthHup.API.Model.Models.DrugModel;
+global using HealthHup.API.Model.Models.PharmacyModel;
+global using HealthHup.API.JWT;
+global using HealthHup.API.Service.ImageService;
+global using HealthHup.API.Service.ModelService.BaseModel;
+global using HealthHup.API.Service.ModelService.AddressService;
+global using HealthHup.API.Service.ModelService.AddressService.@interface;
