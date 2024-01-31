@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HealthHup.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9dbd96e9a17ba6bde204db47ac07f45f9dad27ac")]
 [assembly: System.Reflection.AssemblyProductAttribute("HealthHup.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HealthHup.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

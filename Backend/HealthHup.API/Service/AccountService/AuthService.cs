@@ -29,7 +29,8 @@ namespace HealthHup.API.Service.AccountService
             string UserName = new EmailAddressAttribute().IsValid(input.userName) ? new MailAddress(input.userName).User : input.userName;
             //Cheack IF User In DataBase
             var UserLogin=await _userManager.FindByNameAsync(UserName);
-            if (UserLogin == null||await _userManager.CheckPasswordAsync(UserLogin,input.password))
+            bool ckPass= await _userManager.CheckPasswordAsync(UserLogin, input.password);
+            if (UserLogin == null||!ckPass)
                 return new OUser()
                 {Error=true,IsLogin=false,Message="Email Or Password Incorrect"};
             //Ready login
@@ -137,20 +138,45 @@ namespace HealthHup.API.Service.AccountService
         {
             string UserName = new EmailAddressAttribute().IsValid(Email) ? new MailAddress(Email).User : Email;
             var User = await _userManager.FindByNameAsync(UserName);
-            if (User == null||await _userManager.CheckPasswordAsync(User,OldPassowrd))
+            if (User == null||!await _userManager.CheckPasswordAsync(User,OldPassowrd))
                 return "Error in Current Password";
-            await _userManager.ChangePasswordAsync(User, OldPassowrd, NewPassword);
-            return "Success";
+            var us= await _userManager.ChangePasswordAsync(User, OldPassowrd, NewPassword);
+            
+            if(!us.Succeeded)
+            {
+                string error = string.Empty;
+                foreach (var item in us.Errors)
+                {
+                    error = $"{error} {item.Code}:{item.Description}\n";
+                }
+                return error;
+            }
+            else
+            {
+                return "Success";
+            }
         }
         public async Task<string> ForgetPasswordAsync(string Email,string NewPassword)
         {
             string UserName = new EmailAddressAttribute().IsValid(Email) ? new MailAddress(Email).User : Email;
             var User = await _userManager.FindByNameAsync(UserName);
             if (User == null)
-                return "Error in Current Password";
-            var pass = await _userManager.GeneratePasswordResetTokenAsync(User);
-            await _userManager.ChangePasswordAsync(User,pass,NewPassword);
-            return "";
+                return "Error in Current User";
+            var restToken = await _userManager.GeneratePasswordResetTokenAsync(User);
+            var r=await _userManager.ResetPasswordAsync(User, restToken,NewPassword);
+            if (!r.Succeeded)
+            {
+                string error = string.Empty;
+                foreach (var item in r.Errors)
+                {
+                    error = $"{error} {item.Code}:{item.Description}\n";
+                }
+                return error;
+            }
+            else
+            {
+                return "Success";
+            }
         }
         //Create Token
         private async Task<JwtSecurityToken> CreateJwtTokenAsync(ApplicationUser input)

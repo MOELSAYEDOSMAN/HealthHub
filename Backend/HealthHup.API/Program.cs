@@ -7,6 +7,7 @@ using Serilog;
 using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Models;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -61,7 +62,34 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
 }).ConfigureApiBehaviorOptions(option=>option.SuppressModelStateInvalidFilter=true);
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(s =>
+{
+    s.AddSecurityDefinition("Bearer",
+        securityScheme: new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
+        {
+            In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+            Description = "Enter Token",
+            Name = "Authorization",
+            Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+            Scheme= "bearer",
+            BearerFormat="JWT"
+        });
+    
+    s.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new()
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id="Bearer"
+                }
+            },
+            new string[]{}
+        }
+    });
+});
 
 //Add Cours
 builder.Services.AddCors(options =>

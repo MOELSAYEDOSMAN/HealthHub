@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "meGxb+GYO+as/O4SGG2NBx714tiJCq6VCq4zm8C+46o=",
+  "Hash": "hbaDVaGVeT5MIJ+kv2B0uZQgFi8UJWIlar++1ZvB4IY=",
   "Source": "HealthHup.API",
   "BasePath": "_content/HealthHup.API",
   "Mode": "Default",
@@ -16,6 +16,25 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\User\\4d23c2b4-8989-4f36-bed9-a070177b9f7b.webp",
+      "SourceId": "HealthHup.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\",
+      "BasePath": "_content/HealthHup.API",
+      "RelativePath": "Image/User/4d23c2b4-8989-4f36-bed9-a070177b9f7b.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Image\\User\\4d23c2b4-8989-4f36-bed9-a070177b9f7b.webp"
+    },
     {
       "Identity": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\User\\c5eb205b-a62c-46a0-8b84-1488dd9d3ca0.webp",
       "SourceId": "HealthHup.API",

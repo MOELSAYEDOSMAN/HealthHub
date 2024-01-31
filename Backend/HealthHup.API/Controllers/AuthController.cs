@@ -58,41 +58,44 @@ namespace HealthHup.API.Controllers
         }
 
 
-        [HttpGet("AddRole"), Authorize(Roles = "Admin,CustomerService")]
+        [HttpPut("AddRole"), Authorize(Roles = "Admin,CustomerService")]
         public async Task<IActionResult> AddRoles(string Email, string Role)
             => Ok(await _authService.AddRoleAsync(Email, Role));
 
 
-        [HttpGet("RemoveRole"), Authorize(Roles = "Admin,CustomerService")]
+        [HttpPut("RemoveRole"), Authorize(Roles = "Admin,CustomerService")]
         public async Task<IActionResult> RemoveRole(string Email, string Role)
             => Ok(await _authService.RemoveRoleAsync(Email, Role));
 
-        [HttpGet("ChangePassword"),Authorize]
+        [HttpPut("ChangePassword"),Authorize]
         public async Task<IActionResult> ChangePassword(string OldPassword,string NewPassowrd)
         {
-            string Email = ClaimTypes.Email;
+            string Email = User.FindFirstValue(ClaimTypes.Email);
             return Ok(await _authService.ChangePasswordAsync(Email, OldPassword, NewPassowrd));
         }
 
-        [HttpGet("ForgetPassword"),Authorize]
+        [HttpPut("ForgetPassword"),Authorize]
         public async Task<IActionResult> ForgetPassword(string NewPassword)
         {
-            string Email = ClaimTypes.Email;
+            string Email = User.FindFirstValue(ClaimTypes.Email); ;
             return Ok(await _authService.ForgetPasswordAsync(Email,NewPassword));
         }
 
 
-        [HttpPost("ChangePhoto"),Authorize]
+        [HttpPut("ChangePhoto"),Authorize]
         public async Task<IActionResult> ChangePhoto(IFormFile img)
         {
-            return Ok( await _authService.ChaneImageUserAsync(ClaimTypes.Email,img));
+            var Email = User.FindFirstValue(ClaimTypes.Email);
+            if (img == null)
+                return Ok(false);
+            
+            return Ok(await _authService.ChaneImageUserAsync(Email, img)) ;
         }
         //Private Function
         private OUser ChangeSrcImage(OUser? input)
         {
-            if(input?.ImgSrc==string.Empty)
+            if(input.ImgSrc!=string.Empty)
                 input.ImgSrc = $"{this.Request.Scheme}://{this.Request.Host}/Image/User/{input?.ImgSrc}";
-
             return input;
         }
     }
