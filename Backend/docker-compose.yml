@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  healthhup.api:
+    image: ${DOCKER_REGISTRY-}healthhupapi
+    build:
+      context: .
+      dockerfile: HealthHup.API\Dockerfile
