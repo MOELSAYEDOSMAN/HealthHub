@@ -1,0 +1,1 @@
+{"Timestamp":"2024-02-02T01:31:19.0177139+02:00","Level":"Warning","MessageTemplate":"Failed to determine the https port for redirect.","Properties":{"EventId":{"Id":3,"Name":"FailedToDeterminePort"},"SourceContext":"Microsoft.AspNetCore.HttpsPolicy.HttpsRedirectionMiddleware","RequestId":"0HN13FNB1VC89:00000004","RequestPath":"/Auth/Register","ConnectionId":"0HN13FNB1VC89"}}

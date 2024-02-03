@@ -28,8 +28,8 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 .AddDefaultTokenProviders();
 
 //Add JWT 
-builder.Services.AddScoped<jwt, jwt>();
-builder.Services.Configure<jwt>(builder.Configuration.GetSection("JWT"));
+builder.Services.AddScoped<Jwt, Jwt>();
+builder.Services.Configure<Jwt>(builder.Configuration.GetSection("JWT"));
 builder.Services.AddAuthentication(o =>
 {
     o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -44,7 +44,7 @@ builder.Services.AddAuthentication(o =>
         ValidateIssuerSigningKey = true,
         ValidIssuer = builder.Configuration["JWT:IssUser"],
         ValidAudience = builder.Configuration["JWT:Audience"],
-        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]))
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]??""))
     };
 });
 

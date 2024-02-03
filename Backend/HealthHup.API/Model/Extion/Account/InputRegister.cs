@@ -6,18 +6,20 @@ namespace HealthHup.API.Model.Extion.Account
 {
     public class InputRegister
     {
-        [Required,DataType(dataType:DataType.Text)]
+        [Required(ErrorMessage ="Must Enter Name(First Name,Mid Name,Last Name)"),DataType(dataType:DataType.Text)]
         public string name { get; set; }
-        [Required, DataType(DataType.EmailAddress)]
+        [Required(ErrorMessage ="Must Enter Email (***@example.com)"), DataType(DataType.EmailAddress)]
         public string email { get; set; }
-        [Required, DataType(DataType.Password),MinLength(8),RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[_#$^+=!*()@%&]).{8,}$")]
+        [Required(ErrorMessage = "Must Enter Password"), MinLength(length: 8, ErrorMessage = "Password Must Be at Least 8 Characters"), RegularExpression("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[_#$^+=!*()@%&]).{8,}$", ErrorMessage = "Password Must Consist of a [A-Z],a number[0-9],a Symbol[_#$^+=!*()@%&]")]
         public string password { get; set; }
-        [Required,MinLength(11) ,RegularExpression(@"^01[0125][1-9]{8}$")]
+        [Required(ErrorMessage ="Must Enter Phone"),StringLength(maximumLength:11,MinimumLength =11,ErrorMessage ="You Must Enter 11 Numbers"),RegularExpression(@"^01[0125][1-9]{8}$",ErrorMessage ="01[0|1|2|5]*******")]
         public string phone { get; set; }
-        [Required, DataType(DataType.Date)]
+        [Required(ErrorMessage ="Must Select BirthDay"), DataType(DataType.Date)]
         public DateTime birday { get; set; }
-        [Required]
+        [Required(ErrorMessage ="Must Select Area")]
         public string area { get; set; }
+        [Required]
+        public bool Gender { get; set; }
         [JsonIgnore]
         public IFormFile? img { get; set; }
         //Func
@@ -28,6 +30,7 @@ namespace HealthHup.API.Model.Extion.Account
                 PhoneNumber=input.phone,
                 Brdate=input.birday,
                 Name=input.name,
+                Gender=input.Gender,
                 UserName = new EmailAddressAttribute().IsValid(input.email) ? new MailAddress(input.email).User : input.email
             };
     }

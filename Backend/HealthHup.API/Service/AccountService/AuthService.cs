@@ -15,8 +15,8 @@ namespace HealthHup.API.Service.AccountService
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ISaveImage _SvImg;
         private readonly IAreaService _areaService;
-        private readonly jwt _jwt;
-        public AuthService(UserManager<ApplicationUser> userManager, IOptions<jwt> jwt,ISaveImage saveimg,IAreaService areaService)
+        private readonly Jwt _jwt;
+        public AuthService(UserManager<ApplicationUser> userManager, IOptions<Jwt> jwt,ISaveImage saveimg,IAreaService areaService)
         {
             _userManager = userManager;
             _SvImg = saveimg;
@@ -29,8 +29,7 @@ namespace HealthHup.API.Service.AccountService
             string UserName = new EmailAddressAttribute().IsValid(input.userName) ? new MailAddress(input.userName).User : input.userName;
             //Cheack IF User In DataBase
             var UserLogin=await _userManager.FindByNameAsync(UserName);
-            bool ckPass= await _userManager.CheckPasswordAsync(UserLogin, input.password);
-            if (UserLogin == null||!ckPass)
+            if (UserLogin == null||!await _userManager.CheckPasswordAsync(UserLogin, input.password))
                 return new OUser()
                 {Error=true,IsLogin=false,Message="Email Or Password Incorrect"};
             //Ready login
@@ -39,13 +38,14 @@ namespace HealthHup.API.Service.AccountService
             return new()
             {
                 Error=false,
-                ImgSrc=UserLogin.src,
+                ImgSrc=UserLogin?.src??string.Empty,
                 IsLogin=true,
-                Email=UserLogin.Email,
+                Email=UserLogin?.Email?? string.Empty,
                 Roles=rolesList.ToArray(),
                 UserName=UserName,
                 Token=new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
-                ExToken = jwtSecurityToken.ValidTo
+                ExToken = jwtSecurityToken.ValidTo,
+                Gender=UserLogin.Gender
             };
         }
         public async Task<OUser> RegisterAsync(InputRegister input, IFormFile? img = null)
@@ -190,9 +190,9 @@ namespace HealthHup.API.Service.AccountService
 
             var claims = new[]
             {
-                new Claim(JwtRegisteredClaimNames.Sub, input.UserName),
+                new Claim(JwtRegisteredClaimNames.Sub, input.UserName?? ""),
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(JwtRegisteredClaimNames.Email, input.Email),
+                new Claim(JwtRegisteredClaimNames.Email, input.Email??""),
                 new Claim("uid", input.Id)
             }
             .Union(userClaims)

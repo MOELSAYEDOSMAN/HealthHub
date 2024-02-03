@@ -8,3 +8,4 @@ global using HealthHup.API.Service.ImageService;
 global using HealthHup.API.Service.ModelService.BaseModel;
 global using HealthHup.API.Service.ModelService.AddressService;
 global using HealthHup.API.Service.ModelService.AddressService.@interface;
+global using HealthHup.API.Model.Models.Hospital;

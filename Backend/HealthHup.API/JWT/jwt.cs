@@ -1,6 +1,6 @@
 ﻿namespace HealthHup.API.JWT
 {
-    public class jwt
+    public class Jwt
     {
         public string Key { get; set; }
         public string IssUser { get; set; }

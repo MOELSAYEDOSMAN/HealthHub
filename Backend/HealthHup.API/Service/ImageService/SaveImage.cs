@@ -7,21 +7,21 @@
         {
             this.env = env;
         }
-        public async Task<bool> DeleteImage(string src)
+        public Task<bool> DeleteImage(string src)
         {
             var filepath = Path.Combine(env.ContentRootPath + System.IO.Path.DirectorySeparatorChar, $@"wwwroot/Image/{src}");
             if (System.IO.File.Exists(filepath))
             {
                 System.IO.File.Delete(filepath);
-                return true;
+                return Task.FromResult<bool>(true);
             }
             else
             {
-                return false;
+                return Task.FromResult<bool>(false);
             }
         }
 
-        public async Task<bool> DeletsImages(List<string> src)
+        public Task<bool> DeletsImages(List<string> src)
         {
             bool result = true;
 
@@ -36,7 +36,7 @@
                     result = false;
                 }
             }
-            return result;
+            return Task.FromResult<bool>(result);
         }
 
         public async Task<string> UploadImage(string src, IFormFile img)

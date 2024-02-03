@@ -37,13 +37,22 @@ namespace HealthHup.API.Controllers
         [HttpPost("Register")]
         public async Task<IActionResult> Register(IFormFile? Img, IFormCollection input)
         {
-            InputRegister UsrInput = JsonConvert.DeserializeObject<InputRegister>(input["input"]);
-            if(Img!=null)
-                UsrInput.img=Img;
-            return Ok(await Register(UsrInput));
+            try
+            {
+
+                InputRegister UsrInput = JsonConvert.DeserializeObject<InputRegister>(input["input"]);
+                if (Img != null)
+                    UsrInput.img = Img;
+                return Ok(await Register(UsrInput));
+            }
+            catch
+            {
+                return BadRequest(new OUser()
+                { Message = "Error in Object Input Or No Data",Error = true,IsLogin = false});
+            }
         }
         
-        private async Task<OUser> Register( InputRegister input)
+        private async Task<OUser> Register(InputRegister input)
         {
             ModelState.ClearValidationState(nameof(input));
             if (!TryValidateModel(input, nameof(input)))
@@ -54,30 +63,47 @@ namespace HealthHup.API.Controllers
                 return  new OUser()
                 { Error = true, IsLogin = false, Message = Error };
             }
-            return ChangeSrcImage(await _authService.RegisterAsync(input,input?.img));
+            var result = ChangeSrcImage(await _authService.RegisterAsync(input, input?.img));
+            return result??new OUser();
         }
 
 
         [HttpPut("AddRole"), Authorize(Roles = "Admin,CustomerService")]
         public async Task<IActionResult> AddRoles(string Email, string Role)
-            => Ok(await _authService.AddRoleAsync(Email, Role));
+        {
+            if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Role))
+                return BadRequest("Must Enter Email And Role");
+            return Ok(await _authService.AddRoleAsync(Email, Role));
+        }
 
 
         [HttpPut("RemoveRole"), Authorize(Roles = "Admin,CustomerService")]
         public async Task<IActionResult> RemoveRole(string Email, string Role)
-            => Ok(await _authService.RemoveRoleAsync(Email, Role));
+        {
+            if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Role))
+                return BadRequest("Must Enter Email And Role");
+           return Ok(await _authService.RemoveRoleAsync(Email, Role));
+        }
 
         [HttpPut("ChangePassword"),Authorize]
         public async Task<IActionResult> ChangePassword(string OldPassword,string NewPassowrd)
         {
-            string Email = User.FindFirstValue(ClaimTypes.Email);
-            return Ok(await _authService.ChangePasswordAsync(Email, OldPassword, NewPassowrd));
+            var Email = User.FindFirstValue(ClaimTypes.Email);
+            if (Email == null)
+                return Ok("Must Login Again");
+            if (string.IsNullOrEmpty(OldPassword) || string.IsNullOrEmpty(NewPassowrd))
+                return Ok("Must Enter OldPassword And New Password");
+                return Ok(await _authService.ChangePasswordAsync(Email, OldPassword, NewPassowrd));
         }
 
         [HttpPut("ForgetPassword"),Authorize]
         public async Task<IActionResult> ForgetPassword(string NewPassword)
         {
-            string Email = User.FindFirstValue(ClaimTypes.Email); ;
+            var Email = User.FindFirstValue(ClaimTypes.Email);
+            if (Email == null)
+                return Ok("Must Login Again");
+            if (string.IsNullOrEmpty(NewPassword))
+                return Ok("Must Enter NewPassword");
             return Ok(await _authService.ForgetPasswordAsync(Email,NewPassword));
         }
 
@@ -86,15 +112,17 @@ namespace HealthHup.API.Controllers
         public async Task<IActionResult> ChangePhoto(IFormFile img)
         {
             var Email = User.FindFirstValue(ClaimTypes.Email);
+            if (Email == null)
+                return Ok("Must Login Again");
             if (img == null)
                 return Ok(false);
             
             return Ok(await _authService.ChaneImageUserAsync(Email, img)) ;
         }
         //Private Function
-        private OUser ChangeSrcImage(OUser? input)
+        private OUser? ChangeSrcImage(OUser? input)
         {
-            if(input.ImgSrc!=string.Empty)
+            if(input?.ImgSrc!=null)
                 input.ImgSrc = $"{this.Request.Scheme}://{this.Request.Host}/Image/User/{input?.ImgSrc}";
             return input;
         }

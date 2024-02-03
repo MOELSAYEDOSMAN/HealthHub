@@ -10,6 +10,7 @@
         public string? Message { get; set; }
         public bool Error { get; set; } = false;
         public bool IsLogin { get; set; }
+        public bool Gender { get; set; }
         public DateTime ExToken { get; set; }
     }
 }
