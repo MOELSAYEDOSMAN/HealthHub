@@ -1,6 +1,14 @@
 {
   "Files": [
     {
+      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\DoctorCertificates\\86f3251e-9fc6-4a9d-88d8-badd7c00ca4e.webp",
+      "PackagePath": "staticwebassets\\Image\\DoctorCertificates\\86f3251e-9fc6-4a9d-88d8-badd7c00ca4e.webp"
+    },
+    {
+      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\DoctorCertificates\\c6ccd122-a418-4e74-988a-40c69c729cb3.webp",
+      "PackagePath": "staticwebassets\\Image\\DoctorCertificates\\c6ccd122-a418-4e74-988a-40c69c729cb3.webp"
+    },
+    {
       "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\User\\user.png",
       "PackagePath": "staticwebassets\\Image\\User\\user.png"
     },

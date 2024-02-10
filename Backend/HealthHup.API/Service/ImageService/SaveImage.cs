@@ -27,14 +27,7 @@
 
             foreach (string s in src)
             {
-                if (System.IO.File.Exists(s))
-                {
-                    System.IO.File.Delete(s);
-                }
-                else
-                {
-                    result = false;
-                }
+                DeleteImage(s);
             }
             return Task.FromResult<bool>(result);
         }

@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
+using HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Service;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -99,14 +100,18 @@ bui => bui.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod())
 
 //Start Inject Service
     //Image
-builder.Services.AddScoped<ISaveImage, SaveImage>();
+builder.Services.AddTransient<ISaveImage, SaveImage>();
+    //Message
+builder.Services.AddTransient<IMessageService,MessageService>();
 //Account
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddTransient<IAuthService, AuthService>();
 //Start DataBase
 builder.Services.AddTransient(typeof(IBaseService<>), typeof(BaseService<>));
 //Address
 builder.Services.AddTransient<IGovermentService, GovermentService>();
 builder.Services.AddTransient<IAreaService, AreaService>();
+//Doctors
+builder.Services.AddTransient<IDoctorService, DoctorService>();
 //End DataBase
 //End Inject Service
 

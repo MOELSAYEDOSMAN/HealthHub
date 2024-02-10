@@ -11,5 +11,6 @@ namespace HealthHup.API.Service.AccountService
         Task<bool> ChaneImageUserAsync(string Email, IFormFile img);
         Task<string> ChangePasswordAsync(string Email, string OldPassowrd, string NewPassword);
         Task<string> ForgetPasswordAsync(string Email, string NewPassword);
+        Task<ApplicationUser> GetUserAsync(string Email);
     }
 }

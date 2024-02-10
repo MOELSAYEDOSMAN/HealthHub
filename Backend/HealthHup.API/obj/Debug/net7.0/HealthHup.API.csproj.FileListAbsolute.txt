@@ -203,3 +203,8 @@ D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\obj
 D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\obj\Debug\net7.0\HealthHup.API.pdb
 D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\obj\Debug\net7.0\HealthHup.API.genruntimeconfig.cache
 D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\obj\Debug\net7.0\ref\HealthHup.API.dll
+D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\bin\Debug\net7.0\BouncyCastle.Cryptography.dll
+D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\bin\Debug\net7.0\MailKit.dll
+D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\bin\Debug\net7.0\MimeKit.dll
+D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\bin\Debug\net7.0\System.Security.Cryptography.Pkcs.dll
+D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\bin\Debug\net7.0\runtimes\win\lib\net7.0\System.Security.Cryptography.Pkcs.dll

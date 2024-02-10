@@ -94,6 +94,9 @@ namespace HealthHup.API.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<bool>("Gender")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -202,13 +205,22 @@ namespace HealthHup.API.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<bool>("Accept")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("AddressDescrption")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CollegeName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DepartmentName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DateOfJoin")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateOfSendRequest")
+                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("GraduationYear")
                         .HasColumnType("datetime2");
@@ -217,6 +229,9 @@ namespace HealthHup.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("areaId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("doctorId")
                         .HasColumnType("nvarchar(450)");
 
@@ -224,6 +239,8 @@ namespace HealthHup.API.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("areaId");
 
                     b.HasIndex("doctorId");
 
@@ -250,6 +267,9 @@ namespace HealthHup.API.Migrations
 
                     b.Property<Guid>("doctorId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<double>("rate")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
@@ -500,6 +520,12 @@ namespace HealthHup.API.Migrations
 
             modelBuilder.Entity("HealthHup.API.Model.Models.Hospital.Doctor", b =>
                 {
+                    b.HasOne("HealthHup.API.Model.Models.AdressModle.Area", "area")
+                        .WithMany("doctors")
+                        .HasForeignKey("areaId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "doctor")
                         .WithMany()
                         .HasForeignKey("doctorId");
@@ -509,6 +535,66 @@ namespace HealthHup.API.Migrations
                         .HasForeignKey("drSpecialtieId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.OwnsMany("HealthHup.API.Model.Models.Hospital.DoctorCertificate", "Certificates", b1 =>
+                        {
+                            b1.Property<Guid>("DoctorId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<string>("src")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("DoctorId", "Id");
+
+                            b1.ToTable("DoctorCertificate");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DoctorId");
+                        });
+
+                    b.OwnsMany("HealthHup.API.Model.Models.Hospital.DoctorDate", "Dates", b1 =>
+                        {
+                            b1.Property<Guid>("DoctorId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<string>("DayName")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("From")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("To")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("DoctorId", "Id");
+
+                            b1.ToTable("DoctorDate");
+
+                            b1.WithOwner()
+                                .HasForeignKey("DoctorId");
+                        });
+
+                    b.Navigation("Certificates");
+
+                    b.Navigation("Dates");
+
+                    b.Navigation("area");
 
                     b.Navigation("doctor");
 
@@ -613,6 +699,8 @@ namespace HealthHup.API.Migrations
 
             modelBuilder.Entity("HealthHup.API.Model.Models.AdressModle.Area", b =>
                 {
+                    b.Navigation("doctors");
+
                     b.Navigation("pharmacys");
                 });
 

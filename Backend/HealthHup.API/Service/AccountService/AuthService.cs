@@ -58,7 +58,7 @@ namespace HealthHup.API.Service.AccountService
                 return new()
                 { Error = true, IsLogin = false, Message = "The Email Is Registered" };
             //Cheack Area
-            var UserArea = await _areaService.find(x => x.key == input.area);
+            var UserArea = await _areaService.findAsync(x => x.key == input.area);
             if (UserArea == null)
                 return new()
                 { Error = true, IsLogin = false, Message = "No Area by This Name" };
@@ -177,6 +177,11 @@ namespace HealthHup.API.Service.AccountService
             {
                 return "Success";
             }
+        }
+        public async Task<ApplicationUser>? GetUserAsync(string Email)
+        {
+            var User=await _userManager.FindByEmailAsync(Email);
+            return User;
         }
         //Create Token
         private async Task<JwtSecurityToken> CreateJwtTokenAsync(ApplicationUser input)

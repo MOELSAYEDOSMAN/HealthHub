@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "GYOljePhRXdlcPTEYi5IAlkk/eKROrOKvryZ2oalHsM=",
+  "Hash": "T/r6iMh0rze+Fpd2ZkNHu2WjSovm9hOrZW9tvAj4F7A=",
   "Source": "HealthHup.API",
   "BasePath": "_content/HealthHup.API",
   "Mode": "Default",
@@ -16,6 +16,44 @@
     }
   ],
   "Assets": [
+    {
+      "Identity": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\DoctorCertificates\\86f3251e-9fc6-4a9d-88d8-badd7c00ca4e.webp",
+      "SourceId": "HealthHup.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\",
+      "BasePath": "_content/HealthHup.API",
+      "RelativePath": "Image/DoctorCertificates/86f3251e-9fc6-4a9d-88d8-badd7c00ca4e.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Image\\DoctorCertificates\\86f3251e-9fc6-4a9d-88d8-badd7c00ca4e.webp"
+    },
+    {
+      "Identity": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\DoctorCertificates\\c6ccd122-a418-4e74-988a-40c69c729cb3.webp",
+      "SourceId": "HealthHup.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\",
+      "BasePath": "_content/HealthHup.API",
+      "RelativePath": "Image/DoctorCertificates/c6ccd122-a418-4e74-988a-40c69c729cb3.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Image\\DoctorCertificates\\c6ccd122-a418-4e74-988a-40c69c729cb3.webp"
+    },
     {
       "Identity": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\User\\user.png",
       "SourceId": "HealthHup.API",

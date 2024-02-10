@@ -3,6 +3,7 @@
     public class Review
     {
         public Guid Id { get; set; }
+        public double rate {  get; set; }
         public string Message { get; set; }
         public DateTime SendTime { get; set; }
         public Doctor doctor { get; set; }

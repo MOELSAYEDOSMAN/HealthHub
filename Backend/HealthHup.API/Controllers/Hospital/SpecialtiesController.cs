@@ -1,26 +1,37 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HealthHup.API.Service.AccountService;
+using HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Service;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace HealthHup.API.Controllers.Hospital
 {
-    [Route("[controller]")]
+    [Route("Hospital/[controller]")]
     [ApiController]
     public class SpecialtiesController : ControllerBase
     {
         private readonly IBaseService<Specialtie> _SpecialtieService;
-        public SpecialtiesController(IBaseService<Specialtie> SpecialtieService)
+        private readonly IAuthService _doctorService;
+        private readonly IMessageService _messageService;
+        public SpecialtiesController(IBaseService<Specialtie> SpecialtieService, IAuthService doctorService, IMessageService messageService)
         {
             _SpecialtieService = SpecialtieService;
+            _doctorService = doctorService;
+            _messageService = messageService;
         }
-
+        
         [HttpGet]
         public async Task<IActionResult> Get()
-            => Ok(await _SpecialtieService.GetAll());
+            => Ok(await _SpecialtieService.GetAllAsync());
+        [HttpPut]
+        public async Task<IActionResult> SendMessageTest()
+            => Ok(_messageService.SendMessage("mohamed01201a@outlook.com", "Test","Red"));
 
-        [HttpPost]
+        [HttpPost,Authorize(Roles = "Admin,CustomerService")]
         public async Task<IActionResult> Post(string SpecialtieName)
         {
-            if (string.IsNullOrEmpty(SpecialtieName) || await _SpecialtieService.find(s =>s.Name.ToLower()==SpecialtieName.ToLower()) != null)
+            if (string.IsNullOrEmpty(SpecialtieName) || await _SpecialtieService.findAsync(s =>s.Name.ToLower()==SpecialtieName.ToLower()) != null)
                 return BadRequest(false);
 
             await _SpecialtieService.AddAsync(new()

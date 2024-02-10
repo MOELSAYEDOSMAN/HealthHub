@@ -18,7 +18,7 @@ namespace HealthHup.API.Controllers
         }
         [HttpGet("GetGovernorate")]
         public async Task<IActionResult> GetGovernorates()
-            =>Ok(await _GovernorateService.GetAll());
+            =>Ok(await _GovernorateService.GetAllAsync());
         [HttpGet("GetAreas")]
         public async Task<IActionResult> GetAreas(string GovermentKey)
             => Ok(await _areaService.GetAreasWithGoverment(GovermentKey));
@@ -39,7 +39,7 @@ namespace HealthHup.API.Controllers
             {
                 Id = Guid.NewGuid(),
                 key = areaKey,
-                governorate=await _GovernorateService.find(x=>x.key== GovernorateKey)
+                governorate=await _GovernorateService.findAsync(x=>x.key== GovernorateKey)
             }));
     }
 }

@@ -6,5 +6,6 @@
         public string key { get; set; }
         public Governorate governorate { get; set; }
         public List<Pharmacy> pharmacys { get; set; }
+        public List<Doctor> doctors { get; set; }
     }
 }

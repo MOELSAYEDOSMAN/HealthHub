@@ -8,9 +8,18 @@ namespace HealthHup.API.Model.Models.Hospital
         public DateTime GraduationYear {  get; set; }
         public string CollegeName { get; set; }
         public string SummaryCareer { get; set; }
-        public string DepartmentName {  get; set; }
-        public ApplicationUser doctor { get; set; }
-        public List<Review>? reviews { get; set; }
+        public string AddressDescrption { get; set; }
+        public bool Accept { get; set; }
+        public DateTime DateOfJoin { get; set; }
+        public DateTime DateOfSendRequest { get; set; }
+        public Guid drSpecialtieId { get; set; }
         public Specialtie drSpecialtie { get; set; }
+        public ApplicationUser doctor { get; set; }
+        public Guid areaId { get; set; }
+        public Area area { get; set; }
+        public List<DoctorCertificate>? Certificates { get; set; }
+        public List<DoctorDate>? Dates { get; set; }
+        public List<Review>? reviews { get; set; }
+
     }
 }
