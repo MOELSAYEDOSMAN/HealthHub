@@ -1,37 +1,5 @@
 ﻿<Project>
   <ItemGroup>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Image\DoctorCertificates\86f3251e-9fc6-4a9d-88d8-badd7c00ca4e.webp))">
-      <SourceType>Package</SourceType>
-      <SourceId>HealthHup.API</SourceId>
-      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
-      <BasePath>_content/HealthHup.API</BasePath>
-      <RelativePath>Image/DoctorCertificates/86f3251e-9fc6-4a9d-88d8-badd7c00ca4e.webp</RelativePath>
-      <AssetKind>All</AssetKind>
-      <AssetMode>All</AssetMode>
-      <AssetRole>Primary</AssetRole>
-      <RelatedAsset></RelatedAsset>
-      <AssetTraitName></AssetTraitName>
-      <AssetTraitValue></AssetTraitValue>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Image\DoctorCertificates\86f3251e-9fc6-4a9d-88d8-badd7c00ca4e.webp))</OriginalItemSpec>
-    </StaticWebAsset>
-    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Image\DoctorCertificates\c6ccd122-a418-4e74-988a-40c69c729cb3.webp))">
-      <SourceType>Package</SourceType>
-      <SourceId>HealthHup.API</SourceId>
-      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
-      <BasePath>_content/HealthHup.API</BasePath>
-      <RelativePath>Image/DoctorCertificates/c6ccd122-a418-4e74-988a-40c69c729cb3.webp</RelativePath>
-      <AssetKind>All</AssetKind>
-      <AssetMode>All</AssetMode>
-      <AssetRole>Primary</AssetRole>
-      <RelatedAsset></RelatedAsset>
-      <AssetTraitName></AssetTraitName>
-      <AssetTraitValue></AssetTraitValue>
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-      <OriginalItemSpec>$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Image\DoctorCertificates\c6ccd122-a418-4e74-988a-40c69c729cb3.webp))</OriginalItemSpec>
-    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath($(MSBuildThisFileDirectory)..\staticwebassets\Image\User\user.png))">
       <SourceType>Package</SourceType>
       <SourceId>HealthHup.API</SourceId>

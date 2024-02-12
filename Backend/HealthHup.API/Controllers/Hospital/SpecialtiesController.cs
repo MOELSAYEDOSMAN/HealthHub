@@ -24,10 +24,6 @@ namespace HealthHup.API.Controllers.Hospital
         [HttpGet]
         public async Task<IActionResult> Get()
             => Ok(await _SpecialtieService.GetAllAsync());
-        [HttpPut]
-        public async Task<IActionResult> SendMessageTest()
-            => Ok(_messageService.SendMessage("mohamed01201a@outlook.com", "Test","Red"));
-
         [HttpPost,Authorize(Roles = "Admin,CustomerService")]
         public async Task<IActionResult> Post(string SpecialtieName)
         {

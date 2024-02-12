@@ -24,15 +24,15 @@ namespace HealthHup.API.Controllers.Hospital
             return Ok(await _doctorService.GetDoctorsInArea(input, Email));
         }
 
-        [HttpGet("GetDoctorsInArea"), Authorize]
+        [HttpGet("GetDoctorsInGovernorate"), Authorize]
         public async Task<IActionResult> GetDoctorsInGovernorate([FromQuery] DoctorFilterInput input)
         {
             var Email = User.FindFirstValue(ClaimTypes.Email);
             return Ok(await _doctorService.GetDoctorsInGove(input, Email));
         }
         //Get Doctors Not Active
-        [HttpGet("GetDoctorsNotActive")]
-        public async Task<IActionResult> GetDoctorsNotActive(uint index)
+        [HttpGet("GetDoctorsNotActive"), /*Authorize("Admin,CustomerService")*/]
+        public async Task<IActionResult> GetDoctorsNotActive(uint index=0)
             =>Ok(await _doctorService.GetDoctorsNotActiveAsync((int)index));
         
         //Add Doctor
@@ -65,7 +65,7 @@ namespace HealthHup.API.Controllers.Hospital
         }
         
         //Active Doctor
-        [HttpPut("ActionDoctor"),/*Authorize("Admin,CustomerService")*/]
+        [HttpPut("ActionDoctor"), Authorize("Admin,CustomerService")]
         public async Task<IActionResult> ActionDoctor(Guid Id, bool action)
             => Ok(await _doctorService.ActionDoctorAsync(Id,action));
        
