@@ -31,7 +31,7 @@ namespace HealthHup.API.Controllers.Hospital
             return Ok(await _doctorService.GetDoctorsInGove(input, Email));
         }
         //Get Doctors Not Active
-        [HttpGet("GetDoctorsNotActive"), /*Authorize("Admin,CustomerService")*/]
+        [HttpGet("GetDoctorsNotActive"), Authorize("Admin,CustomerService")]
         public async Task<IActionResult> GetDoctorsNotActive(uint index=0)
             =>Ok(await _doctorService.GetDoctorsNotActiveAsync((int)index));
         
