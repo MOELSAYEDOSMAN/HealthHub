@@ -14,6 +14,7 @@ namespace HealthHup.API.Model.Models.Hospital
         public DateTime DateOfSendRequest { get; set; }
         public Guid drSpecialtieId { get; set; }
         public Specialtie drSpecialtie { get; set; }
+        public string doctorId { get; set; }
         public ApplicationUser doctor { get; set; }
         public Guid areaId { get; set; }
         public Area area { get; set; }

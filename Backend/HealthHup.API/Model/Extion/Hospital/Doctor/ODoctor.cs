@@ -2,23 +2,24 @@
 {
     public class ODoctor
     {
-        public Guid Id { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string phone { get; set; }
-        public string? DrImg { get; set; }
-        public bool Gender { get; set; }
-        public DateTime DateOfJoin { get; set; }
-        public DateTime DateOfSendRequest { get; set; }
-        public DateTime Birthdate { get; set; }
-        public DateTime GraduationYear { get; set; }
-        public string CollegeName { get; set; }
-        public string SummaryCareer { get; set; }
-        public string DepartmentName { get; set; }
-        public string AddressDescrption { get; set; }
-        public bool Accept { get; set; }
-        public string area { get; set; }
-        public List<DoctorCertificate>? Certificates { get; set; }
+        public Guid Id { get; set; } = Guid.Empty;
+        public string Name { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty;
+        public string phone { get; set; } = string.Empty;
+        public string? DrImg { get; set; } = string.Empty;
+        public bool Gender { get; set; }=false;
+        public DateTime DateOfJoin { get; set; } = DateTime.MinValue;
+        public DateTime DateOfSendRequest { get; set; } = DateTime.MinValue;
+        public DateTime Birthdate { get; set; } = DateTime.MinValue;
+        public DateTime GraduationYear { get; set; } = DateTime.MinValue;
+        public string CollegeName { get; set; } = string.Empty;
+        public string SummaryCareer { get; set; } = string.Empty;
+        public string DepartmentName { get; set; } = string.Empty;
+        public string AddressDescrption { get; set; } = string.Empty;
+        public bool Accept { get; set; } = false;
+        public string area { get; set; } = string.Empty;
+        public List<DoctorDate>? Dates { get; set; } = new List<DoctorDate>();
+        public List<DoctorCertificate>? Certificates { get; set; } = new List<DoctorCertificate>();
         
 
         //Functions
@@ -28,9 +29,9 @@
             {
                 Id = input?.Id ?? Guid.Empty,
                 Accept = input?.Accept ?? false,
-                AddressDescrption = input?.AddressDescrption,
-                area = input?.area.key ?? string.Empty,
-                Certificates = input?.Certificates??new List<DoctorCertificate>(),
+                AddressDescrption = input?.AddressDescrption??string.Empty,
+                area = input?.area?.key ?? string.Empty,
+                Certificates = input?.Certificates ?? new List<DoctorCertificate>(),
                 CollegeName = input?.CollegeName ?? string.Empty,
                 DepartmentName = input?.drSpecialtie?.Name ?? string.Empty,
                 Email = input?.doctor?.Email ?? string.Empty,
@@ -41,15 +42,16 @@
                 phone = input?.doctor?.PhoneNumber ?? string.Empty,
                 DrImg = input?.doctor?.src ?? string.Empty,
                 SummaryCareer = input?.SummaryCareer ?? string.Empty,
-                DateOfJoin=input?.DateOfJoin??DateTime.MinValue,
-                DateOfSendRequest=input?.DateOfSendRequest??DateTime.MinValue,
+                DateOfJoin = input?.DateOfJoin ?? DateTime.MinValue,
+                DateOfSendRequest = input?.DateOfSendRequest ?? DateTime.MinValue,
+                Dates = input?.Dates ?? new List<DoctorDate>()
             };
         }
 
     }
     public class ListOutPutDoctors
     {
-        public IList<ODoctor> Doctors { get; set;}
+        public List<ODoctor> Doctors { get; set;}=new List<ODoctor>();
         public int count { get; set; } = 0;
     }
 }
