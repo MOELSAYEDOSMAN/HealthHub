@@ -3,6 +3,7 @@ using HealthHup.API.Service.AccountService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
 namespace HealthHup.API.Controllers
@@ -35,7 +36,7 @@ namespace HealthHup.API.Controllers
 
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(IFormFile? Img, IFormCollection input)
+        public async Task<IActionResult> Register(IFormFile? Img,[Required] IFormCollection input)
         {
             try
             {
@@ -47,7 +48,7 @@ namespace HealthHup.API.Controllers
             }
             catch
             {
-                return BadRequest(new OUser()
+                return Ok(new OUser()
                 { Message = "Error in Object Input Or No Data",Error = true,IsLogin = false});
             }
         }

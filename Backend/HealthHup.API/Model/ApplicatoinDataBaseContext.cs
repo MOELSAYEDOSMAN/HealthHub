@@ -14,8 +14,6 @@ namespace HealthHup.API.Model
 
         //Drugs
         public DbSet<Drug> Drugs { get; set; }
-        public DbSet<ActivePharmaceutical> ActivePharmaceuticals { get; set; }
-
         //Pharmacy
         public DbSet<Pharmacy> pharmacies { get; set; }
         public DbSet<PharmacyDrug> pharmacyDrugs { get; set; }

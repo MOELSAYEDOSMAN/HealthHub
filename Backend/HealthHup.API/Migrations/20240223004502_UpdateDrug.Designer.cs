@@ -4,6 +4,7 @@ using HealthHup.API.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HealthHup.API.Migrations
 {
     [DbContext(typeof(ApplicatoinDataBaseContext))]
-    partial class ApplicatoinDataBaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240223004502_UpdateDrug")]
+    partial class UpdateDrug
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,24 +143,6 @@ namespace HealthHup.API.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("HealthHup.API.Model.Models.DrugModel.Drug", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("smiles")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Drugs");
-                });
-
             modelBuilder.Entity("HealthHup.API.Model.Models.Hospital.Doctor", b =>
                 {
                     b.Property<Guid>("Id")
@@ -252,60 +237,6 @@ namespace HealthHup.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Specialties");
-                });
-
-            modelBuilder.Entity("HealthHup.API.Model.Models.PharmacyModel.Pharmacy", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("areaId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<double?>("xLoc")
-                        .HasColumnType("float");
-
-                    b.Property<double?>("yLoc")
-                        .HasColumnType("float");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("areaId");
-
-                    b.ToTable("pharmacies");
-                });
-
-            modelBuilder.Entity("HealthHup.API.Model.Models.PharmacyModel.PharmacyDrug", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("Count")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DrugId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("Expire")
-                        .HasColumnType("datetime2");
-
-                    b.Property<Guid>("PharmacyId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DrugId");
-
-                    b.HasIndex("PharmacyId");
-
-                    b.ToTable("pharmacyDrugs");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -563,34 +494,6 @@ namespace HealthHup.API.Migrations
                     b.Navigation("doctor");
                 });
 
-            modelBuilder.Entity("HealthHup.API.Model.Models.PharmacyModel.Pharmacy", b =>
-                {
-                    b.HasOne("HealthHup.API.Model.Models.AdressModle.Area", "area")
-                        .WithMany("pharmacys")
-                        .HasForeignKey("areaId");
-
-                    b.Navigation("area");
-                });
-
-            modelBuilder.Entity("HealthHup.API.Model.Models.PharmacyModel.PharmacyDrug", b =>
-                {
-                    b.HasOne("HealthHup.API.Model.Models.DrugModel.Drug", "Drug")
-                        .WithMany()
-                        .HasForeignKey("DrugId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("HealthHup.API.Model.Models.PharmacyModel.Pharmacy", "Pharmacy")
-                        .WithMany("pharmacyDrugs")
-                        .HasForeignKey("PharmacyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Drug");
-
-                    b.Navigation("Pharmacy");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -645,8 +548,6 @@ namespace HealthHup.API.Migrations
             modelBuilder.Entity("HealthHup.API.Model.Models.AdressModle.Area", b =>
                 {
                     b.Navigation("doctors");
-
-                    b.Navigation("pharmacys");
                 });
 
             modelBuilder.Entity("HealthHup.API.Model.Models.AdressModle.Governorate", b =>
@@ -662,11 +563,6 @@ namespace HealthHup.API.Migrations
             modelBuilder.Entity("HealthHup.API.Model.Models.Hospital.Specialtie", b =>
                 {
                     b.Navigation("Doctors");
-                });
-
-            modelBuilder.Entity("HealthHup.API.Model.Models.PharmacyModel.Pharmacy", b =>
-                {
-                    b.Navigation("pharmacyDrugs");
                 });
 #pragma warning restore 612, 618
         }

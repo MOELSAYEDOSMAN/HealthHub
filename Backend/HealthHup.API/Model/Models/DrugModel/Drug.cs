@@ -1,12 +1,15 @@
-﻿namespace HealthHup.API.Model.Models.DrugModel
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace HealthHup.API.Model.Models.DrugModel
 {
     public class Drug
     {
-        public Guid Id { get; set; }
+        [Key, Required]
+        public Guid Id { get; set; }=Guid.NewGuid();
+        [Required]
         public string name { get; set; }
-        public string type { get; set; }
-        public string? description { get; set; }
-        public List<ActivePharmaceutical>? activePharmaceuticals { get; set; }
-        public List<PharmacyDrug>? pharmacyDrugs { get; set; }
+        [Required]
+        public string smiles { get; set; }
+        
     }
 }
