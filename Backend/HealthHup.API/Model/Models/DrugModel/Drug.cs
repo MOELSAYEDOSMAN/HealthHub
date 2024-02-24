@@ -5,7 +5,7 @@ namespace HealthHup.API.Model.Models.DrugModel
     public class Drug
     {
         [Key, Required]
-        public Guid Id { get; set; }=Guid.NewGuid();
+        public string Id { get; set; }=Guid.NewGuid().ToString();
         [Required]
         public string name { get; set; }
         [Required]

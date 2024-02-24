@@ -16,12 +16,13 @@ namespace HealthHup.API.Controllers.Hospital
         [HttpPost,Authorize(Roles = "Admin,CustomerService")]
         public async Task<IActionResult> Post([Required] Drug input)
         {
+            ModelState.Remove("id");
             if(!ModelState.IsValid)
                 return BadRequest(false);
-           return Ok(await _drugService.AddAsync(input));
+           return Ok(/*await _drugService.AddAsync(input)*/true);
         }
         [HttpGet("SerchByName")]
         public async Task<IActionResult> GetDrugByName([Required] string name)
-            => Ok(await _drugService.findByAsync( d=>d.name.ToUpper().Contains(name.ToUpper()) )  );
+            => Ok((await _drugService.findByAsync( d=>d.name.ToUpper().Contains(name.ToUpper()))).Take(5)  );
     }
 }

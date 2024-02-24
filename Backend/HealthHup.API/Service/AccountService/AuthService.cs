@@ -183,6 +183,18 @@ namespace HealthHup.API.Service.AccountService
             var User=await _userManager.FindByEmailAsync(Email);
             return User;
         }
+        public async Task<DTOUserInformation>? GetUserWithEmailAsync (string Email)
+        {
+            var user=await _userManager.FindByEmailAsync(Email);
+            if (user == null)
+                return null;
+            var area = await _areaService.findAsync(x => x.Id == user.AreaId, new string[] { "governorate" });
+            var DtoUser = new DTOUserInformation();
+            DtoUser = user;
+            DtoUser.area = area?.key;
+            DtoUser.gove = area?.governorate?.key;
+            return DtoUser;
+        }
         //Create Token
         private async Task<JwtSecurityToken> CreateJwtTokenAsync(ApplicationUser input)
         {
