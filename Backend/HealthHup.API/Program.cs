@@ -9,6 +9,7 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Service;
+using HealthHup.API.Hubs.ChatHubFolder;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -98,6 +99,8 @@ options.AddPolicy("MyPolicy",
 bui => bui.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod())
 );
 
+//RealeTime
+builder.Services.AddSignalR();
 //Start Inject Service
     //Image
 builder.Services.AddTransient<ISaveImage, SaveImage>();
@@ -112,6 +115,8 @@ builder.Services.AddTransient<IGovermentService, GovermentService>();
 builder.Services.AddTransient<IAreaService, AreaService>();
 //Doctors
 builder.Services.AddTransient<IDoctorService, DoctorService>();
+//Patient
+builder.Services.AddTransient<IPatientDatesService, PatientDatesService>();
 //End DataBase
 //End Inject Service
 
@@ -131,6 +136,9 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+//Add Hubs
+app.MapHub<ChatHub>("Chat");
 
 app.MapControllers();
 

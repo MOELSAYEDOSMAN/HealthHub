@@ -10,6 +10,7 @@ namespace HealthHup.API.Model.Models
         public bool Gender {  get; set; }
         public DateTime Brdate { get; set; }
         public int Age => DateTime.Now.Year - Brdate.Year;
-
+        public List<Disease>? Diseases { get; set; }
+        public List<PatientDates> patientDates { get; set; }
     }
 }

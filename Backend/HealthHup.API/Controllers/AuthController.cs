@@ -18,6 +18,11 @@ namespace HealthHup.API.Controllers
             _authService = authService;
         }
 
+        [HttpGet("GetUser"), Authorize]
+        public async Task<IActionResult> GetUser([DataType(dataType: DataType.EmailAddress)] string? Email)
+            => Ok(await _authService.GetUserWithEmailAsync(Email ?? User.FindFirstValue(ClaimTypes.Email)));
+
+
         [HttpPost("Login")]
         public async Task<IActionResult> Login(InputLogin input)
         {
@@ -86,6 +91,8 @@ namespace HealthHup.API.Controllers
            return Ok(await _authService.RemoveRoleAsync(Email, Role));
         }
 
+
+
         [HttpPut("ChangePassword"),Authorize]
         public async Task<IActionResult> ChangePassword(string OldPassword,string NewPassowrd)
         {
@@ -96,6 +103,8 @@ namespace HealthHup.API.Controllers
                 return Ok("Must Enter OldPassword And New Password");
                 return Ok(await _authService.ChangePasswordAsync(Email, OldPassword, NewPassowrd));
         }
+
+
 
         [HttpPut("ForgetPassword"),Authorize]
         public async Task<IActionResult> ForgetPassword(string NewPassword)
@@ -108,6 +117,8 @@ namespace HealthHup.API.Controllers
             return Ok(await _authService.ForgetPasswordAsync(Email,NewPassword));
         }
 
+
+
         [HttpPut("ChangePhoto"),Authorize]
         public async Task<IActionResult> ChangePhoto(IFormFile img)
         {
@@ -119,9 +130,7 @@ namespace HealthHup.API.Controllers
             
             return Ok(await _authService.ChaneImageUserAsync(Email, img)) ;
         }
-        [HttpGet("GetUser"), Authorize]
-        public async Task<IActionResult> GetUser([DataType(dataType:DataType.EmailAddress)]string? Email)
-            => Ok(await _authService.GetUserWithEmailAsync(Email ?? User.FindFirstValue(ClaimTypes.Email)));
+        
         //Private Function
         private OUser? ChangeSrcImage(OUser? input)
         {

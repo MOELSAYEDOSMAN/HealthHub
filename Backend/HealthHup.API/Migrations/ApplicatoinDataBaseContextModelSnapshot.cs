@@ -140,6 +140,73 @@ namespace HealthHup.API.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("HealthHup.API.Model.Models.Chat.Group", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("AccseptedMessages")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("SendMessage")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserReciveId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserSendId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserReciveId");
+
+                    b.HasIndex("UserSendId");
+
+                    b.ToTable("Groups");
+                });
+
+            modelBuilder.Entity("HealthHup.API.Model.Models.Chat.Message", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("GroupId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("See")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserReciveId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserSendId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("dateTiemSendMessage")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GroupId");
+
+                    b.HasIndex("UserReciveId");
+
+                    b.HasIndex("UserSendId");
+
+                    b.ToTable("Message");
+                });
+
             modelBuilder.Entity("HealthHup.API.Model.Models.DrugModel.Drug", b =>
                 {
                     b.Property<string>("Id")
@@ -197,6 +264,9 @@ namespace HealthHup.API.Migrations
                     b.Property<Guid>("drSpecialtieId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<decimal>("priceSession")
+                        .HasColumnType("decimal(18,2)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("areaId");
@@ -206,6 +276,70 @@ namespace HealthHup.API.Migrations
                     b.HasIndex("drSpecialtieId");
 
                     b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("HealthHup.API.Model.Models.Hospital.Patient.MedicalSession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DiseaseName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("DoctorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DoctorId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PatientId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("DoctorId1");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("MedicalSessions");
+                });
+
+            modelBuilder.Entity("HealthHup.API.Model.Models.Hospital.Patient.PatientDates", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("FromTime")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("doctorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("patientId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("doctorId");
+
+                    b.HasIndex("patientId");
+
+                    b.ToTable("PatientDates");
                 });
 
             modelBuilder.Entity("HealthHup.API.Model.Models.Hospital.Review", b =>
@@ -460,7 +594,84 @@ namespace HealthHup.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsMany("HealthHup.API.Model.Models.Hospital.Patient.Disease", "Diseases", b1 =>
+                        {
+                            b1.Property<string>("ApplicationUserId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<Guid>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<bool>("Cured")
+                                .HasColumnType("bit");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Notes")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<bool>("persistent")
+                                .HasColumnType("bit");
+
+                            b1.Property<Guid?>("responsibledDoctorId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.HasKey("ApplicationUserId", "Id");
+
+                            b1.HasIndex("responsibledDoctorId");
+
+                            b1.ToTable("AspNetUsers_Diseases");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ApplicationUserId");
+
+                            b1.HasOne("HealthHup.API.Model.Models.Hospital.Doctor", "responsibledDoctor")
+                                .WithMany()
+                                .HasForeignKey("responsibledDoctorId");
+
+                            b1.Navigation("responsibledDoctor");
+                        });
+
+                    b.Navigation("Diseases");
+
                     b.Navigation("area");
+                });
+
+            modelBuilder.Entity("HealthHup.API.Model.Models.Chat.Group", b =>
+                {
+                    b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "UserSendRecive")
+                        .WithMany()
+                        .HasForeignKey("UserReciveId");
+
+                    b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "UserSendRequest")
+                        .WithMany()
+                        .HasForeignKey("UserSendId");
+
+                    b.Navigation("UserSendRecive");
+
+                    b.Navigation("UserSendRequest");
+                });
+
+            modelBuilder.Entity("HealthHup.API.Model.Models.Chat.Message", b =>
+                {
+                    b.HasOne("HealthHup.API.Model.Models.Chat.Group", null)
+                        .WithMany("Messages")
+                        .HasForeignKey("GroupId");
+
+                    b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "UserRecive")
+                        .WithMany()
+                        .HasForeignKey("UserReciveId");
+
+                    b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "UserSend")
+                        .WithMany()
+                        .HasForeignKey("UserSendId");
+
+                    b.Navigation("UserRecive");
+
+                    b.Navigation("UserSend");
                 });
 
             modelBuilder.Entity("HealthHup.API.Model.Models.Hospital.Doctor", b =>
@@ -535,15 +746,133 @@ namespace HealthHup.API.Migrations
                                 .HasForeignKey("DoctorId");
                         });
 
+                    b.OwnsMany("HealthHup.API.Model.Models.Hospital.Patient.Disease", "Diseases", b1 =>
+                        {
+                            b1.Property<Guid?>("responsibledDoctorId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<Guid>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<bool>("Cured")
+                                .HasColumnType("bit");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Notes")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<bool>("persistent")
+                                .HasColumnType("bit");
+
+                            b1.HasKey("responsibledDoctorId", "Id");
+
+                            b1.ToTable("Doctors_Diseases");
+
+                            b1.WithOwner("responsibledDoctor")
+                                .HasForeignKey("responsibledDoctorId");
+
+                            b1.Navigation("responsibledDoctor");
+                        });
+
                     b.Navigation("Certificates");
 
                     b.Navigation("Dates");
+
+                    b.Navigation("Diseases");
 
                     b.Navigation("area");
 
                     b.Navigation("doctor");
 
                     b.Navigation("drSpecialtie");
+                });
+
+            modelBuilder.Entity("HealthHup.API.Model.Models.Hospital.Patient.MedicalSession", b =>
+                {
+                    b.HasOne("HealthHup.API.Model.Models.Hospital.Doctor", null)
+                        .WithMany("MedicalSessions")
+                        .HasForeignKey("DoctorId");
+
+                    b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId1");
+
+                    b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId");
+
+                    b.OwnsMany("HealthHup.API.Model.Models.Hospital.Patient.Repentance", "repentances", b1 =>
+                        {
+                            b1.Property<Guid>("MedicalSessionId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("int");
+
+                            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b1.Property<int>("Id"));
+
+                            b1.Property<DateTime?>("EndDate")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("Note")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Repeat")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<int>("RepeatCount")
+                                .HasColumnType("int");
+
+                            b1.Property<DateTime?>("StartDate")
+                                .HasColumnType("datetime2");
+
+                            b1.Property<string>("drugId")
+                                .IsRequired()
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.HasKey("MedicalSessionId", "Id");
+
+                            b1.HasIndex("drugId");
+
+                            b1.ToTable("Repentance");
+
+                            b1.WithOwner()
+                                .HasForeignKey("MedicalSessionId");
+
+                            b1.HasOne("HealthHup.API.Model.Models.DrugModel.Drug", "drug")
+                                .WithMany()
+                                .HasForeignKey("drugId")
+                                .OnDelete(DeleteBehavior.Cascade)
+                                .IsRequired();
+
+                            b1.Navigation("drug");
+                        });
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+
+                    b.Navigation("repentances");
+                });
+
+            modelBuilder.Entity("HealthHup.API.Model.Models.Hospital.Patient.PatientDates", b =>
+                {
+                    b.HasOne("HealthHup.API.Model.Models.Hospital.Doctor", "doctor")
+                        .WithMany("patientDates")
+                        .HasForeignKey("doctorId");
+
+                    b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "patient")
+                        .WithMany("patientDates")
+                        .HasForeignKey("patientId");
+
+                    b.Navigation("doctor");
+
+                    b.Navigation("patient");
                 });
 
             modelBuilder.Entity("HealthHup.API.Model.Models.Hospital.Review", b =>
@@ -654,8 +983,22 @@ namespace HealthHup.API.Migrations
                     b.Navigation("areas");
                 });
 
+            modelBuilder.Entity("HealthHup.API.Model.Models.ApplicationUser", b =>
+                {
+                    b.Navigation("patientDates");
+                });
+
+            modelBuilder.Entity("HealthHup.API.Model.Models.Chat.Group", b =>
+                {
+                    b.Navigation("Messages");
+                });
+
             modelBuilder.Entity("HealthHup.API.Model.Models.Hospital.Doctor", b =>
                 {
+                    b.Navigation("MedicalSessions");
+
+                    b.Navigation("patientDates");
+
                     b.Navigation("reviews");
                 });
 

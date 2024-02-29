@@ -22,5 +22,11 @@ namespace HealthHup.API.Model
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Specialtie> Specialties { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        //Patient
+        public DbSet<MedicalSession> MedicalSessions { get; set; }
+
+        //realTime
+        //Chat=>Group
+        public DbSet<Group> Groups { get; set; }
     }
 }

@@ -10,6 +10,7 @@ namespace HealthHup.API.Model.Models.Hospital
         public string SummaryCareer { get; set; }
         public string AddressDescrption { get; set; }
         public bool Accept { get; set; }
+        public decimal priceSession { get; set; }   
         public DateTime DateOfJoin { get; set; }
         public DateTime DateOfSendRequest { get; set; }
         public Guid drSpecialtieId { get; set; }
@@ -21,6 +22,8 @@ namespace HealthHup.API.Model.Models.Hospital
         public List<DoctorCertificate>? Certificates { get; set; }
         public List<DoctorDate>? Dates { get; set; }
         public List<Review>? reviews { get; set; }
-
+        public List<Disease> Diseases { get; set; } 
+        public List<MedicalSession> MedicalSessions { get; set; }
+        public List<PatientDates> patientDates { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace HealthHup.API.Controllers
             _GovernorateService = govermentService;
             _areaService=areaService;
         }
+
         [HttpGet("GetGovernorate")]
         public async Task<IActionResult> GetGovernorates()
             =>Ok(await _GovernorateService.GetAllAsync());

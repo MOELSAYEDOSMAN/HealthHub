@@ -121,7 +121,7 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
         public async Task<ListOutPutDoctors> GetDoctorsInArea(DoctorFilterInput input, string Email)
         {
             //Set Area
-            input.area=input?.area??(await _AuthService.GetUserAsync(Email)).AreaId;
+            input.area=input?.area==Guid.Empty?(await _AuthService.GetUserAsync(Email)).AreaId: input?.area;
             //Get Doctors
             var Doctors =await findByAsync(d => d.areaId==input.area&&d.drSpecialtieId == input.Specialtie&&d.Accept==true,
                 new string[] { "doctor"});
@@ -141,15 +141,16 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
         public async Task<ListOutPutDoctors> GetDoctorsInGove(DoctorFilterInput input, string Email)
         {
             //Chrack Area
-            input.area = input?.goveId==null? input?.area:(await _AuthService.GetUserAsync(Email)).AreaId;
+            if(input?.goveId == null)
+                input.area = input?.area == Guid.Empty ? (await _AuthService.GetUserAsync(Email)).AreaId : input?.area;
+
             //Get Gove
-            var gove = input?.goveId != null ? 
-                input?.goveId:
-                (await _areaService.findAsync(a=>a.Id==input.area)).governorateId;
+            var gove =(await _areaService.findAsync(a => a.Id == input.area)).governorateId;
+            
             //Get Doctors
-            var Doctors=gove==null?
-                new List<Doctor>():
-                await _db.Governorates
+            if (gove == null)
+                return new();
+            var Doctors=await _db.Governorates
                 .Include(g => g.areas).ThenInclude(a => a.doctors).ThenInclude(d => d.doctor)
                  .Where(g=>g.Id==gove)
                  .SelectMany(g=>g.areas.

@@ -41,6 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Hubs\NotifyHubFolder\" />
     <Folder Include="wwwroot\Image\DoctorCertificates\" />
   </ItemGroup>
 
