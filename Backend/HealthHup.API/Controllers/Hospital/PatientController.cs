@@ -21,9 +21,15 @@ namespace HealthHup.API.Controllers.Hospital
 
 
         //Patient Date
+        //DoctorDatesPatient
         [HttpGet("GetDoctorDates"), Authorize]
         public async Task<IActionResult> GetDoctorDates(Guid DoctorId)
         => Ok(await _patientDatesService.GetDoctorDatesAsync(DoctorId, null));
+        [HttpGet("GetPatientDates"), Authorize]
+        public async Task<IActionResult> GetPatientDates()
+            => Ok(await _patientDatesService.GetPatientDates(User.FindFirstValue(ClaimTypes.Email)));
+
+
         [HttpPost("PushDateDoctor"),Authorize]
         public async Task<IActionResult> PushDateDoctor([FromQuery,Required]Guid DoctorId, [FromBody] PatientDateInput input )
         {

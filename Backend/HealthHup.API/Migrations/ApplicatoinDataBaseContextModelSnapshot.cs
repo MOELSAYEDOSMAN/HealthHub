@@ -288,11 +288,8 @@ namespace HealthHup.API.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("DoctorId")
+                    b.Property<Guid>("DoctorId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("DoctorId1")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Notes")
                         .HasColumnType("nvarchar(max)");
@@ -306,8 +303,6 @@ namespace HealthHup.API.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
-
-                    b.HasIndex("DoctorId1");
 
                     b.HasIndex("PatientId");
 
@@ -327,7 +322,7 @@ namespace HealthHup.API.Migrations
                     b.Property<DateTime>("date")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("doctorId")
+                    b.Property<Guid>("doctorId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("patientId")
@@ -623,7 +618,7 @@ namespace HealthHup.API.Migrations
 
                             b1.HasIndex("responsibledDoctorId");
 
-                            b1.ToTable("AspNetUsers_Diseases");
+                            b1.ToTable("Disease");
 
                             b1.WithOwner()
                                 .HasForeignKey("ApplicationUserId");
@@ -746,43 +741,9 @@ namespace HealthHup.API.Migrations
                                 .HasForeignKey("DoctorId");
                         });
 
-                    b.OwnsMany("HealthHup.API.Model.Models.Hospital.Patient.Disease", "Diseases", b1 =>
-                        {
-                            b1.Property<Guid?>("responsibledDoctorId")
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<Guid>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("uniqueidentifier");
-
-                            b1.Property<bool>("Cured")
-                                .HasColumnType("bit");
-
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<string>("Notes")
-                                .HasColumnType("nvarchar(max)");
-
-                            b1.Property<bool>("persistent")
-                                .HasColumnType("bit");
-
-                            b1.HasKey("responsibledDoctorId", "Id");
-
-                            b1.ToTable("Doctors_Diseases");
-
-                            b1.WithOwner("responsibledDoctor")
-                                .HasForeignKey("responsibledDoctorId");
-
-                            b1.Navigation("responsibledDoctor");
-                        });
-
                     b.Navigation("Certificates");
 
                     b.Navigation("Dates");
-
-                    b.Navigation("Diseases");
 
                     b.Navigation("area");
 
@@ -793,13 +754,11 @@ namespace HealthHup.API.Migrations
 
             modelBuilder.Entity("HealthHup.API.Model.Models.Hospital.Patient.MedicalSession", b =>
                 {
-                    b.HasOne("HealthHup.API.Model.Models.Hospital.Doctor", null)
-                        .WithMany("MedicalSessions")
-                        .HasForeignKey("DoctorId");
-
-                    b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId1");
+                    b.HasOne("HealthHup.API.Model.Models.Hospital.Doctor", "Doctor")
+                        .WithMany("medicicalSessions")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "Patient")
                         .WithMany()
@@ -831,13 +790,16 @@ namespace HealthHup.API.Migrations
                             b1.Property<DateTime?>("StartDate")
                                 .HasColumnType("datetime2");
 
-                            b1.Property<string>("drugId")
+                            b1.Property<Guid>("drugId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<string>("drugId1")
                                 .IsRequired()
                                 .HasColumnType("nvarchar(450)");
 
                             b1.HasKey("MedicalSessionId", "Id");
 
-                            b1.HasIndex("drugId");
+                            b1.HasIndex("drugId1");
 
                             b1.ToTable("Repentance");
 
@@ -846,7 +808,7 @@ namespace HealthHup.API.Migrations
 
                             b1.HasOne("HealthHup.API.Model.Models.DrugModel.Drug", "drug")
                                 .WithMany()
-                                .HasForeignKey("drugId")
+                                .HasForeignKey("drugId1")
                                 .OnDelete(DeleteBehavior.Cascade)
                                 .IsRequired();
 
@@ -864,7 +826,9 @@ namespace HealthHup.API.Migrations
                 {
                     b.HasOne("HealthHup.API.Model.Models.Hospital.Doctor", "doctor")
                         .WithMany("patientDates")
-                        .HasForeignKey("doctorId");
+                        .HasForeignKey("doctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "patient")
                         .WithMany("patientDates")
@@ -995,7 +959,7 @@ namespace HealthHup.API.Migrations
 
             modelBuilder.Entity("HealthHup.API.Model.Models.Hospital.Doctor", b =>
                 {
-                    b.Navigation("MedicalSessions");
+                    b.Navigation("medicicalSessions");
 
                     b.Navigation("patientDates");
 

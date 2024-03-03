@@ -15,6 +15,7 @@ namespace HealthHup.API.Model.Models.Hospital.Patient
         public Guid? responsibledDoctorId { get; set; }
         [ForeignKey("responsibledDoctorId")]
         public Doctor? responsibledDoctor { get; set;}
+        public string ApplicationUserId { get; set; }//Paient
 
     }
 }

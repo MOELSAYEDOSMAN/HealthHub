@@ -115,6 +115,7 @@ builder.Services.AddTransient<IGovermentService, GovermentService>();
 builder.Services.AddTransient<IAreaService, AreaService>();
 //Doctors
 builder.Services.AddTransient<IDoctorService, DoctorService>();
+builder.Services.AddTransient<IMedicalSessionService, MedicalSessionService>();
 //Patient
 builder.Services.AddTransient<IPatientDatesService, PatientDatesService>();
 //End DataBase

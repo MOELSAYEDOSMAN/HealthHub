@@ -35,6 +35,7 @@ namespace HealthHup.API.Service.AccountService
             //Ready login
             var jwtSecurityToken = await CreateJwtTokenAsync(UserLogin);//Create Token
             var rolesList = await _userManager.GetRolesAsync(UserLogin);//Get Roles
+            var area =await _areaService.findAsync(a => a.Id == UserLogin.AreaId, new string[] { "governorate" });
             return new()
             {
                 Error=false,
@@ -45,7 +46,9 @@ namespace HealthHup.API.Service.AccountService
                 UserName=UserName,
                 Token=new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
                 ExToken = jwtSecurityToken.ValidTo,
-                Gender=UserLogin.Gender
+                Gender=UserLogin.Gender,
+                area=area.key,
+                gove=area.governorate.key
             };
         }
         public async Task<OUser> RegisterAsync(InputRegister input, IFormFile? img = null)

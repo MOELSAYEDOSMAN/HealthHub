@@ -10,6 +10,8 @@ global using HealthHup.API.Service.ModelService.AddressService;
 global using HealthHup.API.Service.ModelService.AddressService.@interface;
 global using HealthHup.API.Model.Models.Hospital;
 global using HealthHup.API.Model.Extion.Hospital.Doctor;
+global using HealthHup.API.Model.Extion.Hospital.MedicalSessionModelDto;
+global using HealthHup.API.Service.ModelService.PatientModelService.MedicalSessionModelService;
 global using HealthHup.API.Model.Extion.Hospital.PatientDTO;
 global using HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Service;
 global using HealthHup.API.Service.MessageServiceFolder;

@@ -22,8 +22,7 @@ namespace HealthHup.API.Model.Models.Hospital
         public List<DoctorCertificate>? Certificates { get; set; }
         public List<DoctorDate>? Dates { get; set; }
         public List<Review>? reviews { get; set; }
-        public List<Disease> Diseases { get; set; } 
-        public List<MedicalSession> MedicalSessions { get; set; }
         public List<PatientDates> patientDates { get; set; }
+        public List<MedicalSession> medicicalSessions { get; set;}
     }
 }

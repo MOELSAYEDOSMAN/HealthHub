@@ -11,6 +11,8 @@
         public bool Error { get; set; } = false;
         public bool IsLogin { get; set; }
         public bool Gender { get; set; }
+        public string area { get;set; }
+        public string gove { get; set; }
         public DateTime ExToken { get; set; }
     }
 }

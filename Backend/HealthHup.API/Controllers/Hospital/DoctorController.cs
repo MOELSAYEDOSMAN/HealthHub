@@ -97,6 +97,8 @@ namespace HealthHup.API.Controllers.Hospital
             var email = User.FindFirstValue(claimType: ClaimTypes.Email);
             return Ok(await _doctorService.AddAppointmentBookAsync(dates, email));
         }
+
+
         
         
         [HttpPut("EditAppointmentBook"), Authorize(Roles = "Doctor")]

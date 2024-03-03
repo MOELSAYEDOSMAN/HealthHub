@@ -40,6 +40,28 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.PatientDatesMod
             }
             return DatesResult;
         }
+        public async Task<List<PatientDates_DTO>> GetPatientDates(string email)
+        {
+            //If Email Null
+            if(string.IsNullOrEmpty(email))
+                return new List<PatientDates_DTO>();
+
+            //Get Dates Doctor(Area,Governorate,Specialtie,Name,Email)
+            //Get From Patient Login
+            var dates = await _db.Users.Where(u=>u.Email==email)
+                .Include(u => u.patientDates).ThenInclude(d => d.doctor).ThenInclude(d => d.area).ThenInclude(a => a.governorate)
+                .Include(u => u.patientDates).ThenInclude(d => d.doctor).ThenInclude(d => d.drSpecialtie)
+                .Include(u => u.patientDates).ThenInclude(d => d.doctor).ThenInclude(d => d.doctor).SelectMany(d=>d.patientDates).ToListAsync();
+            var Result = new List<PatientDates_DTO>();
+            if(dates?.Count>0)
+                dates?.ForEach(async d =>
+                {
+                    PatientDates_DTO newDate = d;
+                    newDate.to = GetTimeTo(d.FromTime);
+                    Result.Add(newDate);
+                });
+            return Result;
+        }
         //Post
         public async Task<string> PushDateAsync(PatientDateInput input,Guid DrId,string Email)
         {
@@ -136,7 +158,10 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.PatientDatesMod
                     return "You aleady Have An Appointment comping up";
             }
 
-
+            //check IF Patient booked Date
+            var UserDates = await findByAsync(d => d.date == input.day && d.patientId == UserId && d.FromTime.ToLower() == input.From.ToLower());
+            if (UserDates?.Count > 0)
+                return "You Have An Appointment With Another Doctor\nCheack Your Appointments";
             //Check other Patient Select Date
             var oldDates = await findByAsync(d => d.date == input.day && d.FromTime.Substring(0,2) == input.From.Substring(0, 2));
             if (oldDates?.Count > 0)
