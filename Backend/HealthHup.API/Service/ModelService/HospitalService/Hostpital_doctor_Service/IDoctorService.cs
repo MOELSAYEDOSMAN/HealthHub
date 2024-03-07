@@ -8,8 +8,11 @@
         Task<ODoctor>? GetDoctorAsync(Guid Id);
         Task<ListOutPutDoctors> GetDoctorsInArea(DoctorFilterInput input,string Email);
         Task<ListOutPutDoctors> GetDoctorsInGove(DoctorFilterInput input,string Email);
+        Task<List<DoctorDate>> GetDoctorDatesAsync(string email);
         Task<string> AddAppointmentBookAsync(List<DoctorDate> Dates, string email);
         Task<string> EditAppointmentBookAsync(DoctorDate Dates, string DayNameOld, string email);
         Task<string> ReoveAppointmentBookAsync(string DayNameDel, string email);
+        Task<int> PatientCountAsync(string Email);
+        Task<double> PatientPercentageAsync(string email);
     }
 }

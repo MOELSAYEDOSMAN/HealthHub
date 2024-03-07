@@ -13,13 +13,15 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
         private readonly IBaseService<Specialtie> _SpecialtieService;
         private readonly IAreaService _areaService;
         private readonly IBaseService<Governorate> _governorate;
-        public DoctorService(ApplicatoinDataBaseContext db,IAuthService authService, ISaveImage saveImg, IBaseService<Specialtie> specialtieService, IAreaService areaService,IBaseService<Governorate> gove) : base(db)
+        private readonly IBaseService<Disease> _diseaseService;
+        public DoctorService(ApplicatoinDataBaseContext db,IAuthService authService, ISaveImage saveImg, IBaseService<Specialtie> specialtieService, IAreaService areaService,IBaseService<Governorate> gove, IBaseService<Disease> diseaseService) : base(db)
         {
             _AuthService = authService;
             _SaveImg = saveImg;
             _SpecialtieService = specialtieService;
             _areaService = areaService;
             _governorate = gove;
+            _diseaseService = diseaseService;
         }
 
         //Doctors Not In Active
@@ -170,9 +172,49 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
 
             return result;
         }
-       
-        
-        # region AppointmentBook
+        //Get Patients Count
+        public async Task<int> PatientCountAsync(string Email)
+        {
+            //Get User
+            var user = await _AuthService.GetUserAsync(Email);
+            if (user == null)
+                return -1;
+            //Get Doctor
+            var Doctor = await findAsync(d=>d.doctorId==user.Id);
+            if (Doctor == null)
+                return -1;
+            var DoctorPatients = _db.Users.Include(u => u.Diseases).Where(d => d.Diseases.Where(doc => doc.responsibledDoctorId == Doctor.Id).Count() > 0);
+            return DoctorPatients?.Count()??0;
+        }
+        //Get Patients Male Percentage 
+        public async Task<double> PatientPercentageAsync(string email)
+        {
+            //Get User
+            var User = await _AuthService.GetUserAsync(email);
+            if (User == null) 
+                return -1;
+            //Get Doctor
+            var Doctor = await findAsync(d=>d.doctorId==User.Id);
+            if (Doctor == null)
+                return -1;
+            //Get Male Percentage 
+            var DoctorPatients =  _db.Users.Include(u => u.Diseases).Where(d=>d.Diseases.Where(doc=>doc.responsibledDoctorId==Doctor.Id).Count()>0);
+            var CountMale = DoctorPatients.Count(d => d.Gender == true);
+            double MalePercentage=CountMale/(DoctorPatients.Count()==0?1: DoctorPatients.Count());
+            return (MalePercentage*100);
+        }
+
+
+        #region AppointmentBook
+        //Get Dates
+        public async Task<List<DoctorDate>> GetDoctorDatesAsync(string email)
+        {
+            var User= await _AuthService.GetUserAsync(email);
+            if (User == null)
+                return new();
+            var Doctor = await findAsync(d=>d.doctorId==User.Id,new string[] { "Dates" });
+            return Doctor?.Dates;
+        }
         //Add Date To Doctors
         public async Task<string> AddAppointmentBookAsync(List<DoctorDate>Dates,string email)
         {

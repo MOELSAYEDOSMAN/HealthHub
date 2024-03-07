@@ -56,8 +56,17 @@ namespace HealthHup.API.Controllers.Hospital
         [HttpGet("Get Doctor")]
         public async Task<IActionResult> GetDoctor(Guid Id)
             => Ok(await _doctorService.GetDoctorAsync(Id));
-        
-        
+        //Get CountOfPatientsWithDoctor
+        [HttpGet("CountOfPatientsWithDoctor"), Authorize(Roles = "Doctor")]
+        public async Task<IActionResult> GetCountOfPatientsWithDoctor()
+            => Ok(await _doctorService.PatientCountAsync(User.FindFirstValue(ClaimTypes.Email)));
+        //Get CountOfPatientsWithDoctor
+        [HttpGet("PatientPercentage"), Authorize(Roles = "Doctor")]
+        public async Task<IActionResult> GetPatientPercentage()
+            => Ok(await _doctorService.PatientPercentageAsync(User.FindFirstValue(ClaimTypes.Email)));
+        [HttpGet("DoctorDates"), Authorize(Roles = "Doctor")]
+        public async Task<IActionResult> GetDoctorDates()
+        => Ok(await _doctorService.GetDoctorDatesAsync(User.FindFirstValue(ClaimTypes.Email)));
         //Add Doctor
         [HttpPost("AddDoctor"),Authorize]
         public async Task<IActionResult> AddDoctor(List<IFormFile> Certificates, IFormCollection input)

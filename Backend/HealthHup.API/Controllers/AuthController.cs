@@ -53,7 +53,7 @@ namespace HealthHup.API.Controllers
             }
             catch
             {
-                return Ok(new OUser()
+                return BadRequest(new OUser()
                 { Message = "Error in Object Input Or No Data",Error = true,IsLogin = false});
             }
         }
