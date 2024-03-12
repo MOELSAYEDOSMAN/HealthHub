@@ -18,3 +18,5 @@ global using HealthHup.API.Service.MessageServiceFolder;
 global using HealthHup.API.Service.ModelService.PatientModelService.PatientDatesModelService;
 global using HealthHup.API.Model.Models.Hospital.Patient;
 global using HealthHup.API.Model.Models.Chat;
+global using HealthHup.API.Service.ModelService.PatientModelService.PatientGeneralInfoModelService;
+global using HealthHup.API.Service.ModelService.PatientModelService.RateModelService;

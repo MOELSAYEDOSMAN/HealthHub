@@ -1,8 +1,10 @@
 ﻿using HealthHup.API.Model.Extion.Account;
+using HealthHup.API.Service.AccountService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
 namespace HealthHup.API.Controllers.Hospital
@@ -11,15 +13,29 @@ namespace HealthHup.API.Controllers.Hospital
     [ApiController]
     public class DoctorController : ControllerBase
     {
+        private readonly IAuthService _authService;
         private readonly IDoctorService _doctorService;
         private readonly IPatientDatesService _patientDatesService;
-        public DoctorController(IDoctorService doctorService, IPatientDatesService patientDatesService)
+        public DoctorController(IDoctorService doctorService, IPatientDatesService patientDatesService,IAuthService authService)
         {
             _doctorService = doctorService;
             _patientDatesService = patientDatesService;
+            _authService = authService;
 
         }
         //Get Doctors Active
+        [HttpGet("CheackRoleDoctor"),Authorize]
+        public async Task<IActionResult> CheackRoleDoctor()
+        {
+            if(User.IsInRole("Doctor"))
+                return BadRequest(new OUser()
+                {
+                    Error = true,
+                    Message = "You did it Before"
+                });
+
+            return Ok(await _authService.CheackDoctorRoleAsync(User.FindFirstValue(ClaimTypes.Email)));
+        }
         [HttpGet("GetDoctorsInArea"), Authorize]
         public async Task<IActionResult> GetDoctorsInArea([FromQuery]DoctorFilterInput input)
         {
@@ -53,7 +69,7 @@ namespace HealthHup.API.Controllers.Hospital
         
         
         //Find Doctor
-        [HttpGet("Get Doctor")]
+        [HttpGet("GetDoctor")]
         public async Task<IActionResult> GetDoctor(Guid Id)
             => Ok(await _doctorService.GetDoctorAsync(Id));
         //Get CountOfPatientsWithDoctor
@@ -129,7 +145,9 @@ namespace HealthHup.API.Controllers.Hospital
         public async Task<IActionResult> ActionDoctor(Guid Id, bool action)
             => Ok(await _doctorService.ActionDoctorAsync(Id,action));
 
-
+        [HttpPut("ChangePrice"), Authorize("Doctor")]
+        public async Task<IActionResult> ChangePrice([Required, FromQuery] decimal NewPrice)
+            => Ok(await _doctorService.ChangePriceSession(User.FindFirstValue(ClaimTypes.Email), NewPrice));
         [HttpDelete("DelteAppointmentBook"), Authorize(Roles = "Doctor")]
         public async Task<IActionResult> DelteAppointmentBook(string OldDayName)
         {

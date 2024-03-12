@@ -13,16 +13,19 @@ namespace HealthHup.API.Service.AccountService
     public class AuthService : IAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IBaseService<Doctor> _doctorService;
         private readonly ISaveImage _SvImg;
         private readonly IAreaService _areaService;
         private readonly Jwt _jwt;
-        public AuthService(UserManager<ApplicationUser> userManager, IOptions<Jwt> jwt,ISaveImage saveimg,IAreaService areaService)
+        public AuthService(UserManager<ApplicationUser> userManager, IOptions<Jwt> jwt,ISaveImage saveimg,IAreaService areaService, IBaseService<Doctor> doctorService)
         {
             _userManager = userManager;
             _SvImg = saveimg;
             _jwt = jwt.Value;
             _areaService = areaService;
+            _doctorService = doctorService;
         }
+        //post
         public async Task<OUser> LoginAsync(InputLogin input)
         {
             //Cheack Email Or UserName
@@ -95,6 +98,7 @@ namespace HealthHup.API.Service.AccountService
             await _userManager.AddToRoleAsync(UserRegister, "Patient");
             return new() { Message = "Go To Login Page", IsLogin = false,Error=false};
         }
+        //put
         public async Task<string> AddRoleAsync(string Email, string Role)
         {
             string UserName = new EmailAddressAttribute().IsValid(Email) ? new MailAddress(Email).User : Email;
@@ -181,7 +185,8 @@ namespace HealthHup.API.Service.AccountService
                 return "Success";
             }
         }
-        public async Task<ApplicationUser>? GetUserAsync(string Email)
+        //get
+        public async Task<ApplicationUser?> GetUserAsync(string Email)
         {
             var User=await _userManager.FindByEmailAsync(Email);
             return User;
@@ -197,6 +202,45 @@ namespace HealthHup.API.Service.AccountService
             DtoUser.area = area?.key;
             DtoUser.gove = area?.governorate?.key;
             return DtoUser;
+        }
+        public async Task<OUser> CheackDoctorRoleAsync(string Email)
+        {
+            var User = await GetUserAsync(Email);
+            //Cheack If User In System
+            if (User == null)
+                return new()
+                {
+                    Error=true,
+                    Message="You need Login"
+                };
+            //Cheack Roles
+            var Role=await _userManager.GetRolesAsync(User);
+            if(Role.Count(r=>r=="Doctor")==0)
+            {
+                var Doctor = await _doctorService.findAsync(d => d.doctorId == User.Id);
+                if (Doctor == null)
+                    return new()
+                    {
+                        Error = true,
+                        Message = "Your Request Has been Rejected,You Can Contact A Customer Service Or Re-Upload The Order"
+                    };
+                else if (!Doctor.Accept)
+                    return new()
+                    {
+                        Error = true,
+                        Message = "Your Request Has Not Yet been Reviewed"
+                    };
+            }
+            //Create New Token
+            var jwtSecurityToken = await CreateJwtTokenAsync(User);//Create Token
+            return new()
+            {
+                Token = new JwtSecurityTokenHandler().WriteToken(jwtSecurityToken),
+                ExToken = jwtSecurityToken.ValidTo,
+                Message = "Accept",
+                Error = false,
+                Roles=Role.ToArray(),
+            };
         }
         //Create Token
         private async Task<JwtSecurityToken> CreateJwtTokenAsync(ApplicationUser input)

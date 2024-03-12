@@ -16,6 +16,7 @@ namespace HealthHup.API.Service.MessageServiceFolder
             => Password;
         public async Task SendMessage(string ToEmail, string Message,string? Color)
         {
+            
             var email = new MimeMessage();
             email.From.Add(new MailboxAddress("HealthHup Admin",FromEmail));
             email.To.Add(MailboxAddress.Parse(ToEmail));

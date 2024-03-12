@@ -13,6 +13,7 @@ namespace HealthHup.API.Model.Extion.Hospital.MedicalSessionModelDto
         [Required]
         public bool persistent { get; set; }
         public string? diseasnote { get; set; }
+        public bool? Cured { get; set; } = false;
 
         public static implicit operator MedicalSession(MedicalSessionDTO input)
             => new()
@@ -21,6 +22,7 @@ namespace HealthHup.API.Model.Extion.Hospital.MedicalSessionModelDto
                 DiseaseName = input.diseaseName,
                 Id = Guid.NewGuid(),
                 Notes = input?.sessionnote,
+                repentances=new List<Repentance>(),
             };
 
         public static implicit operator Disease(MedicalSessionDTO input)
@@ -30,6 +32,7 @@ namespace HealthHup.API.Model.Extion.Hospital.MedicalSessionModelDto
                 Notes = input.diseasnote,
                 Name = input.diseaseName,
                 persistent = input.persistent,
+                Cured=input?.Cured??false
             };
 
     }

@@ -8,7 +8,6 @@ using System.Text;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
-using HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Service;
 using HealthHup.API.Hubs.ChatHubFolder;
 
 
@@ -18,7 +17,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 //Connect With Db
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<ApplicatoinDataBaseContext>(option =>option.UseSqlServer(connectionString));
+builder.Services.AddDbContext<ApplicatoinDataBaseContext>(option =>option.UseSqlServer(connectionString,
+    sqlServerOption => sqlServerOption.CommandTimeout(115000)));
 
 //Add Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
@@ -118,6 +118,9 @@ builder.Services.AddTransient<IDoctorService, DoctorService>();
 builder.Services.AddTransient<IMedicalSessionService, MedicalSessionService>();
 //Patient
 builder.Services.AddTransient<IPatientDatesService, PatientDatesService>();
+builder.Services.AddTransient<IPatientInfoService, PatientInfoService>();
+builder.Services.AddTransient<IRateService, RateService>();
+
 //End DataBase
 //End Inject Service
 

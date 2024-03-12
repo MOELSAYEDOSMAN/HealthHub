@@ -22,5 +22,16 @@ namespace HealthHup.API.Model.Extion.Hospital.MedicalSessionModelDto
                 Repeat= input?.repeat,
                 RepeatCount=(int)input?.repeatCount,
             };
+
+        public static implicit operator RepentanceDto(Repentance input)
+            => new RepentanceDto()
+            {
+                startDate= input?.StartDate,
+                endDate= input?.EndDate,
+                drugId=input?.drug?.name??"",
+                note=input?.Note,
+                repeat=input?.Repeat,
+                repeatCount=(uint)input?.RepeatCount,
+            };
     }
 }

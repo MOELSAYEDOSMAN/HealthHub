@@ -23,140 +23,112 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
             _governorate = gove;
             _diseaseService = diseaseService;
         }
+        //Get Singale
 
+        #region GET Doctor
+        //Get Doctor 
+        public async Task<ODoctor?> GetDoctorAsync(Guid Id)
+        {
+            var doctor = await findAsync(d => d.Id == Id, new string[] { "drSpecialtie", "Dates", "doctor", "area", "Certificates", "reviews" });
+            if (doctor == null)
+                return null;
+            if(doctor?.reviews.Count==0)
+                return doctor;
+
+            ODoctor Result = doctor;
+            doctor.reviews.ForEach(r => Result.rate += r.rate);
+            Result.rate = (Result.rate / (5 * doctor.reviews.Count))*100;
+            return Result;
+        }
+        //Get Patients Count
+        public async Task<int> PatientCountAsync(string Email)
+        {
+            //Get User
+            var user = await _AuthService.GetUserAsync(Email);
+            if (user == null)
+                return -1;
+            //Get Doctor
+            var Doctor = await findAsync(d => d.doctorId == user.Id);
+            if (Doctor == null)
+                return -1;
+            var DoctorPatients = _db.Users.Include(u => u.Diseases).Where(d => d.Diseases.Where(doc => doc.responsibledDoctorId == Doctor.Id).Count() > 0);
+            return DoctorPatients?.Count() ?? 0;
+        }
+        //Get Patients Male Percentage 
+        public async Task<double> PatientPercentageAsync(string email)
+        {
+            //Get User
+            var User = await _AuthService.GetUserAsync(email);
+            if (User == null)
+                return -1;
+            //Get Doctor
+            var Doctor = await findAsync(d => d.doctorId == User.Id);
+            if (Doctor == null)
+                return -1;
+            //Get Male Percentage 
+            var DoctorPatients = _db.Users.Include(u => u.Diseases).Where(d => d.Diseases.Where(doc => doc.responsibledDoctorId == Doctor.Id).Count() > 0);
+            var CountMale = DoctorPatients.Count(d => d.Gender == true);
+            double MalePercentage = CountMale / (DoctorPatients.Count() == 0 ? 1 : DoctorPatients.Count());
+            return (MalePercentage * 100);
+        }
+        #endregion
+        //Get List
         //Doctors Not In Active
         public async Task<ListOutPutDoctors> GetDoctorsNotActiveAsync(int index)
         {
             var listDoctors = await findByAsync(
                 condation: (d => !d.Accept),
-                inculde:new string[] { "drSpecialtie", "doctor", "area", "Certificates" },
-                OrderBy:x=>x.DateOfSendRequest
+                inculde: new string[] { "drSpecialtie", "doctor", "area", "Certificates" },
+                OrderBy: x => x.DateOfSendRequest
                 );
             int count = listDoctors.Count;
-            listDoctors= listDoctors.Skip(index * 10).Take(10).ToList();
+            listDoctors = listDoctors.Skip(index * 10).Take(10).ToList();
             var listODoctors = new ListOutPutDoctors()
             {
-                count = count % 10 == 0 ? count / 10 : ((count /10) + 1),
+                count = count % 10 == 0 ? count / 10 : ((count / 10) + 1),
                 Doctors = new List<ODoctor>()
             };
             listDoctors.ToList().ForEach(d => listODoctors.Doctors.Add(d));
             return listODoctors;
         }
-       //Add Doctor From Normal User
-        public async Task<InputDoctor> AddDoctorAsync(InputDoctor input,string Email ,List<IFormFile> Certificates)
-        {
-            //Cheack User
-            var User = await _AuthService.GetUserAsync(Email);
-            if (User == null)
-                return new() { error = true, message = "Agin login" };
-            //Cheack IF Have Old Request 
-            var doc =await findAsync(x => x.doctor.Id == User.Id, new string[] { "doctor" });
-            if (doc != null)
-                return new() {error=true,message="You Have Old Request" };
-            //Cheack If Certificates Upload
-            if (Certificates?.Count == 0)
-                return new(){ error = true, message = "Must Upload Certificates" };
-            //Cheack If Select Area 
-            var areaClic = await _areaService.GetAsync(input.areaClinicId,null);
-            if (areaClic == null)
-                return new() { error = true, message = "Must Select Area" };
-            //Cheack If Select specialtie
-            var specialtie = await _SpecialtieService.GetAsync(input.specialtieId,null);
-            if(specialtie == null)
-                return new() { error = true, message = "Must Select specialtie" };
-            //Save Certificates
-            List<string> ls = await _SaveImg.UploadImagesList("DoctorCertificates", Certificates);
-            
-            //Add Doctor
-            Doctor NewDoctor = input;//Covert InputDoctor To Doctor
-            //Add Certificates
-            ls.ForEach(c =>
-            {
-                NewDoctor.Certificates.Add(
-                    new()
-                    {
-                        src = c
-                    });
-            });
-            NewDoctor.doctor = User;//Add User
-            NewDoctor.area = areaClic;//Add Area
-            NewDoctor.drSpecialtie = specialtie;//Add Specialtie
-            await AddAsync(NewDoctor);
-            return new() { error=false,message="You Application Will Be Reviewed"};
-        }
-        //Get Doctor 
-        public async Task<ODoctor>? GetDoctorAsync(Guid Id)
-        {
-            var doctor = await findAsync( d=>d.Id==Id, new string[] { "drSpecialtie", "Dates", "doctor", "area", "Certificates" });
-            if (doctor == null)
-                return null;
-            return doctor;
-        }
-        //Action Doctor To Active
-        #region ActionWithDoctor
-        public async Task<bool> ActionDoctorAsync(Guid Id,bool Accespt)
-        =>Accespt?await AccseptDoctorAsync(Id):await RefusalDoctorAsync(Id);
-        private async Task<bool> AccseptDoctorAsync(Guid Id)
-        {
-            var doctor = await findAsync(x=>x.Id==Id,new string[] {"doctor"});
-            if (doctor == null)
-                return false;
-            doctor.Accept = true;
-            doctor.DateOfJoin = DateTime.Now;
-            //Add Role
-            if(doctor.doctor!=null)
-                await _AuthService.AddRoleAsync(doctor?.doctor?.Email, "Doctor");
-            return await UpdateAsync(doctor);
-        }
-        private async Task<bool> RefusalDoctorAsync(Guid Id)
-        {
-            var doctor = await GetAsync(Id, new string[] { "Certificates" });
-            if (doctor == null)
-                return false;
-            //Delete Certificates
-            var Certifcates = doctor.Certificates.Select(x => $"DoctorCertificates/{x.src}").ToList();
-            await _SaveImg.DeletsImages(Certifcates);//Delete 
-            return await RemoveAsync(doctor);
-        }
-        #endregion
         //Get Doctors In Area
         public async Task<ListOutPutDoctors> GetDoctorsInArea(DoctorFilterInput input, string Email)
         {
             //Set Area
-            input.area=input?.area==Guid.Empty?(await _AuthService.GetUserAsync(Email)).AreaId: input?.area;
+            input.area = input?.area == Guid.Empty ? (await _AuthService.GetUserAsync(Email)).AreaId : input?.area;
             //Get Doctors
-            var Doctors =await findByAsync(d => d.areaId==input.area&&d.drSpecialtieId == input.Specialtie&&d.Accept==true,
-                new string[] { "doctor"});
-            Doctors = input?.joinDate??false ? Doctors.OrderBy(x => x.DateOfJoin).ToList() : Doctors;
-            int count = Doctors?.Count??0;
-           //Create Object
-            var result=new ListOutPutDoctors()
+            var Doctors = await findByAsync(d => d.areaId == input.area && d.drSpecialtieId == input.Specialtie && d.Accept == true,
+                new string[] { "doctor" });
+            Doctors = input?.joinDate ?? false ? Doctors.OrderBy(x => x.DateOfJoin).ToList() : Doctors;
+            int count = Doctors?.Count ?? 0;
+            //Create Object
+            var result = new ListOutPutDoctors()
             {
-                count=count%10==0?count%10:(count/10)+1
+                count = count % 10 == 0 ? count % 10 : (count / 10) + 1
             };
             //Give Value
-            Doctors?.Skip(10*(int)input?.Index).Take(10).ToList()
-                .ForEach(d=>result.Doctors.Add(d));
+            Doctors?.Skip(10 * (int)input?.Index).Take(10).ToList()
+                .ForEach(d => result.Doctors.Add(d));
             return result;
         }
-       //Get Doctors In Gove
+        //Get Doctors In Gove
         public async Task<ListOutPutDoctors> GetDoctorsInGove(DoctorFilterInput input, string Email)
         {
             //Chrack Area
-            if(input?.goveId == null)
+            if (input?.goveId == null)
                 input.area = input?.area == Guid.Empty ? (await _AuthService.GetUserAsync(Email)).AreaId : input?.area;
 
             //Get Gove
-            var gove =(await _areaService.findAsync(a => a.Id == input.area)).governorateId;
-            
+            var gove = (await _areaService.findAsync(a => a.Id == input.area)).governorateId;
+
             //Get Doctors
             if (gove == null)
                 return new();
-            var Doctors=await _db.Governorates
+            var Doctors = await _db.Governorates
                 .Include(g => g.areas).ThenInclude(a => a.doctors).ThenInclude(d => d.doctor)
-                 .Where(g=>g.Id==gove)
-                 .SelectMany(g=>g.areas.
-                 SelectMany(a=>a.doctors.Where(d=>d.drSpecialtieId==input.Specialtie&&d.Accept).ToList()))
+                 .Where(g => g.Id == gove)
+                 .SelectMany(g => g.areas.
+                 SelectMany(a => a.doctors.Where(d => d.drSpecialtieId == input.Specialtie && d.Accept).ToList()))
                  .ToListAsync();
             Doctors = input?.joinDate ?? false ? Doctors.OrderBy(x => x.DateOfJoin).ToList() : Doctors;
             //Get Count
@@ -172,37 +144,88 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
 
             return result;
         }
-        //Get Patients Count
-        public async Task<int> PatientCountAsync(string Email)
+        //post
+        //Add Doctor From Normal User
+        public async Task<InputDoctor> AddDoctorAsync(InputDoctor input, string Email, List<IFormFile> Certificates)
         {
-            //Get User
-            var user = await _AuthService.GetUserAsync(Email);
-            if (user == null)
-                return -1;
-            //Get Doctor
-            var Doctor = await findAsync(d=>d.doctorId==user.Id);
-            if (Doctor == null)
-                return -1;
-            var DoctorPatients = _db.Users.Include(u => u.Diseases).Where(d => d.Diseases.Where(doc => doc.responsibledDoctorId == Doctor.Id).Count() > 0);
-            return DoctorPatients?.Count()??0;
-        }
-        //Get Patients Male Percentage 
-        public async Task<double> PatientPercentageAsync(string email)
+            //Cheack User
+            var User = await _AuthService.GetUserAsync(Email);
+            if (User == null)
+                return new() { error = true, message = "Agin login" };
+            //Cheack IF Have Old Request 
+            var doc = await findAsync(x => x.doctor.Id == User.Id, new string[] { "doctor" });
+            if (doc != null)
+                return new() { error = true, message = "You Have Old Request" };
+            //Cheack If Certificates Upload
+            if (Certificates?.Count == 0)
+                return new() { error = true, message = "Must Upload Certificates" };
+            //Cheack If Select Area 
+            var areaClic = await _areaService.GetAsync(input.areaClinicId, null);
+            if (areaClic == null)
+                return new() { error = true, message = "Must Select Area" };
+            //Cheack If Select specialtie
+            var specialtie = await _SpecialtieService.GetAsync(input.specialtieId, null);
+            if (specialtie == null)
+                return new() { error = true, message = "Must Select specialtie" };
+            //Save Certificates
+            List<string> ls = await _SaveImg.UploadImagesList("DoctorCertificates", Certificates);
+
+            //Add Doctor
+            Doctor NewDoctor = input;//Covert InputDoctor To Doctor
+            //Add Certificates
+            ls.ForEach(c =>
+            {
+                NewDoctor.Certificates.Add(
+                    new()
+                    {
+                        src = c
+                    });
+            });
+            NewDoctor.doctor = User;//Add User
+            NewDoctor.area = areaClic;//Add Area
+            NewDoctor.drSpecialtie = specialtie;//Add Specialtie
+            await AddAsync(NewDoctor);
+            return new() { error = false, message = "You Application Will Be Reviewed" };
+        } 
+        //put
+        public async Task<bool> ChangePriceSession(string Email,decimal price)
         {
-            //Get User
-            var User = await _AuthService.GetUserAsync(email);
-            if (User == null) 
-                return -1;
-            //Get Doctor
-            var Doctor = await findAsync(d=>d.doctorId==User.Id);
-            if (Doctor == null)
-                return -1;
-            //Get Male Percentage 
-            var DoctorPatients =  _db.Users.Include(u => u.Diseases).Where(d=>d.Diseases.Where(doc=>doc.responsibledDoctorId==Doctor.Id).Count()>0);
-            var CountMale = DoctorPatients.Count(d => d.Gender == true);
-            double MalePercentage=CountMale/(DoctorPatients.Count()==0?1: DoctorPatients.Count());
-            return (MalePercentage*100);
+            var doctorAuth=await _AuthService.GetUserAsync(Email);
+            var doctor = await findAsNotTrakingync(d => d.doctorId == doctorAuth.Id, AsNotTraking: true);
+            if (doctor == null)
+                return false;
+            doctor.priceSession = price;
+            UpdateAsync(doctor);
+            return true;
         }
+
+        //Action Doctor To Active
+        #region ActionWithDoctor
+        public async Task<bool> ActionDoctorAsync(Guid Id, bool Accespt)
+        => Accespt ? await AccseptDoctorAsync(Id) : await RefusalDoctorAsync(Id);
+        private async Task<bool> AccseptDoctorAsync(Guid Id)
+        {
+            var doctor = await findAsync(x => x.Id == Id, new string[] { "doctor" });
+            if (doctor == null)
+                return false;
+            doctor.Accept = true;
+            doctor.DateOfJoin = DateTime.Now;
+            //Add Role
+            if (doctor.doctor != null)
+                await _AuthService.AddRoleAsync(doctor?.doctor?.Email, "Doctor");
+            return await UpdateAsync(doctor);
+        }
+        private async Task<bool> RefusalDoctorAsync(Guid Id)
+        {
+            var doctor = await GetAsync(Id, new string[] { "Certificates" });
+            if (doctor == null)
+                return false;
+            //Delete Certificates
+            var Certifcates = doctor.Certificates.Select(x => $"DoctorCertificates/{x.src}").ToList();
+            await _SaveImg.DeletsImages(Certifcates);//Delete 
+            return await RemoveAsync(doctor);
+        }
+        #endregion
 
 
         #region AppointmentBook

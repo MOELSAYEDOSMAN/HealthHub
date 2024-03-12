@@ -5,7 +5,8 @@
         Task<ListOutPutDoctors> GetDoctorsNotActiveAsync(int index);
         Task<InputDoctor> AddDoctorAsync(InputDoctor input, string Email, List<IFormFile> Certificates);
         Task<bool> ActionDoctorAsync(Guid Id, bool Accespt);
-        Task<ODoctor>? GetDoctorAsync(Guid Id);
+        Task<ODoctor?> GetDoctorAsync(Guid Id);
+        Task<bool> ChangePriceSession(string Email, decimal price);
         Task<ListOutPutDoctors> GetDoctorsInArea(DoctorFilterInput input,string Email);
         Task<ListOutPutDoctors> GetDoctorsInGove(DoctorFilterInput input,string Email);
         Task<List<DoctorDate>> GetDoctorDatesAsync(string email);

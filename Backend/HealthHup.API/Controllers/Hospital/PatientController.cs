@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using HealthHup.API.Model.Extion.Hospital.RateModelDto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -11,11 +12,23 @@ namespace HealthHup.API.Controllers.Hospital
     public class PatientController : ControllerBase
     {
         private readonly IPatientDatesService _patientDatesService;
-        public PatientController(IPatientDatesService patientDatesService)
+        private readonly IPatientInfoService _patientInfoService;
+        private readonly IRateService _rateService;
+        public PatientController(IPatientDatesService patientDatesService, IPatientInfoService patientInfoService, IRateService rateService)
         {
             _patientDatesService = patientDatesService;
-        }
+            _patientInfoService = patientInfoService;
+            _rateService = rateService;
 
+        }
+        //Info
+        [HttpGet("Information/Repentances"), Authorize]
+        public async Task<IActionResult> GetRepentances()
+            => Ok(await _patientInfoService.GetRepentanceAsync(User.FindFirstValue(ClaimTypes.Email)));
+
+        [HttpGet("Information/Diseases"), Authorize]
+        public async Task<IActionResult> GetDiseases()
+            => Ok(await _patientInfoService.GetDiseasesAsync(User.FindFirstValue(ClaimTypes.Email)));
 
 
 
@@ -56,5 +69,21 @@ namespace HealthHup.API.Controllers.Hospital
         [HttpDelete("CancelBookedDate"),Authorize]
         public async Task<IActionResult> CancelBookedDate([FromQuery,Required]Guid PaintDateid)
         => Ok(await _patientDatesService.CancleDateAsync(PaintDateid, User.FindFirstValue(ClaimTypes.Email)));
+
+
+        //Rate
+        [HttpPost("Rate/PushRate"),Authorize]
+        public async Task<IActionResult> PushRateToDoctor([Required,FromQuery]Guid DoctorID,RateDTO input)
+        {
+            if(!ModelState.IsValid)
+            {
+                string Error = string.Empty;
+                foreach (var i in ModelState.Values.SelectMany(x => x.Errors))
+                    Error = $"{Error}Error:{i.ErrorMessage}\n";
+              return  BadRequest(Error);
+            }
+            
+            return Ok(await _rateService.PushRate(User.FindFirstValue(ClaimTypes.Email), DoctorID, input));
+        }
     }
 }

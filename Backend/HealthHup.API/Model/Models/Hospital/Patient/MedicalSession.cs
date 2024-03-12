@@ -1,4 +1,6 @@
-﻿namespace HealthHup.API.Model.Models.Hospital.Patient
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace HealthHup.API.Model.Models.Hospital.Patient
 {
     public class MedicalSession
     {
@@ -8,8 +10,9 @@
         public string DiseaseName { get; set; }
         public Guid DoctorId { get; set; }
         public Doctor Doctor { get; set; }
-        public string PatientId { get; set; }
-        public ApplicationUser Patient { get; set; }
+        public string? PatientId { get; set; }
+        [ForeignKey("PatientId")]
+        public ApplicationUser? patient { get; set; }
         public List<Repentance> repentances { get; set; }
     }
 }

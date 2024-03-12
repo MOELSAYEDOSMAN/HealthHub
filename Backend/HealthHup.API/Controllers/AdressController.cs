@@ -23,7 +23,6 @@ namespace HealthHup.API.Controllers
         public async Task<IActionResult> GetAreas(string GovermentKey)
             => Ok(await _areaService.GetAreasWithGoverment(GovermentKey));
 
-
         //Add
         [HttpPost("PushGovernorate"),Authorize(Roles = "Admin,CustomerService")]
         public async Task<IActionResult> PushGovernorate(string GovernorateKey)

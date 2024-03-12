@@ -17,6 +17,8 @@
         public string DepartmentName { get; set; } = string.Empty;
         public string AddressDescrption { get; set; } = string.Empty;
         public bool Accept { get; set; } = false;
+        public decimal rate { get; set; } = 0;
+        public decimal priceSession { get; set; } = 0;
         public string area { get; set; } = string.Empty;
         public List<DoctorDate>? Dates { get; set; } = new List<DoctorDate>();
         public List<DoctorCertificate>? Certificates { get; set; } = new List<DoctorCertificate>();
@@ -29,7 +31,7 @@
             {
                 Id = input?.Id ?? Guid.Empty,
                 Accept = input?.Accept ?? false,
-                AddressDescrption = input?.AddressDescrption??string.Empty,
+                AddressDescrption = input?.AddressDescrption ?? string.Empty,
                 area = input?.area?.key ?? string.Empty,
                 Certificates = input?.Certificates ?? new List<DoctorCertificate>(),
                 CollegeName = input?.CollegeName ?? string.Empty,
@@ -44,7 +46,8 @@
                 SummaryCareer = input?.SummaryCareer ?? string.Empty,
                 DateOfJoin = input?.DateOfJoin ?? DateTime.MinValue,
                 DateOfSendRequest = input?.DateOfSendRequest ?? DateTime.MinValue,
-                Dates = input?.Dates ?? new List<DoctorDate>()
+                Dates = input?.Dates ?? new List<DoctorDate>(),
+                priceSession = input.priceSession
             };
         }
 

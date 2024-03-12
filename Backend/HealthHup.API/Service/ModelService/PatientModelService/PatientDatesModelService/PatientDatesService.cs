@@ -25,8 +25,8 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.PatientDatesMod
             else if (email != string.Empty)
             {
                 var drId = await _authService.GetUserAsync(email);
-                dates = (await _doctorService.findAsync(d => d.doctorId == drId.Id, new string[] { "patientDates" }))
-                    .patientDates;
+                var Doctor = await _doctorService.findAsync(d => d.doctorId==drId.Id);
+                dates = dates = await findByAsync(d => d.doctorId == Doctor.Id, new string[] { "patient" });
             }
             else
                 return new List<PatientDateDTO>();

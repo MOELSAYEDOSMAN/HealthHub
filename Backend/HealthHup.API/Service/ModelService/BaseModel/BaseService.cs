@@ -13,6 +13,7 @@ namespace HealthHup.API.Service.ModelService.BaseModel
         }
         public async Task<bool> AddAsync(T input)
         {
+            
             await _db.Set<T>().AddAsync(input);
             await SaveChaneAsync();
             return true;
@@ -49,6 +50,17 @@ namespace HealthHup.API.Service.ModelService.BaseModel
         public async Task<T> findAsync(Expression<Func<T, bool>> condation, string[]? inculde = null)
         {
             IQueryable<T> query = _db.Set<T>();
+            if (inculde != null)
+                foreach (var incluse in inculde)
+                    query = query.Include(incluse);
+            return await query.SingleOrDefaultAsync(condation);
+        }
+
+        public async Task<T> findAsNotTrakingync(Expression<Func<T, bool>> condation, string[]? inculde = null,bool? AsNotTraking=false)
+        {
+            IQueryable<T> query = _db.Set<T>();
+            if (AsNotTraking??false)
+                query = query.AsNoTracking();
             if (inculde != null)
                 foreach (var incluse in inculde)
                     query = query.Include(incluse);
