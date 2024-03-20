@@ -6,6 +6,7 @@ namespace HealthHup.API.Service.ModelService.BaseModel
     {
         Task<bool> AddAsync(T input);
         Task<bool> RemoveAsync(T input);
+        Task<bool> RemoveRangeAsync(List<T> Items);
         Task<bool> UpdateAsync(T input);
         Task SaveChaneAsync();
         Task<IList<T>> GetAllAsync(Expression<Func<T, object>>? OrderBy = null);

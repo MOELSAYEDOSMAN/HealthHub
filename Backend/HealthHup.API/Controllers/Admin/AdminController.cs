@@ -1,9 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace HealthHup.API.Controllers.Hospital
+
+namespace HealthHup.API.Controllers.Admin
 {
-    [Route("api/[controller]"),Authorize(Roles ="Admin")]
+    [Route("[controller]"),Authorize(Roles ="Admin")]
     [ApiController]
     public class AdminController : ControllerBase
     {
@@ -15,7 +16,6 @@ namespace HealthHup.API.Controllers.Hospital
             _normalUser = normalUser;
             _doctorService= doctorService;
         }
-
         [HttpGet("PatientCount")]
         public async Task<IActionResult> PatientCount()
             => Ok(await _normalUser.CountAsync());

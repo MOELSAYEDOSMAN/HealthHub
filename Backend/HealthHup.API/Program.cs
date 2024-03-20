@@ -9,6 +9,9 @@ using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using HealthHup.API.Hubs.ChatHubFolder;
+using Hangfire;
+using HealthHup.API.Service.MlService;
+using HealthHup.API.Service.ModelService.HospitalService.DrugModelService;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,6 +60,10 @@ var logger = new LoggerConfiguration()
     .CreateLogger();
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
+//HangeFire
+//DataBase
+builder.Services.AddHangfire(x => x.UseSqlServerStorage(connectionString));
+builder.Services.AddHangfireServer();
 
 //Def Service
 builder.Services.AddControllers().AddJsonOptions(options =>
@@ -120,8 +127,13 @@ builder.Services.AddTransient<IMedicalSessionService, MedicalSessionService>();
 builder.Services.AddTransient<IPatientDatesService, PatientDatesService>();
 builder.Services.AddTransient<IPatientInfoService, PatientInfoService>();
 builder.Services.AddTransient<IRateService, RateService>();
-
+//Drug
+builder.Services.AddTransient<IDrugModelApiService, DrugModelApiService>();
 //End DataBase
+
+//Api Ml
+builder.Services.AddHttpClient<IMLDrugApiService, MLDrugApiService>
+    (client => client.BaseAddress = new Uri("http://127.0.0.1:5000/"));
 //End Inject Service
 
 var app = builder.Build();
@@ -143,6 +155,8 @@ app.UseAuthorization();
 
 //Add Hubs
 app.MapHub<ChatHub>("Chat");
+//HangFire(BackGroundJobs):Dashboard
+app.UseHangfireDashboard("/Dashboard");
 
 app.MapControllers();
 

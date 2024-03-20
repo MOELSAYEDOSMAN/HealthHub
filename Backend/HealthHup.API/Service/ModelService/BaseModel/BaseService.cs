@@ -26,11 +26,19 @@ namespace HealthHup.API.Service.ModelService.BaseModel
         }
         public async Task<bool> RemoveAsync(T input)
         {
+           
+            Console.WriteLine("RemoveBase");
+
             _db.Set<T>().Remove(input);
             await SaveChaneAsync();
             return true;
         }
-
+        public async Task<bool> RemoveRangeAsync(List<T> Items)
+        {
+            _db.Set<T>().RemoveRange(Items);
+            await SaveChaneAsync();
+            return true;
+        }
         public async Task<T> GetAsync(Guid Id, string[]? Inculde = null)
         {
             var table = _db.Set<T>();

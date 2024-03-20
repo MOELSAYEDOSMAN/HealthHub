@@ -1,5 +1,6 @@
 ﻿using HealthHup.API.Service.AccountService;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace HealthHup.API.Service.ModelService.PatientModelService.PatientGeneralInfoModelService
 {
@@ -8,7 +9,8 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.PatientGeneralI
         private readonly IAuthService _authService;
         private readonly IMedicalSessionService _medicalSessionService;
         private readonly IBaseService<Disease> _diseaseService;
-        public PatientInfoService(ApplicatoinDataBaseContext db,IAuthService authService,IMedicalSessionService medicalSessionService, IBaseService<Disease> diseaseService) :base(db)
+        
+        public PatientInfoService(ApplicatoinDataBaseContext db,IAuthService authService,IMedicalSessionService medicalSessionService, IBaseService<Disease> diseaseService, IBaseService<Repentance> repentanceService) :base(db)
         {
             _authService = authService;
             _medicalSessionService=medicalSessionService;
@@ -52,6 +54,34 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.PatientGeneralI
 
             var Result = new List<PatientRepentanceDTO>();
             MedicalSessions.ForEach(m =>Result.Add(m));
+            return Result;
+        }
+        public async Task<List<Drug>?> GetCurrentDrugs(string email)
+        {
+            var patient = await _authService.GetUserAsync(email);
+            if (patient == null)
+                return new();
+            var reps =await _db.MedicalSessions.AsNoTracking()
+                .Include(m=>m.repentances).ThenInclude(r=>r.drug)
+                .Where(m=>m.PatientId==patient.Id).SelectMany(m=>m.repentances)
+                .Where(r=>(r.EndDate??DateTime.MaxValue.Date)>DateTime.Now.Date)
+                .ToListAsync()
+                ;
+            if(reps.Count==0)
+                return new();
+            return reps.Select(r => r.drug).ToList();
+        }
+        //Get=> responsibled Doctor
+        public async Task<List<ODoctor>> GetResponsibledDoctorAsync(string Email)
+        {
+            var Patient = await _authService.GetUserAsync(Email);
+            if (Patient == null)
+                return new();
+            var Diseases = await _diseaseService.findByAsync(d =>d.PatientId == Patient.Id, new string[] { "responsibledDoctor"});
+            if (Diseases.Count == 0)
+                return new();
+            var Result = new List<ODoctor>();
+            Diseases.ToList().ForEach(d=>Result.Add(d.responsibledDoctor));
             return Result;
         }
     }

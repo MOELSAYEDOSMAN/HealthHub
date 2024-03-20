@@ -62,6 +62,7 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.PatientDatesMod
                 });
             return Result;
         }
+        
         //Post
         public async Task<string> PushDateAsync(PatientDateInput input,Guid DrId,string Email)
         {
@@ -99,8 +100,17 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.PatientDatesMod
                 //**With HangeFire**
         public async Task RemoveOldDateAsync()
         {
-            var OldDates = await findByAsync(d=>!CompareDate(d.date));
-            OldDates.ToList().ForEach(async d => await RemoveAsync(d));
+            var OldDates =await GetOldDates();
+            Console.WriteLine($"{OldDates.Count}");
+
+            if (OldDates.Count > 0)
+                await RemoveRangeAsync(OldDates.ToList());
+
+        }
+        private async Task<List<PatientDates>?> GetOldDates()
+        {
+            var OldDates = await findByAsync(d => d.date.Date < DateTime.UtcNow.Date);
+            return OldDates.ToList();
         }
         //put
         public async Task<string> UpdateDateAsync(PatientDateInput input, Guid DateId, string Email)

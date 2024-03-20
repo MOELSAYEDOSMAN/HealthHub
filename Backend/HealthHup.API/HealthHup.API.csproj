@@ -10,6 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Hangfire" Version="1.8.11" />
+    <PackageReference Include="Humanizer.Core" Version="2.14.1" />
     <PackageReference Include="MailKit" Version="4.3.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.15" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="7.0.15" />
@@ -42,6 +44,7 @@
 
   <ItemGroup>
     <Folder Include="Hubs\NotifyHubFolder\" />
+    <Folder Include="backendJobs\" />
     <Folder Include="wwwroot\Image\DoctorCertificates\" />
   </ItemGroup>
 

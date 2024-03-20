@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using HealthHup.API.Service.ModelService.HospitalService.DrugModelService;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -12,9 +13,11 @@ namespace HealthHup.API.Controllers.Hospital
     public class MedicalSessionController : ControllerBase
     {
         private readonly IMedicalSessionService _sessionService;
-        public MedicalSessionController(IMedicalSessionService sessionService)
+        private readonly IDrugModelApiService _drugApiService;
+        public MedicalSessionController(IMedicalSessionService sessionService, IDrugModelApiService drugApiService)
         {
             _sessionService = sessionService;
+            _drugApiService = drugApiService;
         }
         //Get
         [HttpGet("GetMedicalSessionWithDoctor"), Authorize(Roles = "Doctor")]
@@ -51,6 +54,9 @@ namespace HealthHup.API.Controllers.Hospital
             }
             return Ok(await _sessionService.AddMedicalSessionAsync(input,User.FindFirstValue(ClaimTypes.Email)));
         }
+        [HttpPost("CheackDrugsInteraction"), Authorize(Roles = "Doctor")]
+        public async Task<IActionResult> CheackDrugsInteraction([Required] string PaientEmail, [Required] List<Guid> DrugIDs)
+        => Ok(await _drugApiService.CheackListDrugs(PaientEmail, DrugIDs));
         //Put
         [HttpPut("PushNewMedical"),Authorize(Roles ="Doctor")]
         public async Task<IActionResult> PushNewMedical([Required,EmailAddress,FromQuery]string PaientEmail, List<RepentanceDto> newRepentances)

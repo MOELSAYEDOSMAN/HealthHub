@@ -1,12 +1,17 @@
 {
   "version": 2,
-  "dgSpecHash": "hYwO1Ms39HVT5YJdUmcmmwdYOmIpUZAf40Gxk5XKOx/kCdU2nyhilwBCqlgV0o3xkRGyJrEzPvVDwwBkHNQDqw==",
+  "dgSpecHash": "8SdOulIApjWpYZnD/WUOyzzPy75pBXmMw+tZ8V+k1nUK4NB1Wkcy4kptqgS0cREzV9ZNzKvBLfmP6lgtBcCsMg==",
   "success": true,
   "projectFilePath": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\HealthHup.API.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\moham\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\moham\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",
     "C:\\Users\\moham\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
+    "C:\\Users\\moham\\.nuget\\packages\\hangfire\\1.8.11\\hangfire.1.8.11.nupkg.sha512",
+    "C:\\Users\\moham\\.nuget\\packages\\hangfire.aspnetcore\\1.8.11\\hangfire.aspnetcore.1.8.11.nupkg.sha512",
+    "C:\\Users\\moham\\.nuget\\packages\\hangfire.core\\1.8.11\\hangfire.core.1.8.11.nupkg.sha512",
+    "C:\\Users\\moham\\.nuget\\packages\\hangfire.netcore\\1.8.11\\hangfire.netcore.1.8.11.nupkg.sha512",
+    "C:\\Users\\moham\\.nuget\\packages\\hangfire.sqlserver\\1.8.11\\hangfire.sqlserver.1.8.11.nupkg.sha512",
     "C:\\Users\\moham\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",
     "C:\\Users\\moham\\.nuget\\packages\\mailkit\\4.3.0\\mailkit.4.3.0.nupkg.sha512",
     "C:\\Users\\moham\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\7.0.15\\microsoft.aspnetcore.authentication.jwtbearer.7.0.15.nupkg.sha512",

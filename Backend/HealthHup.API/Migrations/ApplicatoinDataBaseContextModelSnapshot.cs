@@ -225,6 +225,23 @@ namespace HealthHup.API.Migrations
                     b.ToTable("Drugs");
                 });
 
+            modelBuilder.Entity("HealthHup.API.Model.Models.DrugModel.interaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Reason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Interactions");
+                });
+
             modelBuilder.Entity("HealthHup.API.Model.Models.Hospital.Doctor", b =>
                 {
                     b.Property<Guid>("Id")

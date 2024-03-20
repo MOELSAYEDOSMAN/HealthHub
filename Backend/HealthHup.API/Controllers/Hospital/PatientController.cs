@@ -29,8 +29,14 @@ namespace HealthHup.API.Controllers.Hospital
         [HttpGet("Information/Diseases"), Authorize]
         public async Task<IActionResult> GetDiseases()
             => Ok(await _patientInfoService.GetDiseasesAsync(User.FindFirstValue(ClaimTypes.Email)));
+        [HttpGet("information/GetCurrentDrugs"), Authorize]
+        public async Task<IActionResult> GetCurrentDrugs(string? PatientEmail)
+            => Ok(await _patientInfoService.GetCurrentDrugs(string.IsNullOrEmpty(PatientEmail)?User.FindFirstValue(ClaimTypes.Email):PatientEmail));
 
-
+        //Get Doctor
+        [HttpGet("Doctor/ResponsibledDoctor"), Authorize]
+        public async Task<IActionResult> GetResponsibledDoctor()
+            => Ok(await _patientInfoService.GetResponsibledDoctorAsync(User.FindFirstValue(ClaimTypes.Email)));
 
 
         //Patient Date
