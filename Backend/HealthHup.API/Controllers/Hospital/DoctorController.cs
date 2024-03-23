@@ -60,7 +60,11 @@ namespace HealthHup.API.Controllers.Hospital
         [HttpGet("GetDoctorsNotActive"), Authorize(Roles = "Admin,CustomerService")]
         public async Task<IActionResult> GetDoctorsNotActive(uint index=0)
             =>Ok(await _doctorService.GetDoctorsNotActiveAsync((int)index));
-        
+
+        //Get InfoDoctor
+        [HttpGet("GetDoctorSpecialtie"), Authorize(Roles = "Doctor")]
+        public async Task<IActionResult> GetDoctorSpecialtie()
+            => Ok(await _doctorService.GetDoctorSpecialtie(User.FindFirstValue(ClaimTypes.Email)));
         
         //BookedAppointments
         [HttpGet("BookedAppointments"), Authorize(Roles = "Doctor")]

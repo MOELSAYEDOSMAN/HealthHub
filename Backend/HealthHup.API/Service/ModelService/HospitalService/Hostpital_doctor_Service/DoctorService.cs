@@ -72,6 +72,18 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
             return (MalePercentage * 100);
         }
         #endregion
+        //GetInfoDoctor
+        public async Task<string> GetDoctorSpecialtie(string email)
+        {
+            var DoctorAuth = await _AuthService.GetUserAsync(email);
+            if (DoctorAuth == null)
+                return string.Empty;
+
+            var Doctor = await findAsNotTrakingync(d=>d.doctorId==DoctorAuth.Id,new string[] { "drSpecialtie" },AsNotTraking:true);
+            if (Doctor == null)
+                return string.Empty;
+            return Doctor.drSpecialtie?.Name;
+        }
         //Get List
         //Doctors Not In Active
         public async Task<ListOutPutDoctors> GetDoctorsNotActiveAsync(int index)
