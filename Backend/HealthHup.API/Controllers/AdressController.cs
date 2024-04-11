@@ -10,17 +10,12 @@ namespace HealthHup.API.Controllers
     {
         private readonly IGovermentService _GovernorateService;
         private readonly IAreaService _areaService;
-        
+        private readonly IMessageService _messageService;
         public AdressController(IGovermentService govermentService,IAreaService areaService)
         {
             _GovernorateService = govermentService;
             _areaService = areaService;
         }
-        
-
-
-
-
         [HttpGet("GetGovernorate")]
         public async Task<IActionResult> GetGovernorates()
             =>Ok(await _GovernorateService.GetAllAsync());

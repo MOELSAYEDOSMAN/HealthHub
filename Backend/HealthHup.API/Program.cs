@@ -53,7 +53,7 @@ builder.Services.AddAuthentication(o =>
     };
 });
 
-//Add SeriaLog
+////Add SeriaLog
 var logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.FromLogContext()
@@ -132,8 +132,9 @@ builder.Services.AddTransient<IDrugModelApiService, DrugModelApiService>();
 //End DataBase
 
 //Api Ml
+string UriModel = builder.Configuration.GetSection("Flask").GetValue<string>("uri");
 builder.Services.AddHttpClient<IMLDrugApiService, MLDrugApiService>
-    (client => client.BaseAddress = new Uri("http://127.0.0.1:5000/"));
+    (client => client.BaseAddress = new Uri(UriModel));
 //End Inject Service
 
 var app = builder.Build();

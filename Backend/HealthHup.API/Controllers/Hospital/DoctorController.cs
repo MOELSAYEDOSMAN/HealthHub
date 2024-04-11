@@ -16,6 +16,7 @@ namespace HealthHup.API.Controllers.Hospital
         private readonly IAuthService _authService;
         private readonly IDoctorService _doctorService;
         private readonly IPatientDatesService _patientDatesService;
+        private readonly IMessageService _MessageService;
         public DoctorController(IDoctorService doctorService, IPatientDatesService patientDatesService,IAuthService authService)
         {
             _doctorService = doctorService;
@@ -42,24 +43,24 @@ namespace HealthHup.API.Controllers.Hospital
             if (!ModelState.IsValid)
                 return BadRequest(new ListOutPutDoctors());
             var Email = User.FindFirstValue(ClaimTypes.Email);
-            return Ok(await _doctorService.GetDoctorsInArea(input, Email));
+            return Ok(ChangeImageDoctors(await _doctorService.GetDoctorsInGove(input, Email)));
         }
 
-        
+
         [HttpGet("GetDoctorsInGovernorate"), Authorize]
         public async Task<IActionResult> GetDoctorsInGovernorate([FromQuery] DoctorFilterInput input)
         {
             if (!ModelState.IsValid)
                 return BadRequest(new ListOutPutDoctors());
             var Email = User.FindFirstValue(ClaimTypes.Email);
-            return Ok(await _doctorService.GetDoctorsInGove(input, Email));
+            return Ok(ChangeImageDoctors(await _doctorService.GetDoctorsInGove(input, Email)));
         }
         
         
         //Get Doctors Not Active
         [HttpGet("GetDoctorsNotActive"), Authorize(Roles = "Admin,CustomerService")]
         public async Task<IActionResult> GetDoctorsNotActive(uint index=0)
-            =>Ok(await _doctorService.GetDoctorsNotActiveAsync((int)index));
+            =>Ok(ChangeImageDoctors(await _doctorService.GetDoctorsNotActiveAsync((int)index)));
 
         //Get InfoDoctor
         [HttpGet("GetDoctorSpecialtie"), Authorize(Roles = "Doctor")]
@@ -75,7 +76,7 @@ namespace HealthHup.API.Controllers.Hospital
         //Find Doctor
         [HttpGet("GetDoctor")]
         public async Task<IActionResult> GetDoctor(Guid Id)
-            => Ok(await _doctorService.GetDoctorAsync(Id));
+            => Ok(ChangeImageDoctor(await _doctorService.GetDoctorAsync(Id)));
         //Get CountOfPatientsWithDoctor
         [HttpGet("CountOfPatientsWithDoctor"), Authorize(Roles = "Doctor")]
         public async Task<IActionResult> GetCountOfPatientsWithDoctor()
@@ -147,7 +148,21 @@ namespace HealthHup.API.Controllers.Hospital
         //Active Doctor
         [HttpPut("ActionDoctor"), Authorize(Roles = "Admin,CustomerService")]
         public async Task<IActionResult> ActionDoctor(Guid Id, bool action)
-            => Ok(await _doctorService.ActionDoctorAsync(Id,action));
+        {
+            if(action)
+            {
+                var doctore = await _doctorService.GetDoctorAsync(Id);
+                await _MessageService.SendMessage(doctore.Email, $"Your Request Has been Approved!", "Green");
+            }
+            return Ok(await _doctorService.ActionDoctorAsync(Id, action));
+        }
+
+        [HttpGet("SendMessageToDoctor"), Authorize(Roles = "Admin,CustomerService")]
+        public async Task<IActionResult> SendMessageToDoctor([Required]string Email,[Required]string Message)
+        {
+            await _MessageService.SendMessage(Email, Message, "Red");
+            return Ok();
+        }
 
         [HttpPut("ChangePrice"), Authorize("Doctor")]
         public async Task<IActionResult> ChangePrice([Required, FromQuery] decimal NewPrice)
@@ -160,6 +175,35 @@ namespace HealthHup.API.Controllers.Hospital
                 return Ok("Select Day");
             }
             return Ok(await _doctorService.ReoveAppointmentBookAsync(OldDayName, User.FindFirstValue(ClaimTypes.Email)));
+        }
+
+
+
+
+
+        private ODoctor? ChangeImageDoctor(ODoctor? input)
+        {
+            if (input?.Id == null)
+                return null;
+
+            input.DrImg = $"{this.Request.Scheme}://{this.Request.Host}/Image/User/{input.DrImg}";
+
+            foreach(var i in input.Certificates)
+                i.src= $"{this.Request.Scheme}://{this.Request.Host}/Image/DoctorCertificates/{i.src}";
+
+            return input;
+        }
+
+        private IEnumerable<ODoctor> ChangeImageDoctors(List<ODoctor>? input)
+        {
+            foreach (var i in input)
+               yield return ChangeImageDoctor(i);
+        }
+        private ListOutPutDoctors ChangeImageDoctors(ListOutPutDoctors input)
+        {
+            if (input.count > 0)
+                input.Doctors = ChangeImageDoctors(input.Doctors).ToList();
+            return input;
         }
 
     }

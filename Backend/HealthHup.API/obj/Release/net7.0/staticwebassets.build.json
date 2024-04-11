@@ -1,0 +1,77 @@
+{
+  "Version": 1,
+  "Hash": "TfuRGoutk2dRrnPnoA4havYkNSbGYWUdCpzTsh719sY=",
+  "Source": "HealthHup.API",
+  "BasePath": "_content/HealthHup.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "HealthHup.API\\wwwroot",
+      "Source": "HealthHup.API",
+      "ContentRoot": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\",
+      "BasePath": "_content/HealthHup.API",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\DoctorCertificates\\863ef049-f8b5-474e-8fab-fe47dbb2c55f.webp",
+      "SourceId": "HealthHup.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\",
+      "BasePath": "_content/HealthHup.API",
+      "RelativePath": "Image/DoctorCertificates/863ef049-f8b5-474e-8fab-fe47dbb2c55f.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Image\\DoctorCertificates\\863ef049-f8b5-474e-8fab-fe47dbb2c55f.webp"
+    },
+    {
+      "Identity": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\DoctorCertificates\\9f8e9c51-0de2-4901-84ab-46b127afb222.webp",
+      "SourceId": "HealthHup.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\",
+      "BasePath": "_content/HealthHup.API",
+      "RelativePath": "Image/DoctorCertificates/9f8e9c51-0de2-4901-84ab-46b127afb222.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Image\\DoctorCertificates\\9f8e9c51-0de2-4901-84ab-46b127afb222.webp"
+    },
+    {
+      "Identity": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\User\\user.png",
+      "SourceId": "HealthHup.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\",
+      "BasePath": "_content/HealthHup.API",
+      "RelativePath": "Image/User/user.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Image\\User\\user.png"
+    }
+  ]
+}

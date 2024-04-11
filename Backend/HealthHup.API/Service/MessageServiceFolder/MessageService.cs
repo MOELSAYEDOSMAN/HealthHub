@@ -26,10 +26,9 @@ namespace HealthHup.API.Service.MessageServiceFolder
             email.Body = builder.ToMessageBody();
             using (var smtp = new SmtpClient())
             {
-                smtp.Connect("smtp-mail.outlook.com", 587, SecureSocketOptions.StartTls);
+                smtp.Connect("smtp.gmail.com", 465, SecureSocketOptions.SslOnConnect);
                 smtp.Authenticate(FromEmail, Password);
                 await smtp.SendAsync(email);
-                smtp.Disconnect(true);
             }
             
             //MailMessage message = new MailMessage()

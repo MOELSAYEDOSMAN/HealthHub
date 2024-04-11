@@ -1,0 +1,33 @@
+{
+  "Files": [
+    {
+      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\DoctorCertificates\\863ef049-f8b5-474e-8fab-fe47dbb2c55f.webp",
+      "PackagePath": "staticwebassets\\Image\\DoctorCertificates\\863ef049-f8b5-474e-8fab-fe47dbb2c55f.webp"
+    },
+    {
+      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\DoctorCertificates\\9f8e9c51-0de2-4901-84ab-46b127afb222.webp",
+      "PackagePath": "staticwebassets\\Image\\DoctorCertificates\\9f8e9c51-0de2-4901-84ab-46b127afb222.webp"
+    },
+    {
+      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\User\\user.png",
+      "PackagePath": "staticwebassets\\Image\\User\\user.png"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.HealthHup.API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.build.HealthHup.API.props",
+      "PackagePath": "build\\HealthHup.API.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.HealthHup.API.props",
+      "PackagePath": "buildMultiTargeting\\HealthHup.API.props"
+    },
+    {
+      "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.buildTransitive.HealthHup.API.props",
+      "PackagePath": "buildTransitive\\HealthHup.API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
