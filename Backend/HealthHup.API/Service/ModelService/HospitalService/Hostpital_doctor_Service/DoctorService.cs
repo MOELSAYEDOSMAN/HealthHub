@@ -66,10 +66,13 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
             if (Doctor == null)
                 return -1;
             //Get Male Percentage 
-            var DoctorPatients = _db.Users.Include(u => u.Diseases).Where(d => d.Diseases.Where(doc => doc.responsibledDoctorId == Doctor.Id).Count() > 0);
+            var DoctorPatients = _db.Users.Include(u => u.Diseases).Where(d => d.Diseases.Where(doc => doc.responsibledDoctorId == Doctor.Id).Count() > 0).ToList();
+            int totla = DoctorPatients.Count;
+            if (totla == 0)
+                return 0;
             var CountMale = DoctorPatients.Count(d => d.Gender == true);
-            double MalePercentage = CountMale / (DoctorPatients.Count() == 0 ? 1 : DoctorPatients.Count());
-            return (MalePercentage * 100);
+            double MalePercentage = CountMale *Math.Pow(totla,-1);
+            return MalePercentage*100;
         }
         #endregion
         //GetInfoDoctor
@@ -301,7 +304,7 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
         {
             int PlusFrom = 0; int PlusTo = 0;
 
-            if (dateInputTo.EndsWith("AM") && dateInputFrom.EndsWith("BM"))
+            if (dateInputTo.EndsWith("AM") && dateInputFrom.EndsWith("PM"))
             {
                 PlusFrom = 0;
                 PlusTo = 12;

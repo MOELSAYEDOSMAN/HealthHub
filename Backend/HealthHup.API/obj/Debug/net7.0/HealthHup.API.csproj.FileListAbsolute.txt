@@ -197,7 +197,6 @@ D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\obj
 D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.HealthHup.API.props
 D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\obj\Debug\net7.0\staticwebassets.pack.json
 D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\obj\Debug\net7.0\scopedcss\bundle\HealthHup.API.styles.css
-D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\obj\Debug\net7.0\HealthHup.API.csproj.CopyComplete
 D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\obj\Debug\net7.0\HealthHup.API.dll
 D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\obj\Debug\net7.0\refint\HealthHup.API.dll
 D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\obj\Debug\net7.0\HealthHup.API.pdb
@@ -226,3 +225,4 @@ D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\bin
 D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\bin\Debug\net7.0\tr-TR\Hangfire.Core.resources.dll
 D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\bin\Debug\net7.0\zh-TW\Hangfire.Core.resources.dll
 D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\bin\Debug\net7.0\zh\Hangfire.Core.resources.dll
+D:\Project\Graduation projects\FindalProject\HealthHup\Backend\HealthHup.API\obj\Debug\net7.0\HealthHu.9B900D70.Up2Date

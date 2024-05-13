@@ -13,6 +13,10 @@
       "PackagePath": "staticwebassets\\Image\\User\\user.png"
     },
     {
+      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Template\\ConfirmMail.html",
+      "PackagePath": "staticwebassets\\Template\\ConfirmMail.html"
+    },
+    {
       "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.HealthHup.API.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },

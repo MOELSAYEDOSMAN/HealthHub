@@ -57,7 +57,12 @@ namespace HealthHup.API.Controllers
                 { Message = "Error in Object Input Or No Data",Error = true,IsLogin = false});
             }
         }
-        
+        [HttpGet("ConfiermMail")]
+        public async Task<IActionResult> ConfiermMail([Required]string token,[Required]string email)
+        {
+            var result=await _authService.ConfiermMail(token, email);
+            return Ok(result ? "Confiermed":"try Again");
+        }
         private async Task<OUser> Register(InputRegister input)
         {
             ModelState.ClearValidationState(nameof(input));

@@ -8,6 +8,7 @@ namespace HealthHup.API.Service.AccountService
         Task<OUser> LoginAsync(InputLogin input);
         Task<OUser> RegisterAsync(InputRegister input,IFormFile?img=null);
         //put
+        Task<bool> ConfiermMail(string token, string email);
         Task<string> AddRoleAsync(string Email, string Role);
         Task<string> RemoveRoleAsync(string Email,string Role);
         Task<bool> ChaneImageUserAsync(string Email, IFormFile img);

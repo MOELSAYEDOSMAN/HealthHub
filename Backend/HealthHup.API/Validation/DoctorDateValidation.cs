@@ -15,7 +15,7 @@ namespace HealthHup.API.Validation
             return false;
         }
         private static bool DateHaveAMorBM(string date)
-            => (date.ToUpper().Contains("AM") || date.ToUpper().Contains("BM"));
+            => (date.ToUpper().Contains("AM") || date.ToUpper().Contains("PM"));
         private static bool DateStartFrom1To12(string date)
         {
             int Number = -1;

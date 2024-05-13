@@ -26,7 +26,7 @@ builder.Services.AddDbContext<ApplicatoinDataBaseContext>(option =>option.UseSql
 //Add Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
-    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedEmail = true;
     options.Password.RequiredLength = 8;
     options.User.RequireUniqueEmail = true;
 }).AddEntityFrameworkStores<ApplicatoinDataBaseContext>()
@@ -112,7 +112,7 @@ builder.Services.AddSignalR();
     //Image
 builder.Services.AddTransient<ISaveImage, SaveImage>();
     //Message
-builder.Services.AddTransient<IMessageService,MessageService>();
+builder.Services.AddTransient<IMessageService, MessageService>();
 //Account
 builder.Services.AddTransient<IAuthService, AuthService>();
 //Start DataBase

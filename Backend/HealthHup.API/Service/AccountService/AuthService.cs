@@ -17,13 +17,18 @@ namespace HealthHup.API.Service.AccountService
         private readonly ISaveImage _SvImg;
         private readonly IAreaService _areaService;
         private readonly Jwt _jwt;
-        public AuthService(UserManager<ApplicationUser> userManager, IOptions<Jwt> jwt,ISaveImage saveimg,IAreaService areaService, IBaseService<Doctor> doctorService)
+        private readonly IHttpContextAccessor _env;
+        private readonly IMessageService _messageService;
+        public AuthService(UserManager<ApplicationUser> userManager, IOptions<Jwt> jwt,ISaveImage saveimg,IAreaService areaService
+            , IBaseService<Doctor> doctorService, IHttpContextAccessor env,IMessageService messageService)
         {
             _userManager = userManager;
             _SvImg = saveimg;
             _jwt = jwt.Value;
             _areaService = areaService;
             _doctorService = doctorService;
+            _env = env;
+            _messageService = messageService;
         }
         //post
         public async Task<OUser> LoginAsync(InputLogin input)
@@ -35,6 +40,9 @@ namespace HealthHup.API.Service.AccountService
             if (UserLogin == null||!await _userManager.CheckPasswordAsync(UserLogin, input.password))
                 return new OUser()
                 {Error=true,IsLogin=false,Message="Email Or Password Incorrect"};
+            if(!UserLogin.EmailConfirmed)
+                return new OUser()
+                { Error = true, IsLogin = false, Message = "need Confirme Mail" };
             //Ready login
             var jwtSecurityToken = await CreateJwtTokenAsync(UserLogin);//Create Token
             var rolesList = await _userManager.GetRolesAsync(UserLogin);//Get Roles
@@ -96,9 +104,29 @@ namespace HealthHup.API.Service.AccountService
             }
             //Give Defulte Role
             await _userManager.AddToRoleAsync(UserRegister, "Patient");
-            return new() { Message = "Go To Login Page", IsLogin = false,Error=false};
+            await _messageService.ConfirmAccount(input.email, $"{_env.HttpContext.Request.Scheme}://{_env.HttpContext.Request.Host}/Auth/ConfiermMail?email={input.email}&token={await _userManager.GenerateEmailConfirmationTokenAsync(UserRegister)}");
+            
+            return new() { Message = $"Cheack Mail to Confirem Mail", IsLogin = false,Error=false};
         }
-        //put
+        
+        public async Task<bool> ConfiermMail(string token,string email)
+        {
+            var User = await GetUserAsync(email);
+            //Cheack IF User In DB
+            if (User == null)
+                return false;
+            //Cheack IF Confirmed
+            if (User.EmailConfirmed)
+                return false;
+            //Confirm
+            var result = await _userManager.ConfirmEmailAsync(User, token);
+            if (!result.Succeeded)
+                return false;
+
+            return true;
+
+        }
+        // put
         public async Task<string> AddRoleAsync(string Email, string Role)
         {
             string UserName = new EmailAddressAttribute().IsValid(Email) ? new MailAddress(Email).User : Email;

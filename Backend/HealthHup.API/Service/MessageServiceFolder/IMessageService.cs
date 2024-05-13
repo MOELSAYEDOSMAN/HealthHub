@@ -3,6 +3,7 @@
     public interface IMessageService
     {
         Task SendMessage(string Email, string Message, string? Color);
-        string GetEmail();
+        Task<bool> ConfirmAccount(string Email, string link);
+        
     }
 }

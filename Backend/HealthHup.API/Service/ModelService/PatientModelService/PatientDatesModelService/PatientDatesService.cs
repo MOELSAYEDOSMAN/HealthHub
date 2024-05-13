@@ -180,16 +180,16 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.PatientDatesMod
         }
 
         //Date|Time
-        //Covert Time From AM To BM & ++
+        //Covert Time From AM To PM & ++
         string GetTimeTo(string time)
         {
             int timeValue = int.Parse(time.Substring(0, 2));
             if (time.ToUpper().Contains("AM"))
-                return timeValue == 12 ? $"01:{int.Parse(time.Substring(3, 2))} BM"
+                return timeValue == 12 ? $"01:{int.Parse(time.Substring(3, 2))} PM"
                     : $"{++timeValue}:{int.Parse(time.Substring(3, 2))} AM";
             else
                 return timeValue == 12 ? $"01:{int.Parse(time.Substring(3, 2))} AM"
-                    : $"{++timeValue}:{int.Parse(time.Substring(3, 2))} BM";
+                    : $"{++timeValue}:{int.Parse(time.Substring(3, 2))} PM";
         }
 
         //Compare Time
