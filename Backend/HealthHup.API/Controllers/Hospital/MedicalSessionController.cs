@@ -23,6 +23,7 @@ namespace HealthHup.API.Controllers.Hospital
         [HttpGet("GetMedicalSessionWithDoctor"), Authorize(Roles = "Doctor")]
         public async Task<IActionResult> GetMedicalSessionWithDoctor([Required] string PaientEmail)
         {
+
             var DoctorEmail = User.FindFirstValue(ClaimTypes.Email);
             return Ok(await _sessionService.GetMedicalSessionsWithPatientAsync(DoctorEmail, PaientEmail));
         }

@@ -1,4 +1,5 @@
-﻿using HealthHup.API.Service.AccountService;
+﻿using Hangfire.Storage.Monitoring;
+using HealthHup.API.Service.AccountService;
 using Microsoft.EntityFrameworkCore;
 namespace HealthHup.API.Service.ModelService.PatientModelService.MedicalSessionModelService
 {
@@ -41,7 +42,7 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.MedicalSessionM
                 return "Must Select Patient";
 
             //PatientGivePermision
-            var PatientDates = await _patientDate.findByAsync(d => d.patientId == PatientAuth.Id && d.doctorId == Doctor.Id&&d.date.Date==DateTime.UtcNow.Date);
+            var PatientDates = await _patientDate.findByAsync(d => d.patientId == PatientAuth.Id && d.doctorId == Doctor.Id && d.date.Date == DateTime.UtcNow.Date);
             if (PatientDates.Count == 0)
                 return "The Patient Must Make A Pre-Bookin";
 
@@ -56,14 +57,12 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.MedicalSessionM
                 foreach (var r in input?.repentances)
                     if ((await _drugService.findAsync(d => d.Id == r.drugId)) == null)
                         return "Must Select Correct Drug";
-
             //Add|Update State Disease
             if (!(await DiseaseAsync(input, PatientAuth.Id, Doctor.Id)))
                 return "Try Agin";
+            
+            await CreateNewMedicalSession(Doctor.Id, PatientAuth.Id, input, input?.repentances);
 
-            //Create MedicalSession
-            if (!await CreateNewMedicalSession(Doctor.Id, PatientAuth.Id, input, input?.repentances))
-                return "Wait a Few Minutes And Try Again";
 
             return "Done";
         }
@@ -234,26 +233,20 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.MedicalSessionM
 
 
         //Create MedicalSession
-        private async Task<bool> CreateNewMedicalSession(Guid DoctorId,string PatientId,MedicalSession input,List<RepentanceDto>? repentances=null)
+        private async Task<bool> CreateNewMedicalSession(Guid DoctorId, string PatientId, MedicalSession input, List<RepentanceDto>? repentances = null)
         {
-            try
+            
+            input.DoctorId = DoctorId;
+            input.PatientId = PatientId;
+            if (repentances != null)
+            repentances.ForEach(r =>
             {
-                input.DoctorId = DoctorId;
-                input.PatientId = PatientId;
-                if (repentances != null)
-                    repentances.ForEach(r =>
-                    {
-                        Repentance NewRepentance = r;
-                        NewRepentance.drugId = r.drugId;
-                        input.repentances.Add(NewRepentance);
-                    });
-                await AddAsync(input);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+                Repentance NewRepentance = r;
+                NewRepentance.drugId = r.drugId;
+                input.repentances.Add(NewRepentance);
+            });
+            await AddAsync(input);
+            return true;
         }
         //Disease Switch
         public async Task<bool> DiseaseAsync(Disease input, string PatientId, Guid DoctorId)
@@ -262,27 +255,32 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.MedicalSessionM
             var disease = await _diseaseService.findByAsync(d => d.PatientId == PatientId && d.Name.ToUpper()==input.Name.ToUpper());
             if(disease.Count>0)
                 input.Id = disease[0].Id;
-            return disease.Count != 0 ? await UpdateDiseaseAsync(input, PatientId, DoctorId) :
+            return disease.Count != 0 ? await UpdateDiseaseAsync(input, disease[0], PatientId, DoctorId) :
                 await AddNewDiseaseAsync(input, PatientId, DoctorId);
         }
         private async Task<bool> AddNewDiseaseAsync(Disease input, string PatientId, Guid DoctorId)
         {
-            input.Id = Guid.NewGuid();
+            if (input.Cured)
+                return true;
+
             input.responsibledDoctorId = DoctorId;
             input.PatientId = PatientId;
             input.Notes = string.IsNullOrEmpty(input.Notes) ?
                 "" : $"[{DateOnly.FromDateTime(DateTime.UtcNow)}]:{input.Notes}";
             return await _diseaseService.AddAsync(input);
         }
-        private async Task<bool> UpdateDiseaseAsync(Disease input, string PatientId, Guid DoctorId)
+        private async  Task<bool> UpdateDiseaseAsync(Disease input,Disease disea, string PatientId, Guid DoctorId)
         {
-            var disea=await _diseaseService.findAsync(d => d.Id==input.Id);
-            disea.Cured = input?.Cured??false;
+            if (input.Cured)
+                return await _diseaseService.RemoveAsync(disea);
+            
             disea.Notes = string.IsNullOrEmpty(input?.Notes ?? "")
                 ? disea.Notes : $"{disea.Notes} \n\n[{DateOnly.FromDateTime(DateTime.UtcNow)}]:{input.Notes}";
+            
             disea.persistent = input.persistent;
+            
             disea.responsibledDoctorId = DoctorId;
-            _diseaseService.UpdateAsync(disea);
+            _db.Update(disea);
             return true;
         }
     }

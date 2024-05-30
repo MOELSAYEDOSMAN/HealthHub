@@ -18,12 +18,17 @@ namespace HealthHup.API.Service.ModelService.BaseModel
             await SaveChaneAsync();
             return true;
         }
+        
+
         public async Task<bool> UpdateAsync(T input)
         {
             _db.Set<T>().Update(input);
             await SaveChaneAsync();
+            _db.Dispose();
+
             return true;
         }
+        
         public async Task<bool> RemoveAsync(T input)
         {
            

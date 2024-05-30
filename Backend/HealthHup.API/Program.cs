@@ -112,23 +112,23 @@ builder.Services.AddSignalR();
     //Image
 builder.Services.AddTransient<ISaveImage, SaveImage>();
     //Message
-builder.Services.AddTransient<IMessageService, MessageService>();
+builder.Services.AddSingleton<IMessageService, MessageService>();
 //Account
 builder.Services.AddTransient<IAuthService, AuthService>();
 //Start DataBase
-builder.Services.AddTransient(typeof(IBaseService<>), typeof(BaseService<>));
+builder.Services.AddScoped(typeof(IBaseService<>), typeof(BaseService<>));
 //Address
 builder.Services.AddTransient<IGovermentService, GovermentService>();
 builder.Services.AddTransient<IAreaService, AreaService>();
 //Doctors
 builder.Services.AddTransient<IDoctorService, DoctorService>();
-builder.Services.AddTransient<IMedicalSessionService, MedicalSessionService>();
+builder.Services.AddScoped<IMedicalSessionService, MedicalSessionService>();
 //Patient
 builder.Services.AddTransient<IPatientDatesService, PatientDatesService>();
 builder.Services.AddTransient<IPatientInfoService, PatientInfoService>();
 builder.Services.AddTransient<IRateService, RateService>();
 //Drug
-builder.Services.AddTransient<IDrugModelApiService, DrugModelApiService>();
+builder.Services.AddScoped<IDrugModelApiService, DrugModelApiService>();
 //End DataBase
 
 //Api Ml

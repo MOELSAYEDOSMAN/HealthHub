@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 
 namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Service
 {
-    public class DoctorService:BaseService<Doctor>, IDoctorService
+    public partial class DoctorService:BaseService<Doctor>, IDoctorService
     {
         private readonly IAuthService _AuthService;
         private readonly ISaveImage _SaveImg;
@@ -110,7 +110,7 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
         public async Task<ListOutPutDoctors> GetDoctorsInArea(DoctorFilterInput input, string Email)
         {
             //Set Area
-            input.area = input?.area == Guid.Empty ? (await _AuthService.GetUserAsync(Email)).AreaId : input?.area;
+            input.area = input?.area == Guid.Empty ? await GetAreaIdPaientAsync(Email) : input?.area;
             //Get Doctors
             var Doctors = await findByAsync(d => d.areaId == input.area && d.drSpecialtieId == input.Specialtie && d.Accept == true,
                 new string[] { "doctor" });
@@ -129,12 +129,8 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
         //Get Doctors In Gove
         public async Task<ListOutPutDoctors> GetDoctorsInGove(DoctorFilterInput input, string Email)
         {
-            //Chrack Area
-            if (input?.goveId == null)
-                input.area = input?.area == Guid.Empty ? (await _AuthService.GetUserAsync(Email)).AreaId : input?.area;
-
             //Get Gove
-            var gove = (await _areaService.findAsync(a => a.Id == input.area)).governorateId;
+            var gove = input?.goveId??await GetGovermetPaient(Email);
 
             //Get Doctors
             if (gove == null)

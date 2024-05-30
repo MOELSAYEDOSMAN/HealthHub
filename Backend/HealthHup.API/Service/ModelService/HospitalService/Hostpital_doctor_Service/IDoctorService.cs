@@ -10,6 +10,7 @@
         Task<bool> ChangePriceSession(string Email, decimal price);
         Task<ListOutPutDoctors> GetDoctorsInArea(DoctorFilterInput input,string Email);
         Task<ListOutPutDoctors> GetDoctorsInGove(DoctorFilterInput input,string Email);
+        Task<ListOutPutDoctors> SerchDoctorWithName(string Name, DoctorFilterInput input, string email);
         Task<List<DoctorDate>> GetDoctorDatesAsync(string email);
         Task<string> AddAppointmentBookAsync(List<DoctorDate> Dates, string email);
         Task<string> EditAppointmentBookAsync(DoctorDate Dates, string DayNameOld, string email);

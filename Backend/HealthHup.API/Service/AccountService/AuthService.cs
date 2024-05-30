@@ -5,8 +5,10 @@ using Microsoft.IdentityModel.Tokens;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Net.Mail;
+using System.Runtime.CompilerServices;
 using System.Security.Claims;
 using System.Text;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HealthHup.API.Service.AccountService
 {
@@ -40,6 +42,11 @@ namespace HealthHup.API.Service.AccountService
             if (UserLogin == null||!await _userManager.CheckPasswordAsync(UserLogin, input.password))
                 return new OUser()
                 {Error=true,IsLogin=false,Message="Email Or Password Incorrect"};
+
+            if (!UserLogin.LockoutEnabled)
+                return new OUser()
+                { Error = true, IsLogin = false, Message = "Yor are blocked" };
+
             if(!UserLogin.EmailConfirmed)
                 return new OUser()
                 { Error = true, IsLogin = false, Message = "need Confirme Mail" };
@@ -66,9 +73,9 @@ namespace HealthHup.API.Service.AccountService
         {
             //Cheack Email Or UserName
             string UserName = new EmailAddressAttribute().IsValid(input.email) ? new MailAddress(input.email).User : input.email;
-
+            
             //Cheack If Main In DataBase
-            if (await _userManager.FindByNameAsync(UserName) != null)
+            if (await _userManager.FindByNameAsync(UserName.Replace(".",string.Empty)) != null)
                 return new()
                 { Error = true, IsLogin = false, Message = "The Email Is Registered" };
             //Cheack Area

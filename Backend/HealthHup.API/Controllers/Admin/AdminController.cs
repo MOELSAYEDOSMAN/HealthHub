@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Bcpg.Sig;
+using System.Text.RegularExpressions;
 
 
 namespace HealthHup.API.Controllers.Admin
@@ -16,6 +18,7 @@ namespace HealthHup.API.Controllers.Admin
             _normalUser = normalUser;
             _doctorService= doctorService;
         }
+        
         [HttpGet("PatientCount")]
         public async Task<IActionResult> PatientCount()
             => Ok(await _normalUser.CountAsync());

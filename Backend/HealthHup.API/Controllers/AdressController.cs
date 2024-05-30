@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 
 namespace HealthHup.API.Controllers
 {
@@ -16,16 +18,18 @@ namespace HealthHup.API.Controllers
             _GovernorateService = govermentService;
             _areaService = areaService;
         }
+       
         [HttpGet("GetGovernorate")]
         public async Task<IActionResult> GetGovernorates()
             =>Ok(await _GovernorateService.GetAllAsync());
         [HttpGet("GetAreas")]
         public async Task<IActionResult> GetAreas(string GovermentKey)
-            => Ok(await _areaService.GetAreasWithGoverment(GovermentKey));
+            => Ok(string.IsNullOrEmpty(GovermentKey)||string.IsNullOrWhiteSpace(GovermentKey)?new List<Governorate>()
+                :await _areaService.GetAreasWithGoverment(GovermentKey));
 
         //Add
         [HttpPost("PushGovernorate"),Authorize(Roles = "Admin,CustomerService")]
-        public async Task<IActionResult> PushGovernorate(string GovernorateKey)
+        public async Task<IActionResult> PushGovernorate([Required]string GovernorateKey)
             => Ok(await _GovernorateService.AddAsync(new Governorate()
             {
                 Id=Guid.NewGuid(),
@@ -33,7 +37,7 @@ namespace HealthHup.API.Controllers
             }));
      
         [HttpPost("PushArea"), Authorize(Roles = "Admin,CustomerService")]
-        public async Task<IActionResult> PushArea(string GovernorateKey, string areaKey)
+        public async Task<IActionResult> PushArea([Required]string GovernorateKey,[Required] string areaKey)
             => Ok(await _areaService.AddAsync(new Area()
             {
                 Id = Guid.NewGuid(),

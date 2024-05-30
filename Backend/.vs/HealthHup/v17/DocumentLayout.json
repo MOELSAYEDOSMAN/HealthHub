@@ -3,8 +3,24 @@
   "WorkspaceRootPath": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|d:\\project\\graduation projects\\findalproject\\healthhup\\backend\\healthhup.api\\service\\modelservice\\hospitalservice\\hostpital_doctor_service\\doctorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|solutionrelative:healthhup.api\\service\\modelservice\\hospitalservice\\hostpital_doctor_service\\doctorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Migrations\\20240530125548_AddNewNIDToApplicationUSer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:HealthHup.API\\Migrations\\20240530125548_AddNewNIDToApplicationUSer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|d:\\project\\graduation projects\\findalproject\\healthhup\\backend\\healthhup.api\\model\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|solutionrelative:healthhup.api\\model\\models\\applicationuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|d:\\project\\graduation projects\\findalproject\\healthhup\\backend\\healthhup.api\\model\\extion\\account\\inputregister.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|solutionrelative:healthhup.api\\model\\extion\\account\\inputregister.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|d:\\project\\graduation projects\\findalproject\\healthhup\\backend\\healthhup.api\\service\\accountservice\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|solutionrelative:healthhup.api\\service\\accountservice\\authservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|d:\\project\\graduation projects\\findalproject\\healthhup\\backend\\healthhup.api\\controllers\\adresscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|solutionrelative:healthhup.api\\controllers\\adresscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,23 +30,75 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "20240530125548_AddNewNIDToApplicationUSer.cs",
+              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Migrations\\20240530125548_AddNewNIDToApplicationUSer.cs",
+              "RelativeDocumentMoniker": "HealthHup.API\\Migrations\\20240530125548_AddNewNIDToApplicationUSer.cs",
+              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Migrations\\20240530125548_AddNewNIDToApplicationUSer.cs",
+              "RelativeToolTip": "HealthHup.API\\Migrations\\20240530125548_AddNewNIDToApplicationUSer.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-30T12:55:53.391Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ApplicationUser.cs",
+              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Model\\Models\\ApplicationUser.cs",
+              "RelativeDocumentMoniker": "HealthHup.API\\Model\\Models\\ApplicationUser.cs",
+              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Model\\Models\\ApplicationUser.cs",
+              "RelativeToolTip": "HealthHup.API\\Model\\Models\\ApplicationUser.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-30T12:54:14.644Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "InputRegister.cs",
+              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Model\\Extion\\Account\\InputRegister.cs",
+              "RelativeDocumentMoniker": "HealthHup.API\\Model\\Extion\\Account\\InputRegister.cs",
+              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Model\\Extion\\Account\\InputRegister.cs",
+              "RelativeToolTip": "HealthHup.API\\Model\\Extion\\Account\\InputRegister.cs",
+              "ViewState": "AQIAABMAAAAAAAAAAAAcwBsAAAA3AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-30T12:54:07.416Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DoctorService.cs",
-              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Service\\ModelService\\HospitalService\\Hostpital_doctor_Service\\DoctorService.cs",
-              "RelativeDocumentMoniker": "HealthHup.API\\Service\\ModelService\\HospitalService\\Hostpital_doctor_Service\\DoctorService.cs",
-              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Service\\ModelService\\HospitalService\\Hostpital_doctor_Service\\DoctorService.cs",
-              "RelativeToolTip": "HealthHup.API\\Service\\ModelService\\HospitalService\\Hostpital_doctor_Service\\DoctorService.cs",
-              "ViewState": "AQIAADcAAAAAAAAAAAAvwEkAAABCAAAA",
+              "DocumentIndex": 4,
+              "Title": "AdressController.cs",
+              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Controllers\\AdressController.cs",
+              "RelativeDocumentMoniker": "HealthHup.API\\Controllers\\AdressController.cs",
+              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Controllers\\AdressController.cs",
+              "RelativeToolTip": "HealthHup.API\\Controllers\\AdressController.cs",
+              "ViewState": "AQIAAAsAAAAAAAAAAAAQwBQAAAAHAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-12T23:47:38.659Z",
+              "WhenOpened": "2024-05-30T12:25:20.145Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "AuthService.cs",
+              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Service\\AccountService\\AuthService.cs",
+              "RelativeDocumentMoniker": "HealthHup.API\\Service\\AccountService\\AuthService.cs",
+              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Service\\AccountService\\AuthService.cs",
+              "RelativeToolTip": "HealthHup.API\\Service\\AccountService\\AuthService.cs",
+              "ViewState": "AQIAAB4AAAAAAAAAAAAuwEcAAAA8AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-30T10:58:36.233Z",
               "EditorCaption": ""
             }
           ]

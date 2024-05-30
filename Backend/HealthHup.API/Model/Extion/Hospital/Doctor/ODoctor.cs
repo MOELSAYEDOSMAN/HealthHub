@@ -51,7 +51,14 @@
             };
         }
 
+        public static IEnumerable<ODoctor> Doctors(IList<Model.Models.Hospital.Doctor>? input)
+        {
+            foreach (var d in input)
+                yield return d;
+        }
+
     }
+    
     public class ListOutPutDoctors
     {
         public List<ODoctor> Doctors { get; set;}=new List<ODoctor>();

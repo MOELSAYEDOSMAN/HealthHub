@@ -1,5 +1,6 @@
 ﻿using HealthHup.API.Model.Extion.Account;
 using HealthHup.API.Service.AccountService;
+using HealthHup.API.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -55,8 +56,11 @@ namespace HealthHup.API.Controllers.Hospital
             var Email = User.FindFirstValue(ClaimTypes.Email);
             return Ok(ChangeImageDoctors(await _doctorService.GetDoctorsInGove(input, Email)));
         }
-        
-        
+       
+        [HttpGet("SerchDoctorsWithName"), Authorize]
+        public async Task<IActionResult> SerchDoctorsWithName([SerchValidation,MinLength(3)] string DoctorName, [FromQuery] DoctorFilterInput input)
+            => Ok(await _doctorService.SerchDoctorWithName(DoctorName,input, User.FindFirstValue(ClaimTypes.Email)));
+
         //Get Doctors Not Active
         [HttpGet("GetDoctorsNotActive"), Authorize(Roles = "Admin,CustomerService")]
         public async Task<IActionResult> GetDoctorsNotActive(uint index=0)

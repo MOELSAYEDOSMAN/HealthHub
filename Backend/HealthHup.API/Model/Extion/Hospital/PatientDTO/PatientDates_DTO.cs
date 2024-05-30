@@ -3,6 +3,7 @@
     public class PatientDates_DTO
     {
         //Doctor Information
+        public string? doctorId { get; set; }
         public string doctorName { get; set; }
         public string doctorSpecialty { get; set; }
         public string areaName { get; set; }
@@ -18,6 +19,7 @@
         public static implicit operator PatientDates_DTO(PatientDates input)
             => new PatientDates_DTO()
             {
+                doctorId= input?.doctor?.doctorId,
                 doctorName=input?.doctor?.doctor?.Name,
                 areaName = input?.doctor?.area.key,
                 governorateName = input?.doctor?.area?.governorate?.key,

@@ -122,6 +122,10 @@ namespace HealthHup.API.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
+                    b.Property<string>("nationalID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("src")
                         .HasColumnType("nvarchar(max)");
 
