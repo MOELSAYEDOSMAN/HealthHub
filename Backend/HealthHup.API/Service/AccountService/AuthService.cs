@@ -111,8 +111,8 @@ namespace HealthHup.API.Service.AccountService
             }
             //Give Defulte Role
             await _userManager.AddToRoleAsync(UserRegister, "Patient");
+           
             await _messageService.ConfirmAccount(input.email, $"{_env.HttpContext.Request.Scheme}://{_env.HttpContext.Request.Host}/Auth/ConfiermMail?email={input.email}&token={await _userManager.GenerateEmailConfirmationTokenAsync(UserRegister)}");
-            
             return new() { Message = $"Cheack Mail to Confirem Mail", IsLogin = false,Error=false};
         }
         
@@ -122,13 +122,18 @@ namespace HealthHup.API.Service.AccountService
             //Cheack IF User In DB
             if (User == null)
                 return false;
+ 
             //Cheack IF Confirmed
             if (User.EmailConfirmed)
                 return false;
+
+
             //Confirm
-            var result = await _userManager.ConfirmEmailAsync(User, token);
+            var result = await _userManager.ConfirmEmailAsync(User, token.Replace(' ','+'));
             if (!result.Succeeded)
                 return false;
+
+ 
 
             return true;
 
