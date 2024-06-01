@@ -12,6 +12,7 @@ using HealthHup.API.Hubs.ChatHubFolder;
 using Hangfire;
 using HealthHup.API.Service.MlService;
 using HealthHup.API.Service.ModelService.HospitalService.DrugModelService;
+using HealthHup.API.Service.ModelService.HospitalService.DoctorDates;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -123,6 +124,7 @@ builder.Services.AddTransient<IAreaService, AreaService>();
 //Doctors
 builder.Services.AddTransient<IDoctorService, DoctorService>();
 builder.Services.AddScoped<IMedicalSessionService, MedicalSessionService>();
+builder.Services.AddTransient<IDoctorDateService, DoctorDateService>();
 //Patient
 builder.Services.AddTransient<IPatientDatesService, PatientDatesService>();
 builder.Services.AddTransient<IPatientInfoService, PatientInfoService>();

@@ -1,5 +1,6 @@
 ﻿using HealthHup.API.Model.Extion.Account;
 using HealthHup.API.Service.AccountService;
+using HealthHup.API.Service.ModelService.HospitalService.DoctorDates;
 using HealthHup.API.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,13 +17,16 @@ namespace HealthHup.API.Controllers.Hospital
     {
         private readonly IAuthService _authService;
         private readonly IDoctorService _doctorService;
+        private readonly IDoctorDateService _doctorDateService;
         private readonly IPatientDatesService _patientDatesService;
         private readonly IMessageService _MessageService;
-        public DoctorController(IDoctorService doctorService, IPatientDatesService patientDatesService,IAuthService authService)
+        public DoctorController(IDoctorService doctorService, IPatientDatesService patientDatesService,
+            IAuthService authService, IDoctorDateService doctorDateService)
         {
             _doctorService = doctorService;
             _patientDatesService = patientDatesService;
             _authService = authService;
+            _doctorDateService= doctorDateService;
 
         }
         //Get Doctors Active
@@ -181,7 +185,16 @@ namespace HealthHup.API.Controllers.Hospital
             return Ok(await _doctorService.ReoveAppointmentBookAsync(OldDayName, User.FindFirstValue(ClaimTypes.Email)));
         }
 
+        [HttpDelete("CancelPatientDate"), Authorize(Roles = "Doctor")]
+        public async Task<IActionResult> CancelPatientDate([Required, SerchValidation] string PatientEmail)
+            => Ok(await _doctorDateService.CancelDate(User.FindFirstValue(ClaimTypes.Email),PatientEmail));
 
+        [HttpPut("ChangePatientDate"), Authorize(Roles = "Doctor")]
+        public async Task<IActionResult> ChangePatientDate([Required, SerchValidation] string PatientEmail,PatientDateInput input)
+            => Ok(await _doctorDateService.ChangeDate(User.FindFirstValue(ClaimTypes.Email), PatientEmail,input));
+        [HttpPost("PushPatientDate"), Authorize(Roles = "Doctor")]
+        public async Task<IActionResult> PushPatientDate([Required, SerchValidation] string PatientEmail, PatientDateInput input)
+            => Ok(await _doctorDateService.PushDate(User.FindFirstValue(ClaimTypes.Email), PatientEmail, input));
 
 
 

@@ -43,6 +43,7 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.MedicalSessionM
 
             //PatientGivePermision
             var PatientDates = await _patientDate.findByAsync(d => d.patientId == PatientAuth.Id && d.doctorId == Doctor.Id && d.date.Date == DateTime.UtcNow.Date);
+            
             if (PatientDates.Count == 0)
                 return "The Patient Must Make A Pre-Bookin";
 
@@ -62,7 +63,7 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.MedicalSessionM
                 return "Try Agin";
             
             await CreateNewMedicalSession(Doctor.Id, PatientAuth.Id, input, input?.repentances);
-
+            await _patientDate.RemoveAsync(PatientDates[0]);
 
             return "Done";
         }

@@ -4,6 +4,7 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
 {
     public partial class DoctorService
     {
+        //Get Doctor With Name
         public async Task<ListOutPutDoctors> SerchDoctorWithName(string Name, DoctorFilterInput input,string email)
         {
             var govId = input?.goveId ?? await GetGovermetPaient(email);
@@ -32,5 +33,8 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
             var gove = (await _areaService.findAsNotTrakingync(a=>a.Id==areaid)).governorateId;
             return gove;
         }
+
+        
+
     }
 }

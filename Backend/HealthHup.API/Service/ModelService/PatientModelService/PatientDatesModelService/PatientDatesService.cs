@@ -93,7 +93,8 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.PatientDatesMod
 
             //Get Date
             var date = await findAsync(d => d.Id == PaintDateid && d.patientId == usr.Id);
-            if (date == null) return false;
+            if (date == null ||date.date<DateTime.Now)
+                return false;
             await RemoveAsync(date);
             return true;
         }
