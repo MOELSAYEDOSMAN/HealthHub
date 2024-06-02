@@ -1,5 +1,6 @@
 ﻿using HealthHup.API.Model.Extion.Account;
 using HealthHup.API.Service.AccountService;
+using HealthHup.API.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
@@ -13,9 +14,11 @@ namespace HealthHup.API.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAuthService _authService;
-        public AuthController(IAuthService authService)
+        private readonly IAdminLogs _adminLog;
+        public AuthController(IAuthService authService, IAdminLogs adminLog)
         {
             _authService = authService;
+            _adminLog = adminLog;
         }
 
         [HttpGet("GetUser"), Authorize]
@@ -80,20 +83,29 @@ namespace HealthHup.API.Controllers
 
 
         [HttpPut("AddRole"), Authorize(Roles = "Admin,CustomerService")]
-        public async Task<IActionResult> AddRoles(string Email, string Role)
+        public async Task<IActionResult> AddRoles([SerchValidation] string Email,[SerchValidation,RolesValidation] string Role)
         {
-            if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Role))
-                return BadRequest("Must Enter Email And Role");
+            if (!ModelState.IsValid)
+                return BadRequest("Select Role");
+            if ("Doctor".Equals(Role))
+                await _adminLog.AddDoctor(User.FindFirstValue(ClaimTypes.Email), Email);
+            else
+                await _adminLog.AddAdmin(User.FindFirstValue(ClaimTypes.Email), Email);
+
             return Ok(await _authService.AddRoleAsync(Email, Role));
         }
 
 
         [HttpPut("RemoveRole"), Authorize(Roles = "Admin,CustomerService")]
-        public async Task<IActionResult> RemoveRole(string Email, string Role)
+        public async Task<IActionResult> RemoveRole([SerchValidation] string Email, [ RolesValidation] string Role)
         {
-            if (string.IsNullOrEmpty(Email) || string.IsNullOrEmpty(Role))
-                return BadRequest("Must Enter Email And Role");
-           return Ok(await _authService.RemoveRoleAsync(Email, Role));
+            if (!ModelState.IsValid)
+                return BadRequest("Select Role");
+            if ("Doctor".Equals(Role))
+                await _adminLog.AddDoctor(User.FindFirstValue(ClaimTypes.Email), Email);
+            else
+                await _adminLog.AddAdmin(User.FindFirstValue(ClaimTypes.Email), Email);
+            return Ok(await _authService.RemoveRoleAsync(Email, Role));
         }
 
 

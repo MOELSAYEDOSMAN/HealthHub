@@ -22,7 +22,8 @@ namespace HealthHup.API.Service.AccountService
         private readonly IHttpContextAccessor _env;
         private readonly IMessageService _messageService;
         public AuthService(UserManager<ApplicationUser> userManager, IOptions<Jwt> jwt,ISaveImage saveimg,IAreaService areaService
-            , IBaseService<Doctor> doctorService, IHttpContextAccessor env,IMessageService messageService)
+            , IBaseService<Doctor> doctorService, IHttpContextAccessor env,
+            IMessageService messageService)
         {
             _userManager = userManager;
             _SvImg = saveimg;
@@ -150,6 +151,9 @@ namespace HealthHup.API.Service.AccountService
                 return "User Have Role";
 
             await _userManager.AddToRoleAsync(User,Role);
+            
+           
+            
             return "Success";
         }
         public async Task<string> RemoveRoleAsync(string Email, string Role)
@@ -163,6 +167,7 @@ namespace HealthHup.API.Service.AccountService
                 return "User Role Not Contains Role";
 
             await _userManager.RemoveFromRoleAsync(User, Role);
+            
             return "Success";
         }
         public async Task<bool> ChaneImageUserAsync(string Email, IFormFile img)

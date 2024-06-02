@@ -439,6 +439,36 @@ namespace HealthHup.API.Migrations
                     b.ToTable("Specialties");
                 });
 
+            modelBuilder.Entity("HealthHup.API.Model.Models.Logs.LogAdminAction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AdminId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("adminAction")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("dateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AdminId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AdminLogs");
+                });
+
             modelBuilder.Entity("HealthHup.API.Model.Models.PharmacyModel.Pharmacy", b =>
                 {
                     b.Property<Guid>("Id")
@@ -879,6 +909,21 @@ namespace HealthHup.API.Migrations
                     b.Navigation("Patient");
 
                     b.Navigation("doctor");
+                });
+
+            modelBuilder.Entity("HealthHup.API.Model.Models.Logs.LogAdminAction", b =>
+                {
+                    b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "Admin")
+                        .WithMany()
+                        .HasForeignKey("AdminId");
+
+                    b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("Admin");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("HealthHup.API.Model.Models.PharmacyModel.Pharmacy", b =>

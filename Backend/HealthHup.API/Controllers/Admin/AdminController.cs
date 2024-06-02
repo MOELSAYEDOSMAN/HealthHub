@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using HealthHup.API.Model.Extion.AdminLog;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Org.BouncyCastle.Bcpg.Sig;
+using System.Security.Claims;
 using System.Text.RegularExpressions;
 
 
@@ -12,11 +14,13 @@ namespace HealthHup.API.Controllers.Admin
     {
         private readonly IBaseService<ApplicationUser> _normalUser;
         private readonly IDoctorService _doctorService;
-
-        public AdminController(IBaseService<ApplicationUser> normalUser, IDoctorService doctorService)
+        private readonly IAdminLogs _adminLogs;
+        public AdminController(IBaseService<ApplicationUser> normalUser, IDoctorService doctorService
+            ,IAdminLogs adminLogs)
         {
             _normalUser = normalUser;
             _doctorService= doctorService;
+            _adminLogs = adminLogs;
         }
         
         [HttpGet("PatientCount")]
@@ -25,5 +29,8 @@ namespace HealthHup.API.Controllers.Admin
         [HttpGet("DoctorCount")]
         public async Task<IActionResult> DoctorCount()
             => Ok(await _doctorService.CountAsync());
+        [HttpGet("AdminLogs")]
+        public async Task<IActionResult> AdminLogs(string?AdminEmail)
+            =>Ok(AdminLogsDTO.ConvertFromLogAdminAction(await _adminLogs.GetAdminActions(AdminEmail ?? User.FindFirstValue(ClaimTypes.Email))));
     }
 }

@@ -20,14 +20,15 @@ namespace HealthHup.API.Controllers.Hospital
         private readonly IDoctorDateService _doctorDateService;
         private readonly IPatientDatesService _patientDatesService;
         private readonly IMessageService _MessageService;
+        private readonly IAdminLogs _adminLgos;
         public DoctorController(IDoctorService doctorService, IPatientDatesService patientDatesService,
-            IAuthService authService, IDoctorDateService doctorDateService)
+            IAuthService authService, IDoctorDateService doctorDateService,IAdminLogs adminLog)
         {
             _doctorService = doctorService;
             _patientDatesService = patientDatesService;
             _authService = authService;
             _doctorDateService= doctorDateService;
-
+            _adminLgos=adminLog;
         }
         //Get Doctors Active
         [HttpGet("CheackRoleDoctor"),Authorize]
@@ -162,7 +163,7 @@ namespace HealthHup.API.Controllers.Hospital
                 var doctore = await _doctorService.GetDoctorAsync(Id);
                 await _MessageService.SendMessage(doctore.Email, $"Your Request Has been Approved!", "Green");
             }
-            return Ok(await _doctorService.ActionDoctorAsync(Id, action));
+            return Ok(await _doctorService.ActionDoctorAsync(Id, action, User.FindFirstValue(ClaimTypes.Email)));
         }
 
         [HttpGet("SendMessageToDoctor"), Authorize(Roles = "Admin,CustomerService")]

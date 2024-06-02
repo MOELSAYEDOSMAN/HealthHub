@@ -4,7 +4,7 @@
     {
         Task<ListOutPutDoctors> GetDoctorsNotActiveAsync(int index);
         Task<InputDoctor> AddDoctorAsync(InputDoctor input, string Email, List<IFormFile> Certificates);
-        Task<bool> ActionDoctorAsync(Guid Id, bool Accespt);
+        Task<bool> ActionDoctorAsync(Guid Id, bool Accespt, string adminEmail);
         Task<ODoctor?> GetDoctorAsync(Guid Id);
         Task<string> GetDoctorSpecialtie(string email);
         Task<bool> ChangePriceSession(string Email, decimal price);

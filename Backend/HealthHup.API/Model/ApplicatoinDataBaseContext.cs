@@ -25,7 +25,8 @@ namespace HealthHup.API.Model
         public DbSet<Review> Reviews { get; set; }
         //Patient
         public DbSet<MedicalSession> MedicalSessions { get; set; }
-
+        //Admin
+        public DbSet<LogAdminAction> LogAdminActions { get; set; }
         //realTime
         //Chat=>Group
         public DbSet<Group> Groups { get; set; }

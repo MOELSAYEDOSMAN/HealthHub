@@ -14,7 +14,11 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
         private readonly IAreaService _areaService;
         private readonly IBaseService<Governorate> _governorate;
         private readonly IBaseService<Disease> _diseaseService;
-        public DoctorService(ApplicatoinDataBaseContext db,IAuthService authService, ISaveImage saveImg, IBaseService<Specialtie> specialtieService, IAreaService areaService,IBaseService<Governorate> gove, IBaseService<Disease> diseaseService) : base(db)
+        private readonly IAdminLogs _adminLogs;
+        public DoctorService(ApplicatoinDataBaseContext db,IAuthService authService,
+            ISaveImage saveImg, IBaseService<Specialtie> specialtieService,
+            IAreaService areaService,IBaseService<Governorate> gove,
+            IBaseService<Disease> diseaseService, IAdminLogs adminLogs) : base(db)
         {
             _AuthService = authService;
             _SaveImg = saveImg;
@@ -22,6 +26,7 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
             _areaService = areaService;
             _governorate = gove;
             _diseaseService = diseaseService;
+            _adminLogs = adminLogs;
         }
         //Get Singale
 
@@ -212,9 +217,9 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
 
         //Action Doctor To Active
         #region ActionWithDoctor
-        public async Task<bool> ActionDoctorAsync(Guid Id, bool Accespt)
-        => Accespt ? await AccseptDoctorAsync(Id) : await RefusalDoctorAsync(Id);
-        private async Task<bool> AccseptDoctorAsync(Guid Id)
+        public async Task<bool> ActionDoctorAsync(Guid Id, bool Accespt,string adminEmail)
+        => Accespt ? await AccseptDoctorAsync(Id,adminEmail) : await RefusalDoctorAsync(Id);
+        private async Task<bool> AccseptDoctorAsync(Guid Id, string adminEmail)
         {
             var doctor = await findAsync(x => x.Id == Id, new string[] { "doctor" });
             if (doctor == null)
@@ -224,6 +229,9 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
             //Add Role
             if (doctor.doctor != null)
                 await _AuthService.AddRoleAsync(doctor?.doctor?.Email, "Doctor");
+
+            await _adminLogs.AddAdmin(adminEmail, doctor?.doctor?.Email);
+
             return await UpdateAsync(doctor);
         }
         private async Task<bool> RefusalDoctorAsync(Guid Id)

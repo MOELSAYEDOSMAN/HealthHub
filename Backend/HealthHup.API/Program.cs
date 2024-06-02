@@ -15,6 +15,7 @@ using HealthHup.API.Service.ModelService.HospitalService.DrugModelService;
 using HealthHup.API.Service.ModelService.HospitalService.DoctorDates;
 
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -131,6 +132,8 @@ builder.Services.AddTransient<IPatientInfoService, PatientInfoService>();
 builder.Services.AddTransient<IRateService, RateService>();
 //Drug
 builder.Services.AddScoped<IDrugModelApiService, DrugModelApiService>();
+//Logs
+builder.Services.AddTransient<IAdminLogs,AdminLogsService>();
 //End DataBase
 
 //Api Ml

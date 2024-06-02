@@ -3,24 +3,20 @@
   "WorkspaceRootPath": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|d:\\project\\graduation projects\\findalproject\\healthhup\\backend\\healthhup.api\\service\\modelservice\\hospitalservice\\doctordates\\doctordateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|solutionrelative:healthhup.api\\service\\modelservice\\hospitalservice\\doctordates\\doctordateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|d:\\project\\graduation projects\\findalproject\\healthhup\\backend\\healthhup.api\\model\\extion\\adminlog\\adminlogsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|solutionrelative:healthhup.api\\model\\extion\\adminlog\\adminlogsdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|d:\\project\\graduation projects\\findalproject\\healthhup\\backend\\healthhup.api\\controllers\\hospital\\doctorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|solutionrelative:healthhup.api\\controllers\\hospital\\doctorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|d:\\project\\graduation projects\\findalproject\\healthhup\\backend\\healthhup.api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|solutionrelative:healthhup.api\\controllers\\admin\\admincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|d:\\project\\graduation projects\\findalproject\\healthhup\\backend\\healthhup.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|solutionrelative:healthhup.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|d:\\project\\graduation projects\\findalproject\\healthhup\\backend\\healthhup.api\\validation\\ratevalidation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|solutionrelative:healthhup.api\\validation\\ratevalidation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|d:\\project\\graduation projects\\findalproject\\healthhup\\backend\\healthhup.api\\service\\modelservice\\hospitalservice\\doctordates\\idoctordateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|solutionrelative:healthhup.api\\service\\modelservice\\hospitalservice\\doctordates\\idoctordateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|d:\\project\\graduation projects\\findalproject\\healthhup\\backend\\healthhup.api\\service\\modelservice\\hospitalservice\\hostpital_doctor_service\\doctorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|solutionrelative:healthhup.api\\service\\modelservice\\hospitalservice\\hostpital_doctor_service\\doctorservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|d:\\project\\graduation projects\\findalproject\\healthhup\\backend\\healthhup.api\\validation\\rolesvalidation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|solutionrelative:healthhup.api\\validation\\rolesvalidation.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -30,71 +26,58 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "DoctorController.cs",
-              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Controllers\\Hospital\\DoctorController.cs",
-              "RelativeDocumentMoniker": "HealthHup.API\\Controllers\\Hospital\\DoctorController.cs",
-              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Controllers\\Hospital\\DoctorController.cs",
-              "RelativeToolTip": "HealthHup.API\\Controllers\\Hospital\\DoctorController.cs",
-              "ViewState": "AQIAALUAAAAAAAAAAAAgwL8AAAAZAAAA",
+              "Title": "AdminController.cs",
+              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Controllers\\Admin\\AdminController.cs",
+              "RelativeDocumentMoniker": "HealthHup.API\\Controllers\\Admin\\AdminController.cs",
+              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Controllers\\Admin\\AdminController.cs",
+              "RelativeToolTip": "HealthHup.API\\Controllers\\Admin\\AdminController.cs",
+              "ViewState": "AQIAAAoAAAAAAAAAAAAAAB8AAAAeAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T08:15:21.576Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Program.cs",
-              "RelativeDocumentMoniker": "HealthHup.API\\Program.cs",
-              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Program.cs",
-              "RelativeToolTip": "HealthHup.API\\Program.cs",
-              "ViewState": "AQIAAHQAAAAAAAAAAAAAAH4AAAAwAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T08:13:48.871Z",
+              "WhenOpened": "2024-06-02T23:22:32.225Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "DoctorDateService.cs",
-              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Service\\ModelService\\HospitalService\\DoctorDates\\DoctorDateService.cs",
-              "RelativeDocumentMoniker": "HealthHup.API\\Service\\ModelService\\HospitalService\\DoctorDates\\DoctorDateService.cs",
-              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Service\\ModelService\\HospitalService\\DoctorDates\\DoctorDateService.cs",
-              "RelativeToolTip": "HealthHup.API\\Service\\ModelService\\HospitalService\\DoctorDates\\DoctorDateService.cs",
-              "ViewState": "AQIAACQAAAAAAAAAAAAowC0AAAAiAAAA",
+              "Title": "AdminLogsDTO.cs",
+              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Model\\Extion\\AdminLog\\AdminLogsDTO.cs",
+              "RelativeDocumentMoniker": "HealthHup.API\\Model\\Extion\\AdminLog\\AdminLogsDTO.cs",
+              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Model\\Extion\\AdminLog\\AdminLogsDTO.cs",
+              "RelativeToolTip": "HealthHup.API\\Model\\Extion\\AdminLog\\AdminLogsDTO.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA4AAAAjAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T07:43:42.888Z",
+              "WhenOpened": "2024-06-02T23:15:57.055Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RateValidation.cs",
+              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Validation\\RateValidation.cs",
+              "RelativeDocumentMoniker": "HealthHup.API\\Validation\\RateValidation.cs",
+              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Validation\\RateValidation.cs",
+              "RelativeToolTip": "HealthHup.API\\Validation\\RateValidation.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAQAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-02T22:43:00.423Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "IDoctorDateService.cs",
-              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Service\\ModelService\\HospitalService\\DoctorDates\\IDoctorDateService.cs",
-              "RelativeDocumentMoniker": "HealthHup.API\\Service\\ModelService\\HospitalService\\DoctorDates\\IDoctorDateService.cs",
-              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Service\\ModelService\\HospitalService\\DoctorDates\\IDoctorDateService.cs",
-              "RelativeToolTip": "HealthHup.API\\Service\\ModelService\\HospitalService\\DoctorDates\\IDoctorDateService.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAAwAAAA",
+              "Title": "RolesValidation.cs",
+              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Validation\\RolesValidation.cs",
+              "RelativeDocumentMoniker": "HealthHup.API\\Validation\\RolesValidation.cs",
+              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Validation\\RolesValidation.cs",
+              "RelativeToolTip": "HealthHup.API\\Validation\\RolesValidation.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAiAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T07:43:29.122Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "DoctorService.cs",
-              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Service\\ModelService\\HospitalService\\Hostpital_doctor_Service\\DoctorService.cs",
-              "RelativeDocumentMoniker": "HealthHup.API\\Service\\ModelService\\HospitalService\\Hostpital_doctor_Service\\DoctorService.cs",
-              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Service\\ModelService\\HospitalService\\Hostpital_doctor_Service\\DoctorService.cs",
-              "RelativeToolTip": "HealthHup.API\\Service\\ModelService\\HospitalService\\Hostpital_doctor_Service\\DoctorService.cs",
-              "ViewState": "AQIAAAYAAAAAAAAAAAAAAAoAAAAIAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-01T07:39:01.701Z",
+              "WhenOpened": "2024-06-02T22:42:57.086Z",
               "EditorCaption": ""
             },
             {
