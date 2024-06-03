@@ -40,7 +40,7 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.PatientGeneralI
         }
 
         //Get Repentance
-        public async Task<List<PatientRepentanceDTO>?> GetRepentanceAsync(string email)
+        public async Task<IEnumerable<PatientRepentanceDTO>?> GetRepentanceAsync(string email)
         {
             var Patient = await _authService.GetUserAsync(email);
             if (Patient == null)
@@ -48,13 +48,14 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.PatientGeneralI
 
             var MedicalSessions
                 =await _db.MedicalSessions.Where(m => m.PatientId == Patient.Id)
-                .Include(m => m.repentances).ThenInclude(r => r.drug).ToListAsync();
+                .Include(m=>m.Doctor).ThenInclude(d=>d.doctor)
+                .Include(m => m.repentances).ThenInclude(r => r.drug).ToListAsync()
+                ;
             if (MedicalSessions?.Count == 0)
                 return null;
 
-            var Result = new List<PatientRepentanceDTO>();
-            MedicalSessions.ForEach(m =>Result.Add(m));
-            return Result;
+            
+            return PatientRepentanceDTO.ConvertFromMedicalSession(MedicalSessions);
         }
         public async Task<List<Drug>?> GetCurrentDrugs(string email)
         {
