@@ -9,6 +9,7 @@
         Task<List<OutMedicalList>?> GetMedicalSessionsWithDoctorAsync(string email, Guid DoctorId);
         Task<List<OutMedicalList>?> GetMedicalSessionsWithPatientAsync(string emailDoctor, string emailPatient);
         Task<List<OutMedicalList>?> GetMedicalSessionsWithDiseaseAsync(string Email, string Disease);
+        Task<List<MedicalSession>?> GetMedicalSessionsWithDiseaseCuredAsync(string Id, string Disease);
         //Put
         Task<string> RemoveMedicalSessionNewDrugsAsync(string emailDoctor, string emailPaient, List<string> RemovedRepentances);
         Task<string> AddMedicalSessionNewDrugsAsync(string emailDoctor, string emailPaient, List<RepentanceDto> newRepentances);

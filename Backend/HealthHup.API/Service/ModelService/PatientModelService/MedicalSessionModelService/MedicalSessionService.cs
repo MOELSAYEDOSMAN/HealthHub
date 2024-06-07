@@ -1,5 +1,6 @@
 ﻿using Hangfire.Storage.Monitoring;
 using HealthHup.API.Service.AccountService;
+using HealthHup.API.Service.Notification;
 using Microsoft.EntityFrameworkCore;
 namespace HealthHup.API.Service.ModelService.PatientModelService.MedicalSessionModelService
 {
@@ -13,7 +14,12 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.MedicalSessionM
         private readonly IBaseService<Repentance> _repentanceService;
         private readonly IBaseService<Disease> _diseaseService;
         private readonly IBaseService<PatientDates> _patientDate;
-        public MedicalSessionService(ApplicatoinDataBaseContext db, IAuthService authService, IDoctorService dctorService, IBaseService<Drug> drugService, IBaseService<Repentance> repentanceService, IBaseService<Disease> diseaseService, IBaseService<PatientDates> patientDate) : base(db)
+        private readonly INotifiyService _notifiyService;
+
+        public MedicalSessionService(ApplicatoinDataBaseContext db, IAuthService authService,
+            IDoctorService dctorService, IBaseService<Drug> drugService, 
+            IBaseService<Repentance> repentanceService, IBaseService<Disease> diseaseService,
+            IBaseService<PatientDates> patientDate, INotifiyService notifiyService) : base(db)
         {
             _authService = authService;
             _dctorService = dctorService;
@@ -21,6 +27,7 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.MedicalSessionM
             _repentanceService = repentanceService;
             _diseaseService = diseaseService;
             _patientDate = patientDate;
+            _notifiyService = notifiyService;
 
         }
 
@@ -64,7 +71,7 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.MedicalSessionM
             
             await CreateNewMedicalSession(Doctor.Id, PatientAuth.Id, input, input?.repentances);
             await _patientDate.RemoveAsync(PatientDates[0]);
-
+            await _notifiyService.RateDoctor(PatientAuth,$"Don't Forget Rate Dr\\{DoctorAuth.Name}");
             return "Done";
         }
 
@@ -231,6 +238,15 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.MedicalSessionM
             return result;
         }
 
+
+        public async Task<List<MedicalSession>?> GetMedicalSessionsWithDiseaseCuredAsync(string Id, string Disease)
+        {
+            var MedicalSessionDoctors
+                = await findByAsync(m => m.PatientId == Id && m.DiseaseName.ToUpper().Contains(Disease), new string[] { "repentances", "Doctor" });
+            if (MedicalSessionDoctors.Count == 0)
+                return new List<MedicalSession>();
+            return MedicalSessionDoctors.ToList();
+        }
 
 
         //Create MedicalSession

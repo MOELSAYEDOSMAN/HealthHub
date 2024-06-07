@@ -12,13 +12,10 @@ namespace HealthHup.API.Controllers.Hospital
     public class SpecialtiesController : ControllerBase
     {
         private readonly IBaseService<Specialtie> _SpecialtieService;
-        private readonly IAuthService _doctorService;
-        private readonly IMessageService _messageService;
-        public SpecialtiesController(IBaseService<Specialtie> SpecialtieService, IAuthService doctorService, IMessageService messageService)
+   
+        public SpecialtiesController(IBaseService<Specialtie> SpecialtieService)
         {
             _SpecialtieService = SpecialtieService;
-            _doctorService = doctorService;
-            _messageService = messageService;
         }
         
         [HttpGet]

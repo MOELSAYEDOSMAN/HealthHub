@@ -13,6 +13,10 @@ using Hangfire;
 using HealthHup.API.Service.MlService;
 using HealthHup.API.Service.ModelService.HospitalService.DrugModelService;
 using HealthHup.API.Service.ModelService.HospitalService.DoctorDates;
+using HealthHup.API.Service.ModelService.Admin.Alerts;
+using HealthHup.API.Service.BackGroundJobs.Dates;
+using Microsoft.Data.SqlClient;
+using HealthHup.API.Service.Notification;
 
 
 
@@ -112,9 +116,10 @@ bui => bui.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod())
 builder.Services.AddSignalR();
 //Start Inject Service
     //Image
-builder.Services.AddTransient<ISaveImage, SaveImage>();
+builder.Services.AddTransient<ISaveImage, ImageService>();
     //Message
-builder.Services.AddSingleton<IMessageService, MessageService>();
+builder.Services.AddTransient<ISendMessageService, SendMEssageService>();
+
 //Account
 builder.Services.AddTransient<IAuthService, AuthService>();
 //Start DataBase
@@ -134,6 +139,12 @@ builder.Services.AddTransient<IRateService, RateService>();
 builder.Services.AddScoped<IDrugModelApiService, DrugModelApiService>();
 //Logs
 builder.Services.AddTransient<IAdminLogs,AdminLogsService>();
+//Alert
+builder.Services.AddScoped<IAlertService, AlertService>();
+//BackGroundJobs
+builder.Services.AddTransient<IBDataPeients, BDataPeients>();
+//Notifactions
+builder.Services.AddTransient<INotifiyService, NotifiyService>();
 //End DataBase
 
 //Api Ml

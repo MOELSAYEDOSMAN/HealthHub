@@ -6,6 +6,7 @@
         Task<InputDoctor> AddDoctorAsync(InputDoctor input, string Email, List<IFormFile> Certificates);
         Task<bool> ActionDoctorAsync(Guid Id, bool Accespt, string adminEmail);
         Task<ODoctor?> GetDoctorAsync(Guid Id);
+        Task<ApplicationUser?> GetDoctorMainModel(Guid ID);
         Task<string> GetDoctorSpecialtie(string email);
         Task<bool> ChangePriceSession(string Email, decimal price);
         Task<ListOutPutDoctors> GetDoctorsInArea(DoctorFilterInput input,string Email);

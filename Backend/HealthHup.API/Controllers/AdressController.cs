@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using HealthHup.API.Validation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
@@ -12,13 +13,14 @@ namespace HealthHup.API.Controllers
     {
         private readonly IGovermentService _GovernorateService;
         private readonly IAreaService _areaService;
-        private readonly IMessageService _messageService;
+        
         public AdressController(IGovermentService govermentService,IAreaService areaService)
         {
             _GovernorateService = govermentService;
             _areaService = areaService;
         }
-       
+        
+
         [HttpGet("GetGovernorate")]
         public async Task<IActionResult> GetGovernorates()
             =>Ok(await _GovernorateService.GetAllAsync());

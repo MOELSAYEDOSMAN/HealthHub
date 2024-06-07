@@ -12,7 +12,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HealthHup.API.Service.AccountService
 {
-    public class AuthService : IAuthService
+    public partial class AuthService : IAuthService
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IBaseService<Doctor> _doctorService;
@@ -20,10 +20,10 @@ namespace HealthHup.API.Service.AccountService
         private readonly IAreaService _areaService;
         private readonly Jwt _jwt;
         private readonly IHttpContextAccessor _env;
-        private readonly IMessageService _messageService;
+        private readonly ISendMessageService _messageService;
         public AuthService(UserManager<ApplicationUser> userManager, IOptions<Jwt> jwt,ISaveImage saveimg,IAreaService areaService
             , IBaseService<Doctor> doctorService, IHttpContextAccessor env,
-            IMessageService messageService)
+            ISendMessageService messageService)
         {
             _userManager = userManager;
             _SvImg = saveimg;

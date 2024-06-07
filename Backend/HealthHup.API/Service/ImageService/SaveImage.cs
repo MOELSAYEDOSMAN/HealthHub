@@ -3,6 +3,7 @@
     public class SaveImage : ISaveImage
     {
         private readonly IWebHostEnvironment env;
+
         public SaveImage(IWebHostEnvironment env)
         {
             this.env = env;
@@ -54,7 +55,7 @@
             return true;
         }
 
-        public async Task<List<string>> UploadImagesList(string src, List<IFormFile> imgs)
+        public async IAsyncEnumerable<string> UploadImagesList(string src, List<IFormFile> imgs)
         {
             List<string> images = new List<string>();
             foreach (IFormFile file in imgs)
@@ -65,9 +66,8 @@
                 {
                     await file.CopyToAsync(steam);
                 }
-                images.Add(NameImg);
+                yield return NameImg;
             }
-            return images;
         }
     }
 }

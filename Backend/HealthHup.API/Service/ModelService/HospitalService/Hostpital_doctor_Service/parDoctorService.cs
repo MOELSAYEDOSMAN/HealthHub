@@ -34,6 +34,12 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
             return gove;
         }
 
+        //Get ApplicationUser With Doctor
+        public async Task<ApplicationUser?> GetDoctorMainModel(Guid ID)
+        {
+           var dr= await findAsNotTrakingync(d=>d.Id==ID,inculde:new string[] { "doctor" });
+            return dr?.doctor;
+        }
         
 
     }

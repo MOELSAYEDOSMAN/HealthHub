@@ -19,4 +19,9 @@
             from=input.FromTime
             };
     }
+
+    public enum DateAction
+    {
+        Add,Cancel,Change
+    }
 }

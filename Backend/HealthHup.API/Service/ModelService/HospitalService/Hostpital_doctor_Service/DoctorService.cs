@@ -184,12 +184,12 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
             if (specialtie == null)
                 return new() { error = true, message = "Must Select specialtie" };
             //Save Certificates
-            List<string> ls = await _SaveImg.UploadImagesList("DoctorCertificates", Certificates);
+            var ls = _SaveImg.UploadImagesList("DoctorCertificates", Certificates);
 
             //Add Doctor
             Doctor NewDoctor = input;//Covert InputDoctor To Doctor
             //Add Certificates
-            ls.ForEach(c =>
+            ls.ToBlockingEnumerable().ToList().ForEach(c =>
             {
                 NewDoctor.Certificates.Add(
                     new()

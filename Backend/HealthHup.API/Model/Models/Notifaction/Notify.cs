@@ -10,13 +10,14 @@ namespace HealthHup.API.Model.Models.Notifaction
         public ApplicationUser? User { get; set; }
         public string Message { get; set; }
         public DateTime DateTime { get; set; }
-        public int MyProperty { get; set; }
+        public NotifyHeader notifyHeader { get; set; }
+        public string? link { get; set; }
 
     }
 
     public enum NotifyHeader
     {
-        DoctorChangeYourTime, DoctorCancelYourTime, DoctorAddNewDayInSchedule,
-        DoctorRemoveDayFromSchedule,RateDoctor
+        DoctorChangeYourTime, DoctorCancelYourTime,DoctorSelectDate,
+        DoctorAddNewDayInSchedule,DoctorRemoveDayFromSchedule,RateDoctor
     }
 }

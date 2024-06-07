@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
-  <parameter name="IIS Web Application Name" description="" value="site1784" tags="IisApp">
+  <parameter name="IIS Web Application Name" description="" value="site5265" tags="IisApp">
     <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\Project\\Graduation\ projects\\FindalProject\\HealthHup\\Backend\\HealthHup\.API\\obj\\Release\\net7\.0\\PubTmp\\Out\\$" />
   </parameter>
 </parameters>

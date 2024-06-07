@@ -439,6 +439,31 @@ namespace HealthHup.API.Migrations
                     b.ToTable("Specialties");
                 });
 
+            modelBuilder.Entity("HealthHup.API.Model.Models.Logs.AlertBlcok", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("alertType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("message")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Blocks");
+                });
+
             modelBuilder.Entity("HealthHup.API.Model.Models.Logs.LogAdminAction", b =>
                 {
                     b.Property<Guid>("Id")
@@ -467,6 +492,35 @@ namespace HealthHup.API.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("AdminLogs");
+                });
+
+            modelBuilder.Entity("HealthHup.API.Model.Models.Notifaction.Notify", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Message")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("link")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("notifyHeader")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Notifitions");
                 });
 
             modelBuilder.Entity("HealthHup.API.Model.Models.PharmacyModel.Pharmacy", b =>
@@ -911,6 +965,15 @@ namespace HealthHup.API.Migrations
                     b.Navigation("doctor");
                 });
 
+            modelBuilder.Entity("HealthHup.API.Model.Models.Logs.AlertBlcok", b =>
+                {
+                    b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("HealthHup.API.Model.Models.Logs.LogAdminAction", b =>
                 {
                     b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "Admin")
@@ -922,6 +985,15 @@ namespace HealthHup.API.Migrations
                         .HasForeignKey("UserId");
 
                     b.Navigation("Admin");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("HealthHup.API.Model.Models.Notifaction.Notify", b =>
+                {
+                    b.HasOne("HealthHup.API.Model.Models.ApplicationUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });

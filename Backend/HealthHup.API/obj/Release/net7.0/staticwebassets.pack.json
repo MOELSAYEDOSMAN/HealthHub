@@ -9,8 +9,16 @@
       "PackagePath": "staticwebassets\\Image\\DoctorCertificates\\9f8e9c51-0de2-4901-84ab-46b127afb222.webp"
     },
     {
+      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\User\\2a0aac45-341b-4475-8edf-6b2c0b3a471a.webp",
+      "PackagePath": "staticwebassets\\Image\\User\\2a0aac45-341b-4475-8edf-6b2c0b3a471a.webp"
+    },
+    {
       "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\User\\user.png",
       "PackagePath": "staticwebassets\\Image\\User\\user.png"
+    },
+    {
+      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Template\\ConfirmMail.html",
+      "PackagePath": "staticwebassets\\Template\\ConfirmMail.html"
     },
     {
       "Id": "obj\\Release\\net7.0\\staticwebassets\\msbuild.HealthHup.API.Microsoft.AspNetCore.StaticWebAssets.props",

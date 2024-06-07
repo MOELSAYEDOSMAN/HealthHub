@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "lFml4zD1ANi/jcLd4Lvmin/wBbpMV9GnVyL1Sxmryek=",
+  "Hash": "K5ZTW3lkTENhH94N0LaKHviHcf3AgOsd8HrNKrmTtSo=",
   "Source": "HealthHup.API",
   "BasePath": "_content/HealthHup.API",
   "Mode": "Default",
@@ -55,6 +55,25 @@
       "OriginalItemSpec": "wwwroot\\Image\\DoctorCertificates\\9f8e9c51-0de2-4901-84ab-46b127afb222.webp"
     },
     {
+      "Identity": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\User\\2a0aac45-341b-4475-8edf-6b2c0b3a471a.webp",
+      "SourceId": "HealthHup.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\",
+      "BasePath": "_content/HealthHup.API",
+      "RelativePath": "Image/User/2a0aac45-341b-4475-8edf-6b2c0b3a471a.webp",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Image\\User\\2a0aac45-341b-4475-8edf-6b2c0b3a471a.webp"
+    },
+    {
       "Identity": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\User\\user.png",
       "SourceId": "HealthHup.API",
       "SourceType": "Discovered",
@@ -91,6 +110,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\Template\\ConfirmMail.html"
+    },
+    {
+      "Identity": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Template\\f1.html",
+      "SourceId": "HealthHup.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\",
+      "BasePath": "_content/HealthHup.API",
+      "RelativePath": "Template/f1.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Template\\f1.html"
     }
   ]
 }

@@ -3,7 +3,7 @@
     public interface ISaveImage
     {
         Task<string> UploadImage(string src, IFormFile img);
-        Task<List<string>> UploadImagesList(string src, List<IFormFile> imgs);
+        IAsyncEnumerable<string> UploadImagesList(string src, List<IFormFile> imgs);
         Task<bool> DeleteImage(string src);
         Task<bool> DeletsImages(List<string> src);
         Task<bool> ChangeImg(string src, IFormFile img);

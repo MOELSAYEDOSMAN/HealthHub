@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using HealthHup.API.Model.Models.Notifaction;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace HealthHup.API.Model
@@ -25,8 +26,12 @@ namespace HealthHup.API.Model
         public DbSet<Review> Reviews { get; set; }
         //Patient
         public DbSet<MedicalSession> MedicalSessions { get; set; }
+        //Blocks
+        public DbSet<AlertBlcok> Blocks { get; set; }
         //Admin
         public DbSet<LogAdminAction> LogAdminActions { get; set; }
+        //Notifications 
+        public DbSet<Notify> Notifitions { get; set; }
         //realTime
         //Chat=>Group
         public DbSet<Group> Groups { get; set; }
