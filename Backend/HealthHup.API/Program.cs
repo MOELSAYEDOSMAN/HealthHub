@@ -16,6 +16,7 @@ using HealthHup.API.Service.ModelService.Admin.Alerts;
 using HealthHup.API.Service.BackGroundJobs.Dates;
 using HealthHup.API.Service.Notification;
 using HealthHup.API.Service.MlService.MLCT;
+using Microsoft.Extensions.Options;
 
 
 
@@ -32,7 +33,7 @@ builder.Services.AddDbContext<ApplicatoinDataBaseContext>(option =>option.UseSql
 //Add Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
-    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedEmail = true;
     options.Password.RequiredLength = 8;
     options.User.RequireUniqueEmail = true;
 }).AddEntityFrameworkStores<ApplicatoinDataBaseContext>()
@@ -47,6 +48,7 @@ builder.Services.AddAuthentication(o =>
     o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
 }).AddJwtBearer(o =>
 {
+    
     o.TokenValidationParameters = new TokenValidationParameters
     {
         ValidateIssuer = true,
@@ -56,6 +58,21 @@ builder.Services.AddAuthentication(o =>
         ValidIssuer = builder.Configuration["JWT:IssUser"],
         ValidAudience = builder.Configuration["JWT:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Key"]??""))
+    };
+    o.Events = new JwtBearerEvents
+    {
+        OnMessageReceived = context =>
+        {
+            var accessToken = context.Request.Query["access_token"];
+
+            var path = context.HttpContext.Request.Path;
+            if (!string.IsNullOrEmpty(accessToken) &&
+                (path.StartsWithSegments("/chat")))
+            {
+                context.Token = accessToken;
+            }
+            return Task.CompletedTask;
+        }
     };
 });
 
@@ -109,22 +126,23 @@ builder.Services.AddSwaggerGen(s =>
 //Add Cours
 builder.Services.AddCors(options =>
 options.AddPolicy("MyPolicy",
-bui => bui.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed((host) => true)
-                       .AllowCredentials())
+bui => bui.SetIsOriginAllowed(d=>d!="").AllowCredentials()
+        .AllowAnyMethod()
+        .AllowAnyHeader())
 );
 
 
 
 
 //RealeTime
-builder.Services.AddSignalR(o=>o.EnableDetailedErrors=true);
+builder.Services.AddSignalR();
 
 
 //Start Inject Service
     //Image
 builder.Services.AddTransient<ISaveImage, ImageService>();
     //Message
-builder.Services.AddTransient<ISendMessageService, SendMEssageService>();
+builder.Services.AddScoped<ISendMessageService, SendMEssageService>();
 
 //Account
 builder.Services.AddTransient<IAuthService, AuthService>();
@@ -171,7 +189,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseCors("MyPolicy");
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 
