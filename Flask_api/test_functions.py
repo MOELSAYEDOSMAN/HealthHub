@@ -46,7 +46,7 @@ def create_b_graph(edge_index, x_s, x_t):
     return BipartiteData(edge_index, x_s, x_t)
 
 
-path="D:\Project\Graduation projects\FindalProject\FlaskAndModel\Medical_integration_system\Flask_api/ddi.pkl" #the model path
+path="D:\Project\Graduation projects\FindalProject\HealthHup\Flask_api\ddi.pkl" #the model path
 model=torch.load(path,map_location=torch.device('cpu'))
 
 def check_interaction(drug_1,drug_2):

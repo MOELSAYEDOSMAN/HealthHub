@@ -6,7 +6,6 @@ using Microsoft.IdentityModel.Tokens;
 using Serilog;
 using System.Text;
 using System.Text.Json.Serialization;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using HealthHup.API.Hubs.ChatHubFolder;
 using Hangfire;
@@ -15,8 +14,9 @@ using HealthHup.API.Service.ModelService.HospitalService.DrugModelService;
 using HealthHup.API.Service.ModelService.HospitalService.DoctorDates;
 using HealthHup.API.Service.ModelService.Admin.Alerts;
 using HealthHup.API.Service.BackGroundJobs.Dates;
-using Microsoft.Data.SqlClient;
 using HealthHup.API.Service.Notification;
+using HealthHup.API.Service.MlService.MLCT;
+
 
 
 
@@ -32,7 +32,7 @@ builder.Services.AddDbContext<ApplicatoinDataBaseContext>(option =>option.UseSql
 //Add Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
 {
-    options.SignIn.RequireConfirmedEmail = true;
+    options.SignIn.RequireConfirmedEmail = false;
     options.Password.RequiredLength = 8;
     options.User.RequireUniqueEmail = true;
 }).AddEntityFrameworkStores<ApplicatoinDataBaseContext>()
@@ -109,11 +109,17 @@ builder.Services.AddSwaggerGen(s =>
 //Add Cours
 builder.Services.AddCors(options =>
 options.AddPolicy("MyPolicy",
-bui => bui.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod())
+bui => bui.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed((host) => true)
+                       .AllowCredentials())
 );
 
+
+
+
 //RealeTime
-builder.Services.AddSignalR();
+builder.Services.AddSignalR(o=>o.EnableDetailedErrors=true);
+
+
 //Start Inject Service
     //Image
 builder.Services.AddTransient<ISaveImage, ImageService>();
@@ -145,11 +151,14 @@ builder.Services.AddScoped<IAlertService, AlertService>();
 builder.Services.AddTransient<IBDataPeients, BDataPeients>();
 //Notifactions
 builder.Services.AddTransient<INotifiyService, NotifiyService>();
+//CTV
+builder.Services.AddTransient<ICTService, CTService>();
+
 //End DataBase
 
 //Api Ml
 string UriModel = builder.Configuration.GetSection("Flask").GetValue<string>("uri");
-builder.Services.AddHttpClient<IMLDrugApiService, MLDrugApiService>
+builder.Services.AddHttpClient<IMLApiService, MLApiService>
     (client => client.BaseAddress = new Uri(UriModel));
 //End Inject Service
 
@@ -161,19 +170,19 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseCors("MyPolicy");
+app.UseHttpsRedirection();
 app.UseStaticFiles();
 
-app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
 
-//Add Hubs
-app.MapHub<ChatHub>("Chat");
+
 //HangFire(BackGroundJobs):Dashboard
 app.UseHangfireDashboard("/Dashboard");
+//Add Hubs
+app.MapHub<ChatHub>("chat");
 
 app.MapControllers();
 

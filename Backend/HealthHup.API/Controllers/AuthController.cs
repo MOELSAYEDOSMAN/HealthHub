@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HealthHup.API.Controllers
 {
@@ -44,7 +45,7 @@ namespace HealthHup.API.Controllers
 
 
         [HttpPost("Register")]
-        public async Task<IActionResult> Register(IFormFile? Img,[Required] IFormCollection input)
+        public async Task<IActionResult> Register( IFormFile? Img,[Required] IFormCollection input)
         {
             try
             {
@@ -56,6 +57,7 @@ namespace HealthHup.API.Controllers
             }
             catch
             {
+                
                 return BadRequest(new OUser()
                 { Message = "Error in Object Input Or No Data",Error = true,IsLogin = false});
             }
@@ -76,6 +78,13 @@ namespace HealthHup.API.Controllers
                     Error = $"{Error}Error:{i.ErrorMessage}\n";
                 return  new OUser()
                 { Error = true, IsLogin = false, Message = Error };
+            }
+            if(input.img!= null) 
+            {
+               var r= new FileValidation();
+                if (!r.IsValid(input.img))
+                    return new()
+                    { Error = true, IsLogin = false, Message = r.ErrorMessage };
             }
             var result = ChangeSrcImage(await _authService.RegisterAsync(input, input?.img));
             return result??new OUser();

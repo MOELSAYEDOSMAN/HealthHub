@@ -69,5 +69,10 @@
                 yield return NameImg;
             }
         }
+
+        public Task<FileStream> GetImage(string uri)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

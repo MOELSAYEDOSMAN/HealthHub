@@ -55,7 +55,7 @@ namespace HealthHup.API.Controllers.Hospital
             }
             return Ok(await _sessionService.AddMedicalSessionAsync(input,User.FindFirstValue(ClaimTypes.Email)));
         }
-        [HttpPost("CheackDrugsInteraction"), Authorize(Roles = "Doctor")]
+        [HttpPost("CheackDrugsInteraction")/*, Authorize(Roles = "Doctor")*/]
         public async Task<IActionResult> CheackDrugsInteraction([Required] string PaientEmail, [Required] List<Guid> DrugIDs)
         => Ok(await _drugApiService.CheackListDrugs(PaientEmail, DrugIDs));
         //Put

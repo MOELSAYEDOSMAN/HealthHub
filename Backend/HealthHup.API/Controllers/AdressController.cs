@@ -1,9 +1,8 @@
-﻿using HealthHup.API.Validation;
+﻿using HealthHup.API.Service.MlService.MLCT;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
-using System.Text.RegularExpressions;
+
 
 namespace HealthHup.API.Controllers
 {
@@ -13,14 +12,17 @@ namespace HealthHup.API.Controllers
     {
         private readonly IGovermentService _GovernorateService;
         private readonly IAreaService _areaService;
+
         
         public AdressController(IGovermentService govermentService,IAreaService areaService)
         {
+            
             _GovernorateService = govermentService;
             _areaService = areaService;
+            
         }
-        
 
+        
         [HttpGet("GetGovernorate")]
         public async Task<IActionResult> GetGovernorates()
             =>Ok(await _GovernorateService.GetAllAsync());

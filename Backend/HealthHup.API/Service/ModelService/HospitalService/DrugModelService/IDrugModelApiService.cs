@@ -2,6 +2,6 @@
 {
     public interface IDrugModelApiService:IBaseService<Drug>
     {
-        Task<string> CheackListDrugs(string PatientEmail, List<Guid> DrugIds);
+        Task<InteractivitiyDto> CheackListDrugs(string PatientEmail, List<Guid> DrugIds);
     }
 }

@@ -1,4 +1,8 @@
-﻿namespace HealthHup.API.Service.ImageService
+﻿using Microsoft.AspNetCore.Hosting;
+using System.IO;
+using static System.Net.WebRequestMethods;
+
+namespace HealthHup.API.Service.ImageService
 {
     public class FileBaseService
     {
@@ -15,6 +19,11 @@
             {
                 await FIle.CopyToAsync(steam);
             }
+        }
+        public FileStream ReadFile(string path)
+        {
+            var image = System.IO.File.OpenRead(path);
+            return image;
         }
         public async Task ChangeFile(IFormFile file,string src, string FileName)
         {

@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HealthHup.API.Controllers.Hospital
 {
@@ -123,6 +124,14 @@ namespace HealthHup.API.Controllers.Hospital
                     new InputDoctor() { error = true, message = Error }
                     );
             }
+            var valFile = new FileValidation();
+
+            if (Certificates.Count>0)
+                foreach(var i in Certificates)
+                    if(valFile.IsValid(i))
+                        return Ok(
+                    new InputDoctor() { error = true, message = valFile.ErrorMessage }
+                    );
             return Ok(await _doctorService.AddDoctorAsync(input,Email,Certificates));
         }
         

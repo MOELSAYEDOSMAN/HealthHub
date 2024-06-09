@@ -8,6 +8,10 @@ namespace HealthHup.API.Service.ImageService
         {
             _fileBaseService=new FileBaseService(env);
         }
+        public async Task<FileStream> GetImage(string uri)
+        {
+            return _fileBaseService.ReadFile($"wwwroot/Image/{uri}");
+        }
         public async Task<string> UploadImage(string src, IFormFile img)
         {
             var FileName=Guid.NewGuid().ToString();

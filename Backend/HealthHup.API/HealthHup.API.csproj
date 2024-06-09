@@ -46,6 +46,7 @@
     <Folder Include="Hubs\NotifyHubFolder\" />
     <Folder Include="backendJobs\" />
     <Folder Include="wwwroot\Image\DoctorCertificates\" />
+    <Folder Include="wwwroot\Image\CT\" />
   </ItemGroup>
 
 </Project>

@@ -7,5 +7,6 @@
         Task<bool> DeleteImage(string src);
         Task<bool> DeletsImages(List<string> src);
         Task<bool> ChangeImg(string src, IFormFile img);
+        Task<FileStream> GetImage(string uri);
     }
 }
