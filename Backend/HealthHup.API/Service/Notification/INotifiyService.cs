@@ -5,6 +5,8 @@ namespace HealthHup.API.Service.Notification
 {
     public interface INotifiyService
     {
+        Task DoctorAction(ApplicationUser user, string Message);
+        Task AlertDate(ApplicationUser user, string Message);
         Task RemoveOldNotifactions();
         Task DoctorSelectDate(ApplicationUser user, string Message);
         Task DoctorChangeYourTime(ApplicationUser user, string Message);

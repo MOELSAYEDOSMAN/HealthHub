@@ -21,9 +21,10 @@ namespace HealthHup.API.Service.AccountService
         private readonly Jwt _jwt;
         private readonly IHttpContextAccessor _env;
         private readonly ISendMessageService _messageService;
+        private readonly IBaseService<ApplicationUser> _UserService;
         public AuthService(UserManager<ApplicationUser> userManager, IOptions<Jwt> jwt,ISaveImage saveimg,IAreaService areaService
             , IBaseService<Doctor> doctorService, IHttpContextAccessor env,
-            ISendMessageService messageService)
+            ISendMessageService messageService, IBaseService<ApplicationUser> UserService)
         {
             _userManager = userManager;
             _SvImg = saveimg;
@@ -32,6 +33,7 @@ namespace HealthHup.API.Service.AccountService
             _doctorService = doctorService;
             _env = env;
             _messageService = messageService;
+            _UserService = UserService;
         }
         //post
         public async Task<OUser> LoginAsync(InputLogin input)
@@ -50,7 +52,7 @@ namespace HealthHup.API.Service.AccountService
 
             if(!UserLogin.EmailConfirmed)
                 return new OUser()
-                { Error = true, IsLogin = false, Message = "need Confirme Mail" };
+                { Error = true, IsLogin = false, Message = "need Confirm Mail" };
             //Ready login
             var jwtSecurityToken = await CreateJwtTokenAsync(UserLogin);//Create Token
             var rolesList = await _userManager.GetRolesAsync(UserLogin);//Get Roles
@@ -84,6 +86,9 @@ namespace HealthHup.API.Service.AccountService
             if (UserArea == null)
                 return new()
                 { Error = true, IsLogin = false, Message = "No Area by This Name" };
+            if((await _UserService.findAsNotTrakingync(u=>u.nationalID==input.nationalID))!=null)
+                return new()
+                    { Error = true, IsLogin = false, Message = "The National ID Is Registered" };
             //Save Image
             string srcImg = "";
             if (img != null)
@@ -117,6 +122,8 @@ namespace HealthHup.API.Service.AccountService
             return new() { Message = $"Cheack Mail to Confirem Mail", IsLogin = false,Error=false};
         }
         
+        
+
         public async Task<bool> ConfiermMail(string token,string email)
         {
             var User = await GetUserAsync(email);

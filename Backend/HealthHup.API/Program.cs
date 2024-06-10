@@ -17,6 +17,7 @@ using HealthHup.API.Service.BackGroundJobs.Dates;
 using HealthHup.API.Service.Notification;
 using HealthHup.API.Service.MlService.MLCT;
 using Microsoft.Extensions.Options;
+using HealthHup.API.Service.ModelService.HospitalService.Chat;
 
 
 
@@ -142,7 +143,9 @@ builder.Services.AddSignalR();
     //Image
 builder.Services.AddTransient<ISaveImage, ImageService>();
     //Message
-builder.Services.AddScoped<ISendMessageService, SendMEssageService>();
+builder.Services.AddSingleton<ISendMessageService, SendMEssageService>();
+//Chta
+builder.Services.AddTransient<IChatService, ChatService>();
 
 //Account
 builder.Services.AddTransient<IAuthService, AuthService>();
@@ -185,9 +188,10 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    
 }
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseCors("MyPolicy");
 //app.UseHttpsRedirection();
 app.UseStaticFiles();

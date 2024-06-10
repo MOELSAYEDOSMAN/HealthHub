@@ -1,6 +1,7 @@
 ﻿using HealthHup.API.Model.Extion.Account;
 using HealthHup.API.Service.AccountService;
 using HealthHup.API.Service.ModelService.HospitalService.DoctorDates;
+using HealthHup.API.Service.Notification;
 using HealthHup.API.Validation;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,16 +21,21 @@ namespace HealthHup.API.Controllers.Hospital
         private readonly IDoctorService _doctorService;
         private readonly IDoctorDateService _doctorDateService;
         private readonly IPatientDatesService _patientDatesService;
-        private readonly IMessageService _MessageService;
+        private readonly ISendMessageService _MessageService;
         private readonly IAdminLogs _adminLgos;
+        private readonly INotifiyService _notifyService;
         public DoctorController(IDoctorService doctorService, IPatientDatesService patientDatesService,
-            IAuthService authService, IDoctorDateService doctorDateService,IAdminLogs adminLog)
+            IAuthService authService, IDoctorDateService doctorDateService,IAdminLogs adminLog, ISendMessageService _MessageService1
+            ,INotifiyService notifyService)
+            
         {
             _doctorService = doctorService;
             _patientDatesService = patientDatesService;
             _authService = authService;
             _doctorDateService= doctorDateService;
             _adminLgos=adminLog;
+            _MessageService= _MessageService1;
+            _notifyService = notifyService;
         }
         //Get Doctors Active
         [HttpGet("CheackRoleDoctor"),Authorize]
@@ -50,7 +56,7 @@ namespace HealthHup.API.Controllers.Hospital
             if (!ModelState.IsValid)
                 return BadRequest(new ListOutPutDoctors());
             var Email = User.FindFirstValue(ClaimTypes.Email);
-            return Ok(ChangeImageDoctors(await _doctorService.GetDoctorsInGove(input, Email)));
+            return Ok(ChangeImageDoctors(await _doctorService.GetDoctorsInArea(input, Email)));
         }
 
 
@@ -65,7 +71,7 @@ namespace HealthHup.API.Controllers.Hospital
        
         [HttpGet("SerchDoctorsWithName"), Authorize]
         public async Task<IActionResult> SerchDoctorsWithName([SerchValidation,MinLength(3)] string DoctorName, [FromQuery] DoctorFilterInput input)
-            => Ok(await _doctorService.SerchDoctorWithName(DoctorName,input, User.FindFirstValue(ClaimTypes.Email)));
+            => Ok(ChangeImageDoctors(await _doctorService.SerchDoctorWithName(DoctorName,input, User.FindFirstValue(ClaimTypes.Email))));
 
         //Get Doctors Not Active
         [HttpGet("GetDoctorsNotActive"), Authorize(Roles = "Admin,CustomerService")]
@@ -128,7 +134,7 @@ namespace HealthHup.API.Controllers.Hospital
 
             if (Certificates.Count>0)
                 foreach(var i in Certificates)
-                    if(valFile.IsValid(i))
+                    if(!valFile.IsValid(i))
                         return Ok(
                     new InputDoctor() { error = true, message = valFile.ErrorMessage }
                     );
@@ -167,22 +173,19 @@ namespace HealthHup.API.Controllers.Hospital
         [HttpPut("ActionDoctor"), Authorize(Roles = "Admin,CustomerService")]
         public async Task<IActionResult> ActionDoctor(Guid Id, bool action)
         {
-            if(action)
+            
+            var doctore = await _doctorService.GetDoctorAsync(Id);
+            if (doctore != null)
             {
-                var doctore = await _doctorService.GetDoctorAsync(Id);
-                await _MessageService.SendMessage(doctore.Email, $"Your Request Has been Approved!", "Green");
+                await _MessageService.ActionWithDoctor(doctore.Email, doctore.Name, action ? "Your Request has been Accepted" : "Your Request has been rejected");
+                await _notifyService.DoctorAction(await _authService.GetUserAsync(doctore.Email), action ? "Your Request has been Accepted" : "Your Request has been rejected");
             }
             return Ok(await _doctorService.ActionDoctorAsync(Id, action, User.FindFirstValue(ClaimTypes.Email)));
         }
 
-        [HttpGet("SendMessageToDoctor"), Authorize(Roles = "Admin,CustomerService")]
-        public async Task<IActionResult> SendMessageToDoctor([Required]string Email,[Required]string Message)
-        {
-            await _MessageService.SendMessage(Email, Message, "Red");
-            return Ok();
-        }
+        
 
-        [HttpPut("ChangePrice"), Authorize("Doctor")]
+        [HttpPut("ChangePrice"), Authorize(Roles ="Doctor")]
         public async Task<IActionResult> ChangePrice([Required, FromQuery] decimal NewPrice)
             => Ok(await _doctorService.ChangePriceSession(User.FindFirstValue(ClaimTypes.Email), NewPrice));
         [HttpDelete("DelteAppointmentBook"), Authorize(Roles = "Doctor")]

@@ -7,7 +7,11 @@
         {
             _baseMessage=new BaseMessageService(configuration, env);
         }
+        public async Task ActionWithDoctor(string Email,string Name,string Messsage)
+        {
+            await _baseMessage.SendMessageWithoutLink(Email,Name, "Notice Of Your Application to Become A Doctor", Messsage);
 
+        }
         public async Task ConfirmAccount(string Email,string Link)
         {
             await _baseMessage.SendMessageWithLink(Email, "Confirm Account", Link);

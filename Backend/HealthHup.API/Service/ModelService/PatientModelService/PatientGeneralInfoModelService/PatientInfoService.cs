@@ -78,12 +78,14 @@ namespace HealthHup.API.Service.ModelService.PatientModelService.PatientGeneralI
             var Patient = await _authService.GetUserAsync(Email);
             if (Patient == null)
                 return new();
-            var Diseases = await _diseaseService.findByAsync(d =>d.PatientId == Patient.Id, new string[] { "responsibledDoctor"});
-            if (Diseases.Count == 0)
+            var Diseases = _db.Entry(Patient).
+                Collection(p => p.Diseases).Query()
+                .Include(d => d.responsibledDoctor).ThenInclude(u => u.doctor)
+                .Select(d=>d.responsibledDoctor).ToList();
+            if (Diseases.Count() == 0)
                 return new();
-            var Result = new List<ODoctor>();
-            Diseases.ToList().ForEach(d=>Result.Add(d.responsibledDoctor));
-            return Result;
+            var Result = ODoctor.Doctors(Diseases.DistinctBy(d=>d.Id).ToList());
+            return Result.ToList();
         }
     }
 }

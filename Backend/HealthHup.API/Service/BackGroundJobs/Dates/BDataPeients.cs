@@ -1,6 +1,7 @@
 ﻿
 using HealthHup.API.Service.AccountService;
 using HealthHup.API.Service.ModelService.Admin.Alerts;
+using HealthHup.API.Service.Notification;
 
 namespace HealthHup.API.Service.BackGroundJobs.Dates
 {
@@ -11,9 +12,11 @@ namespace HealthHup.API.Service.BackGroundJobs.Dates
         private readonly IPatientDatesService _PatientDatesService;
         private readonly IAlertService _alertService;
         private readonly IDoctorService _doctorService;
+        private readonly INotifiyService _notifiyService;
         public BDataPeients(IBaseService<Disease> DiseaseService,IMedicalSessionService MedicalSessionService,
             IPatientDatesService PatientDatesService,
             IAlertService alertService, IDoctorService doctorService
+            , INotifiyService notifiyService
             )
         {
             _Disease = DiseaseService;
@@ -21,6 +24,7 @@ namespace HealthHup.API.Service.BackGroundJobs.Dates
             _PatientDatesService= PatientDatesService;
             _alertService = alertService;
             _doctorService = doctorService;
+            _notifiyService=notifiyService;
         }
         public async Task DeleteOldDates()
         {
@@ -48,6 +52,14 @@ namespace HealthHup.API.Service.BackGroundJobs.Dates
                 var medicals = await _MedicalSessionService.GetMedicalSessionsWithDiseaseCuredAsync(i.PatientId,i.Name);
                 await _MedicalSessionService.RemoveRangeAsync(medicals.ToList());
             }
+        }
+
+        public async Task AlertDate()
+        {
+            var dates = await _PatientDatesService.findByAsync(d => d.date.Date == DateTime.Now.Date, new string[] { "patient" });
+            foreach (var i in dates)
+                await _notifiyService
+                    .AlertDate(i.patient,$"Don't Forget Your appintment Today at {i.FromTime}");
         }
 
         

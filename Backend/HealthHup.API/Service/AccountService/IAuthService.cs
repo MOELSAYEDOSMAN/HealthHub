@@ -20,5 +20,6 @@ namespace HealthHup.API.Service.AccountService
         Task<DTOUserInformation>? GetUserWithEmailAsync(string Email);
         Task<ApplicationUser?> GetWithId(string Id);
         Task<OUser> CheackDoctorRoleAsync(string Email);
+        Task<string> ReConfirm(string Email);
     }
 }

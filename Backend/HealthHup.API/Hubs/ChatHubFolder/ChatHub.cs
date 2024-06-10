@@ -17,48 +17,41 @@ namespace HealthHup.API.Hubs.ChatHubFolder
         private readonly IAuthService _authService;
         public ChatHub(IBaseService<Message> messageService,IAuthService authService)
         {
-            Console.WriteLine("CreateClass");
             _messageService = messageService;
             _authService= authService;
         }
-        public override Task OnConnectedAsync()
-        {
-            
-           
-            return base.OnConnectedAsync();
-        }
+        
         
         public async Task joinGroupAsync(string GroupName)
         {
-            Console.WriteLine("____________JoinGroup__________________");
-
-            await Console.Out.WriteLineAsync($"Join {GroupName}");
-            Console.WriteLine("______________________________");
-
             await Groups.AddToGroupAsync(Context.ConnectionId,GroupName);
         }
       
-        public async Task sendMessageAsync(string message,string groupName,string EmailSend)
+        public async Task sendMessageAsync(string message,string groupName,string EmailSend,string EmailTo)
         {
-            Console.WriteLine("____________SendMessage__________________");
+            
+            var Ur = await _authService.GetUserAsync(EmailSend);
+            var Ur2 = await _authService.GetUserAsync(EmailTo);
 
-            Console.WriteLine(message);
-            Console.WriteLine(groupName);
-            Console.WriteLine(EmailSend);
-            Console.WriteLine("______________________________");
-
-
-
-            var Ur = await _authService.GetUserWithEmailAsync(EmailSend);
             MessageModelDTO messageModel = new MessageModelDTO()
             {
                 date = DateOnly.FromDateTime(DateTime.Now),
                 time= DateTime.UtcNow.ToLongTimeString(),
-                email=Ur.email,
-                imgSrc=$"/Image/User/{Ur.img}",
+                email=Ur.Email,
+                imgSrc=$"/Image/User/{Ur.src}",
                 message = message,
-                name=Ur.name,
+                name=Ur.Name,
             };
+            await _messageService.AddAsync(new Message()
+            {
+                dateTiemSendMessage = DateTime.Now,
+                Id=Guid.NewGuid(),
+                See=true,
+                text=message,
+                UserRecive= Ur2??new ApplicationUser(),
+                UserSend=Ur??new ApplicationUser()
+                
+            });
             await Clients.OthersInGroup(groupName).SendAsync("reciveMessage", messageModel);
         }
     }

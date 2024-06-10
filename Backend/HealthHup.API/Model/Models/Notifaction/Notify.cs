@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace HealthHup.API.Model.Models.Notifaction
 {
@@ -17,7 +18,8 @@ namespace HealthHup.API.Model.Models.Notifaction
 
     public enum NotifyHeader
     {
-        DoctorChangeYourTime, DoctorCancelYourTime,DoctorSelectDate,
-        DoctorAddNewDayInSchedule,DoctorRemoveDayFromSchedule,RateDoctor
+        Doctor_Change_Your_Time, Doctor_Cancel_Your_Time,Doctor_Select_Date,
+        Doctor_Add_New_Day_In_Schedule,Doctor_Remove_Day_From_Schedule,Rate_Doctor,
+        Alert_Date,Doctor_Result
     }
 }

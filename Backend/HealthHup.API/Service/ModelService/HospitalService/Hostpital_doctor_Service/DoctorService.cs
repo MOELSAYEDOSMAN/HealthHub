@@ -115,9 +115,9 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
         public async Task<ListOutPutDoctors> GetDoctorsInArea(DoctorFilterInput input, string Email)
         {
             //Set Area
-            input.area = input?.area == Guid.Empty ? await GetAreaIdPaientAsync(Email) : input?.area;
+            var area = input.area==Guid.Empty?await GetAreaIdPaientAsync(Email): input.area;
             //Get Doctors
-            var Doctors = await findByAsync(d => d.areaId == input.area && d.drSpecialtieId == input.Specialtie && d.Accept == true,
+            var Doctors = await findByAsync(d => d.areaId == area && d.drSpecialtieId == input.Specialtie && d.Accept == true,
                 new string[] { "doctor" });
             Doctors = input?.joinDate ?? false ? Doctors.OrderBy(x => x.DateOfJoin).ToList() : Doctors;
             int count = Doctors?.Count ?? 0;
@@ -129,6 +129,7 @@ namespace HealthHup.API.Service.ModelService.HospitalService.Hostpital_doctor_Se
             //Give Value
             Doctors?.Skip(10 * (int)input?.Index).Take(10).ToList()
                 .ForEach(d => result.Doctors.Add(d));
+            
             return result;
         }
         //Get Doctors In Gove

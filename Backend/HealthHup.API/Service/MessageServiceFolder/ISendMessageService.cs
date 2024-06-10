@@ -2,6 +2,7 @@
 {
     public interface ISendMessageService
     {
+        Task ActionWithDoctor(string Email, string Name, string Messsage);
         Task ConfirmAccount(string Email, string Link);
         Task ForgetPassword(string Email, string UserName, string Message);
         Task AlertDate(string Email, string UserName, string DoctorName, DateAction dateAction, string Message);

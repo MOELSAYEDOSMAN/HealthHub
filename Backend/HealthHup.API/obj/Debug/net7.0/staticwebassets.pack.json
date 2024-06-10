@@ -1,12 +1,32 @@
 {
   "Files": [
     {
+      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\DoctorCertificates\\1b0c7401-9a0d-425c-9ef6-c988918f27a3.webp",
+      "PackagePath": "staticwebassets\\Image\\DoctorCertificates\\1b0c7401-9a0d-425c-9ef6-c988918f27a3.webp"
+    },
+    {
+      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\DoctorCertificates\\716e360c-ce84-4ea2-90de-8b6b5fea3fc5.webp",
+      "PackagePath": "staticwebassets\\Image\\DoctorCertificates\\716e360c-ce84-4ea2-90de-8b6b5fea3fc5.webp"
+    },
+    {
+      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\DoctorCertificates\\7d8e6acd-4083-43e4-9889-1744ebfe7698.webp",
+      "PackagePath": "staticwebassets\\Image\\DoctorCertificates\\7d8e6acd-4083-43e4-9889-1744ebfe7698.webp"
+    },
+    {
       "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\DoctorCertificates\\863ef049-f8b5-474e-8fab-fe47dbb2c55f.webp",
       "PackagePath": "staticwebassets\\Image\\DoctorCertificates\\863ef049-f8b5-474e-8fab-fe47dbb2c55f.webp"
     },
     {
+      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\DoctorCertificates\\9b26e8fe-828b-4c24-92d3-2e35190c46b4.webp",
+      "PackagePath": "staticwebassets\\Image\\DoctorCertificates\\9b26e8fe-828b-4c24-92d3-2e35190c46b4.webp"
+    },
+    {
       "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\DoctorCertificates\\9f8e9c51-0de2-4901-84ab-46b127afb222.webp",
       "PackagePath": "staticwebassets\\Image\\DoctorCertificates\\9f8e9c51-0de2-4901-84ab-46b127afb222.webp"
+    },
+    {
+      "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\DoctorCertificates\\e8d616c0-0299-45e7-af1b-39716a286e00.webp",
+      "PackagePath": "staticwebassets\\Image\\DoctorCertificates\\e8d616c0-0299-45e7-af1b-39716a286e00.webp"
     },
     {
       "Id": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\wwwroot\\Image\\User\\2a0aac45-341b-4475-8edf-6b2c0b3a471a.webp",

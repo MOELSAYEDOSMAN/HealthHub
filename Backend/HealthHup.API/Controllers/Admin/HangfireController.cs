@@ -39,6 +39,12 @@ namespace HealthHup.API.Controllers.Admin
             RecurringJob.AddOrUpdate(() => DeleteOldNotifyFunc(), Cron.Daily(hour: 0, minute: 0));
             return Ok(true);
         }
+        [HttpDelete("AlertDates")]
+        public async Task<IActionResult> AlertDates()
+        {
+            RecurringJob.AddOrUpdate(() => AlertDatesFunc(), Cron.Daily(hour: 0, minute: 0));
+            return Ok(true);
+        }
         [NonAction]
         public void DeleteOldDatesFunc()
         {
@@ -53,6 +59,11 @@ namespace HealthHup.API.Controllers.Admin
         public void DeleteOldNotifyFunc()
         {
             _notifiyService.RemoveOldNotifactions().Wait();
+        }
+        [NonAction]
+        public void AlertDatesFunc()
+        {
+            _PatientDatesService.AlertDate().Wait();
         }
     }
 }

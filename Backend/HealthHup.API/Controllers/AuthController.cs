@@ -62,6 +62,11 @@ namespace HealthHup.API.Controllers
                 { Message = "Error in Object Input Or No Data",Error = true,IsLogin = false});
             }
         }
+        [HttpGet("RConfiermMail")]
+        public async Task<IActionResult> RConfiermMail([EmailAddress, SerchValidation]string Email)
+        {
+            return Ok(await _authService.ReConfirm(Email));
+        }
         [HttpGet("ConfiermMail")]
         public async Task<IActionResult> ConfiermMail([Required]string token,[Required]string email)
         {
@@ -146,7 +151,7 @@ namespace HealthHup.API.Controllers
 
 
         [HttpPut("ChangePhoto"),Authorize]
-        public async Task<IActionResult> ChangePhoto(IFormFile img)
+        public async Task<IActionResult> ChangePhoto([FileValidation] IFormFile img)
         {
             var Email = User.FindFirstValue(ClaimTypes.Email);
             if (Email == null)

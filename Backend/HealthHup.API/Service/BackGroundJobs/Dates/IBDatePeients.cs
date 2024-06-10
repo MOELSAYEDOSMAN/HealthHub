@@ -4,6 +4,7 @@
     {
         //Day
         public Task DeleteOldDates();
+        Task AlertDate();
         //Mount
         public Task DeleteOldDisease();
         

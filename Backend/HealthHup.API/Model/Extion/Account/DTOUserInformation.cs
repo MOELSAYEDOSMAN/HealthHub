@@ -24,5 +24,11 @@
                 age=input?.Age??-1,
                 birDay=DateOnly.FromDateTime(input?.Brdate??DateTime.MinValue),
             };
+
+        public static IEnumerable<DTOUserInformation> ConvertFromListOFUser(List<ApplicationUser> input)
+        {
+            foreach (var i in input)
+                yield return i;
+        }
     }
 }

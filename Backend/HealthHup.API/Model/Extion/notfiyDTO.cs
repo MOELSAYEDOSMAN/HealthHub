@@ -1,4 +1,5 @@
 ﻿using HealthHup.API.Model.Models.Notifaction;
+using Humanizer;
 
 namespace HealthHup.API.Model.Extion
 {
@@ -17,7 +18,7 @@ namespace HealthHup.API.Model.Extion
                 Date=DateOnly.FromDateTime(input.DateTime),
                 link=input?.link,
                 Message=input?.Message,
-                notifyHeader=input.notifyHeader.ToString(),
+                notifyHeader=input.notifyHeader.ToString().Humanize(),
                 Time = input.DateTime.ToShortTimeString(),
             };
         //Convert From IList<Notify> to IEnumerable<notfiyDTO>
