@@ -1,7 +1,12 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|d:\\project\\graduation projects\\findalproject\\healthhup\\backend\\healthhup.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{86C2DD78-CA43-4050-8081-D6D7BE835A3E}|HealthHup.API\\HealthHup.API.csproj|solutionrelative:healthhup.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +14,24 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Program.cs",
+              "RelativeDocumentMoniker": "HealthHup.API\\Program.cs",
+              "ToolTip": "D:\\Project\\Graduation projects\\FindalProject\\HealthHup\\Backend\\HealthHup.API\\Program.cs",
+              "RelativeToolTip": "HealthHup.API\\Program.cs",
+              "ViewState": "AQIAAHgAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-12T09:35:08.8Z",
+              "EditorCaption": ""
             }
           ]
         }

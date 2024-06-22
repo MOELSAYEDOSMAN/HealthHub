@@ -188,12 +188,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
-app.UseSwagger();
-app.UseSwaggerUI();
+
 app.UseCors("MyPolicy");
-//app.UseHttpsRedirection();
+/pp.UseHttpsRedirection();
 app.UseStaticFiles();
 
 
@@ -202,7 +202,7 @@ app.UseAuthorization();
 
 
 //HangFire(BackGroundJobs):Dashboard
-app.UseHangfireDashboard("/Dashboard");
+//app.UseHangfireDashboard("/Dashboard");
 //Add Hubs
 app.MapHub<ChatHub>("chat");
 
